@@ -1,0 +1,168 @@
+# Additional Methods {#methods3}
+
+## Introduction
+
+Until now we have standard methods like `print()`, `summary()`, and `plot()`. However, we can add more common (and not so common) methods such as:
+
+- replacement: `"[<-.toss"`
+- extraction: `"[.toss"`
+- testing: `is.toss()`
+- addition: `"+.toss"`
+
+
+## Replacement Method
+
+Replacement functions are those calls like `x[1] <- 3`. The function behind this expression is the replacement `"[<-"()` function. We can also create a replacement function for a given class using the notation `"[<-.class"`, where `class` is the name of the class:
+
+```{r replacement-toss}
+"[<-.toss" <- function(x, i, value) {
+  if (value != x$coin[1] & value != x$coin[2]) {
+    stop(sprintf('\nreplacing value must be %s or %s', x$coin[1], x$coin[2]))
+  }
+  x$tosses[i] <- value
+  make_toss(x$coin, x$tosses)
+}
+```
+
+Test it:
+
+```{r test-replacement}
+set.seed(3752)
+b <- toss(dime1, times = 5)
+b$tosses
+
+# replacement
+b[1] <- "torch"
+b$tosses
+```
+
+What about replacing out of the original range?
+
+```{r weird-test-replacement}
+# replacement in sixth position (weird!)
+b[6] <- "torch"
+b
+```
+
+Or something like this?
+
+```{r fail-test-replacement}
+# replacement
+b[10] <- "torch"
+b
+```
+
+
+Because it does not make sense to replace if index is out of the original length, we can add a `stop()` condition:
+
+```{r better-replacement-toss}
+"[<-.toss" <- function(x, i, value) {
+  if (value != x$coin[1] & value != x$coin[2]) {
+    stop(sprintf('\nreplacing value must be %s or %s', x$coin[1], x$coin[2]))
+  }
+  if (i > x$total) {
+    stop("\nindex out of bounds")
+  }
+  x$tosses[i] <- value
+  make_toss(x$coin, x$tosses)
+}
+```
+
+Now we cannot replace if index is out of the original length:
+
+```{r error-replacement}
+set.seed(3752)
+b <- toss(dime1, times = 5)
+b$tosses
+
+# replacement
+b[10] <- "torch"
+```
+
+
+## Extraction Method
+
+What if you want to know what is the value of toss in position 3? You could type something like this:
+
+```{r}
+b$tosses[3]
+```
+
+Or you could create an extraction method that allows you to type `x[3]`. The function behind this expression is the extraction `"["()` function. We can also create a extraction function for a given class.
+
+```{r extract-toss}
+"[.toss" <- function(x, i) {
+  x$tosses[i]
+}
+```
+
+Test it:
+
+```{r test-extract}
+set.seed(3752)
+b <- toss(dime1, times = 5)
+b$tosses
+b[1]
+```
+
+
+
+## Is `"toss"`
+
+Another common type of function for an object of a given class is `is.class()`-like functions: e.g. `is.list()`, `is.numeric()`, `is.matrix()`.
+This type of functions allow you to test or check whether an object is of a given class.
+
+We can create our own `is.toss()` to check whether a given R object is of class `"coss"`. Here's how to define such a function:
+
+```{r}
+is.toss <- function(x) {
+  inherits(x, "toss")
+}
+
+is.toss(b)
+is.toss(c("heads", "tails"))
+```
+
+
+## Addition Method
+
+R comes with generic Math methods (see `?Math`). Among these generic methods we can find the `"+"` operator. This means that we can define our own _plus_ method for objects of class `"toss"`. The idea is to be able to call a command like this:
+
+```{r eval = FALSE}
+# toss object
+b <- toss(dime1, times = 5)
+
+# add 5 more flips
+b + 5
+```
+
+Here's one implementation of `"+.toss()"` in which the first argument is an object of class `"toss"`, and the second argument is a single positive number that will play the role of additional tosses:
+
+```{r}
+"+.toss" <- function(obj, incr) {
+  if (length(incr) != 1 | incr <= 0) {
+    stop("\ninvalid increament (must be positive)")
+  }
+  more_flips <- toss(obj$coin, times = incr)
+  make_toss(obj$coin, c(obj$tosses, more_flips$tosses))
+}
+```
+
+Remember that `"+"` is a binary operator, which means that writing a `"+"` method requires a function with two arguments. Let's try it:
+
+```{r}
+# add four more tosses
+mycoin <- coin()
+seven <- toss(mycoin, times = 7)
+seven
+```
+
+Let's add a couple of more tosses to `seven`:
+
+```{r}
+# two more flips
+seven + 2
+
+# three more flips
+seven + 3
+```

@@ -1,0 +1,55 @@
+--- 
+title: "Pack Your Code"
+author: "Gaston Sanchez"
+date: ""
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "Basic example of how to create an R package based on S3 classes."
+---
+
+# Preface {-}
+
+```{r echo = FALSE, out.width = NULL}
+knitr::include_graphics("images/pack-your-code-logo.png")
+```
+
+This book aims to teach you how to create a relatively simple R package based on the so-called S3 classes.
+
+I assume that you are already familiar with R, RStudio. You don't need to be an expert useR but you do need to feel comfortable working with various data structures: vectors, factors, arrays, matrices, lists, data frames, etc.
+
+You also need to be familiar with programming structures: how to create simple functions, conditional `if-then-else()`, `for()` loops, `while()` loops, `repeat` loops.
+
+
+You will create various functions:
+
+- define a function to create a `"coin"` object.
+
+- write a function to `toss()` the coin and produce an object of class `"toss"`.
+
+- write common methods such as `print()`, `summary()`, and `plot()`.
+
+- write companion functions `is.toss()`, `as.toss()`
+
+- implement S3 methods for extraction `[.toss`, replacement `[<-.toss`, addition `+.toss`
+
+
+You will write unit tests for your functions
+
+
+You will package your code, and learn an opinionated workflow to build packages:
+
+- generate documentation
+- check manual documentation
+- run tests
+- build vignettes
+- build tarball
+- install your package
+- share it via github
+
+-----
+
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.

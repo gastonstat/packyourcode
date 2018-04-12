@@ -1,0 +1,187 @@
+# Let's toss a coin {#intro}
+
+To illustrate the concepts behind object-oriented programming in R, we are going to consider a classic chance process (or chance experiment) of flipping a coin.
+
+```{r echo = FALSE, out.width = NULL}
+knitr::include_graphics("images/flip-coin.jpg")
+```
+
+In this chapter you will learn how to implement code in R that simulates tossing a coin one or more times.
+
+
+## Coin object
+
+Think about a standard coin with two sides: _heads_ and _tails_.
+
+```{r echo = FALSE, out.width = NULL, fig.cap='two sides of a coin'}
+knitr::include_graphics("images/coin-sides.png")
+```
+
+To toss a coin using R, we first need an object that plays the role of a coin. How do you create such a coin? Perhaps the simplest way to create a coin with two sides, `"heads"` and `"tails"`, is with a character vector via the _combine_ function `c()`:
+
+```{r coin-vector}
+# a (virtual) coin object
+coin <- c("heads", "tails")
+coin
+```
+
+You can also create a _numeric_ coin that shows `1` and `0` instead of
+`"heads"` and `"tails"`:
+
+```{r}
+num_coin <- c(0, 1)
+num_coin
+```
+
+Likewise, you can also create a _logical_ coin that shows `TRUE` and `FALSE` 
+instead of `"heads"` and `"tails"`:
+
+```{r}
+log_coin <- c(TRUE, FALSE)
+log_coin
+```
+
+
+## Tossing a coin
+
+Once you have an object that represents the _coin_, the next step involves learning how to simulate tossing the coin.
+
+Tossing a coin is a random experiment: you either get heads or tails. One way to simulate the action of tossing a coin in R is with the function `sample()` which lets you draw random samples, with or without replacement, of the elements of an input vector. 
+
+Here's how to simulate a coin toss using `sample()` to take a random sample of size 1 of the elements in `coin`:
+
+```{r}
+# toss a coin
+coin <- c('heads', 'tails')
+
+sample(coin, size = 1)
+```
+
+You use the argument `size = 1` to specify that you want to take a sample of size 1 from the input vector `coin`.
+
+
+### Random Samples
+
+By default, `sample()` takes a sample of the specified `size` __without replacement__. If `size = 1`, it does not really matter whether the sample is done with or without replacement. 
+
+To draw two elements WITHOUT replacement, use `sample()` like this:
+
+```{r}
+# draw 2 elements without replacement
+sample(coin, size = 2)
+```
+
+What if you try to toss the coin three or four times?
+
+```{r}
+# trying to toss coin 3 times
+sample(coin, size = 3)
+```
+
+Notice that R produced an error message. This is because the default behavior of `sample()` cannot draw more elements that the length of the input vector.
+
+To be able to draw more elements, you need to sample __with replacement__, which is done by specifying the argument `replace = TRUE`, like this:
+
+```{r}
+# draw 4 elements with replacement
+sample(coin, size = 4, replace = TRUE)
+```
+
+
+## The Random Seed
+
+The way `sample()` works is by taking a random sample from the input vector. This means that every time you invoke `sample()` you will likely get a different output.
+
+```{r}
+# five tosses
+sample(coin, size = 5, replace = TRUE)
+```
+
+```{r}
+# another five tosses
+sample(coin, size = 5, replace = TRUE)
+```
+
+
+In order to make the examples replicable (so you can get the same output as mine), you need to specify what is called a __random seed__. This is done with the function `set.seed()`. By setting a _seed_, every time you use one of the random generator functions, like `sample()`, you will get the same values.
+
+```{r}
+# set random seed
+set.seed(1257)
+
+# toss a coin with replacement
+sample(coin, size = 4, replace = TRUE)
+```
+
+
+## Sampling with different probabilities
+
+Last but not least, `sample()` comes with the argument `prob` which allows you to provide specific probabilities for each element in the input vector.
+
+By default, `prob = NULL`, which means that every element has the same probability of being drawn. In the example of tossing a coin, the command `sample(coin)` is equivalent to `sample(coin, prob = c(0.5, 0.5))`. In the latter case we explicitly specify a probability of 50% chance of heads, and 50% chance of tails:
+
+```{r}
+# tossing a fair coin
+coin <- c("heads", "tails")
+
+sample(coin)
+
+# equivalent
+sample(coin, prob = c(0.5, 0.5))
+```
+
+However, you can provide different probabilities for each of the elements in the input vector. For instance, to simulate a __loaded__ coin with chance of heads 20%, and chance of tails 80%, set `prob = c(0.2, 0.8)` like so:
+
+```{r}
+# tossing a loaded coin (20% heads, 80% tails)
+sample(coin, size = 5, replace = TRUE, prob = c(0.2, 0.8))
+```
+
+
+### Simulating tossing a coin
+
+Now that we have all the elements to toss a coin with R, let's simulate flipping a coin 100 times, and then use the function `table()` to count the resulting number of `"heads"` and `"tails"`:
+
+```{r}
+# number of flips
+num_flips <- 100
+
+# flips simulation
+coin <- c('heads', 'tails')
+flips <- sample(coin, size = num_flips, replace = TRUE)
+
+# number of heads and tails
+freqs <- table(flips)
+freqs
+```
+
+In my case, I got `r freqs[1]` heads and `r freqs[2]` tails. Your results will probably be different than mine. Sometimes you will get more `"heads"`, sometimes you will get more `"tails"`, and sometimes you will get exactly 50 `"heads"` and 50 `"tails"`.
+
+Run another series of 100 flips, and find the frequency of `"heads"` and `"tails"`:
+
+```{r flips100}
+# one more 100 flips
+flips <- sample(coin, size = num_flips, replace = TRUE)
+freqs <- table(flips)
+freqs
+```
+
+
+To make things more interesting, let's consider how the frequency of `heads` evolves over a series of `n` tosses.
+
+```{r heads_freq}
+heads_freq <- cumsum(flips == 'heads') / 1:num_flips
+```
+
+In this case, we can make a plot of the relative frequencies:
+
+```{r head_freqs_plot}
+plot(heads_freq,     # vector
+     type = 'l',     # line type
+     lwd = 2,        # width of line
+     col = 'tomato', # color of line
+     las = 1,        # tick-marks labels orientation
+     ylim = c(0, 1)) # range of y-axis
+abline(h = 0.5, col = 'gray50')
+```
+

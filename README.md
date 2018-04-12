@@ -2,7 +2,7 @@
 
 This repository contains the work in progress of the book __[Pack Your Code](http://www.gastonsanchez.com/packyourcode)__.
 
-<a href="http://www.gastonsanchez.com/packyourcode" target="_blank"><img src="images/pack-your-code-logo.png" alt="cover image" height="375" width="370"></a>
+<a href="http://www.gastonsanchez.com/packyourcode" target="_blank"><img src="images/pack-your-code-logo.png" alt="cover image" height="375" width="380"></a>
 
 ## Author
 

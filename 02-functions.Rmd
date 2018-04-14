@@ -20,7 +20,7 @@ flips50 <- sample(coin, size = 50, replace = TRUE)
 flips1000 <- sample(coin, size = 1000, replace = TRUE)
 ```
 
-As you can tell, even a single toss implies using the command `sample(coin, size = 1, replace = TRUE)` which is a bit long and requires some typing. Also, notice that we are repeating the call of `sample()` several times. This is the classic indication that we should instead write a function to encapsulate our code and reduce repetition.
+As you can tell, even a single toss requires using the command `sample(coin, size = 1, replace = TRUE)` which is a bit long and requires some typing. Also, notice that we are repeating the call of `sample()` several times. This is the classic indication that we should instead write a function to encapsulate our code and reduce repetition.
 
 
 ## A `toss()` function

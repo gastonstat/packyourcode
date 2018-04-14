@@ -22,7 +22,7 @@ volados <- toss(peso, 15)
 volados
 ```
 
-Every time you type in the name of an object `"coin"`, like `volados` in the previous example, the output is displayed like any other list. R displays the values of `$coin` and its attributes (`attr`), the `$tosses`, the `$total`, the number of `$heads` and `$tails`, and finally the class attribute. 
+Every time you type in the name of an object `"toss"`, like `volados` in the previous example, the output is displayed like any other list. R displays the values of `$coin` and its attributes (`attr`), the `$tosses`, the `$total`, the number of `$heads` and `$tails`, and finally the class attribute. 
 
 Instead of displaying all the elements that are in the output list returned by `toss()`, it would be more convenient to display information in a more compact way, for instance some sort of text containing the following bullets:
 

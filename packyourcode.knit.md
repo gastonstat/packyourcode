@@ -51,10 +51,12 @@ You will package your code, and learn an opinionated workflow to build packages:
 -----
 
 
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work, by [Gaston Sanchez](http://gastonsanchez.com), is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
 <!--chapter:end:index.Rmd-->
 
+
+# (PART) Motivation {-}
 
 # Let's toss a coin {#intro}
 
@@ -264,7 +266,7 @@ To make things more interesting, let's consider how the frequency of `heads` evo
 heads_freq <- cumsum(flips == 'heads') / 1:num_flips
 ```
 
-In this case, we can make a plot of the relative frequencies:
+With the vector `heads_freq`, we can graph the relative frequencies with a line-plot:
 
 
 ```r
@@ -308,7 +310,7 @@ flips50 <- sample(coin, size = 50, replace = TRUE)
 flips1000 <- sample(coin, size = 1000, replace = TRUE)
 ```
 
-As you can tell, even a single toss implies using the command `sample(coin, size = 1, replace = TRUE)` which is a bit long and requires some typing. Also, notice that we are repeating the call of `sample()` several times. This is the classic indication that we should instead write a function to encapsulate our code and reduce repetition.
+As you can tell, even a single toss requires using the command `sample(coin, size = 1, replace = TRUE)` which is a bit long and requires some typing. Also, notice that we are repeating the call of `sample()` several times. This is the classic indication that we should instead write a function to encapsulate our code and reduce repetition.
 
 
 ## A `toss()` function
@@ -453,7 +455,9 @@ At this point you may be asking yourself: "Do I really need to document my funct
 <!--chapter:end:02-functions.Rmd-->
 
 
-# Classes {#classes}
+# (PART) Classes {-}
+
+# Coin Objects {#coin}
 
 ## Introduction
 
@@ -463,7 +467,7 @@ We begin describing how to create object classes.
 
 ## Objects and Classes
 
-Taking the code we've written for tossing a coin, we can generate two series of tosses. The first experiment involves tossing a coin five times, and then computing the proportion of heads:
+Let's use the `toss()` function of the previous chapter. We can invoke `toss()` to generate a first series of five tosses, and then compute the proportion of heads:
 
 
 ```r
@@ -480,7 +484,7 @@ sum(five == "heads") / length(five)
 #> [1] 0.6
 ```
 
-The second experiment involves tossing a coin six times and computing the proportion of heads:
+We can also get a second series of tosses, but this time involving tossing a coin six times. Similarly, we compute the proportion of heads:
 
 
 ```r
@@ -557,45 +561,12 @@ inherits(coin2, "coin")
 #> [1] TRUE
 ```
 
-
-### Generic and Specific Methods
-
-Having a coin object, we can simulate flipping the coin with our previously defined function `toss()`:
+Having a `"coin"` object, we can pass it to the `toss()` function to simulate flipping the coin:
 
 
 ```r
 toss(coin1, times = 5)
 #> [1] "tails" "heads" "heads" "heads" "heads"
-```
-
-The issue with the way `toss()` is defined, is that you can pass it any type of vector (not necessarily of class `"coin"`), and it will still work:
-
-
-```r
-toss(c('tic', 'tac', 'toe'))
-#> [1] "tic"
-```
-
-
-To create a function `toss()` that only works for objects of class `"coin"`, we could add a `stop()` condition that checks if the argument `coin` is of the right class:
-
-
-```r
-toss <- function(x, times = 1, prob = NULL) {
-  if (class(x) != "coin") {
-    stop("\ntoss() requires an object 'coin'")
-  }
-  sample(x, size = times, replace = TRUE, prob = prob)
-}
-
-# ok
-toss(coin1)
-#> [1] "heads"
-
-# bad coin
-toss(c('tic', 'tac', 'toe'))
-#> Error in toss(c("tic", "tac", "toe")): 
-#> toss() requires an object 'coin'
 ```
 
 
@@ -661,7 +632,17 @@ coin <- function(object = c("heads", "tails")) {
   class(object) <- "coin"
   object
 }
+```
 
+Let's try our modified `coin()` function to create a US penny like the one in the image below:
+
+<div class="figure" style="text-align: center">
+<img src="images/penny.jpg" alt="US Penny (www.usacoinbook.com)" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-31)US Penny (www.usacoinbook.com)</p>
+</div>
+
+
+```r
 # US penny
 penny <- coin(c("lincoln", "shield"))
 penny
@@ -670,18 +651,36 @@ penny
 #> [1] "coin"
 ```
 
+Now let's try `coin()` with an invalid input vector:
+
 
 ```r
 # invalid coin
+ttt <- c('tic', 'tac', 'toe')
 coin(ttt)
 #> Error in coin(ttt): 
 #> 'object' must be of length 2
 ```
 
 
-Because the `toss()` function simulates flips using `sample()`, we can take advantage of the argument `prob` to specify probabilities for each side of the coin. In this way, we can create _loaded_ coins. 
+Because the `toss()` function simulates flips using `sample()`, we can take advantage of the argument `prob` to specify probabilities for each side of the coin. In this way, we can create _loaded_ (i.e. biased) coins. 
 
-We can add a `prob` argument to the constructor function. This argument takes a vector of probabilities for each element in `object`, and we pass this vector as an attribute of the coin object. Furthermore, we can set a default `prob = c(0.5, 0.5)`, that is, a _fair_ coin by default:
+The way we are going to keep the probability of each side of the coin is with the use an objetc's attributes. An example of an attribute is the class of an object. For example the class of our `"coin"` objects:
+
+
+```r
+penny
+#> [1] "lincoln" "shield" 
+#> attr(,"class")
+#> [1] "coin"
+```
+
+Notice how everytime you print the name of a `"coin"` object, its class is displayed in the form of `attr(,"class")`.
+
+
+### Attributes
+
+In addition to the class attribute of a coin, the idea is to assign another attribute for the probability values. We can do this by adding a `prob` argument to the constructor function, and then pass it as an attribute of the coin object inside the class-constructor function.
 
 
 ```r
@@ -691,7 +690,7 @@ coin <- function(object = c("heads", "tails"), prob = c(0.5, 0.5)) {
   }
   attr(object, "prob") <- prob
   class(object) <- "coin"
-  object
+  return(object)
 }
 
 coin()
@@ -702,6 +701,37 @@ coin()
 #> [1] "coin"
 ```
 
+In the previous code, the `prob` argument takes a vector of probabilities for each element in `object`. This vector is passed to `object` via the function `attr()` inside the body of `coin()`. Notice the use of a default `prob = c(0.5, 0.5)`, that is, a _fair_ coin by default. 
+
+
+### Using a list
+
+Another way to implement a constructor function `coin()` that returns an object containing values for both the sides and the probabilities, is to use an R list. Here's the code for this option:
+
+
+```r
+coin <- function(sides = c("heads", "tails"), prob = c(0.5, 0.5)) {
+  if (length(sides) != 2) {
+    stop("\n'sides' must be of length 2")
+  }
+  res <- list(sides = sides, prob = prob)
+  class(res) <- "coin"
+  return(res)
+}
+
+coin()
+#> $sides
+#> [1] "heads" "tails"
+#> 
+#> $prob
+#> [1] 0.5 0.5
+#> 
+#> attr(,"class")
+#> [1] "coin"
+```
+
+
+### Auxiliary Checker
 
 Once again, we need to check for the validity of `prob`. We basically need to check that `prob` and its elements meet the following requirements:
 
@@ -768,23 +798,83 @@ Here's the improved constructor function `coin()`:
 
 
 ```r
-coin <- function(object = c("heads", "tails"), prob = c(0.5, 0.5)) {
-  if (length(object) != 2) {
-    stop("\n'object' must be of length 2")
+coin <- function(sides = c("heads", "tails"), prob = c(0.5, 0.5)) {
+  if (length(sides) != 2) {
+    stop("\n'sides' must be of length 2")
   }
   check_prob(prob)
-  attr(object, "prob") <- prob
-  class(object) <- "coin"
-  object
+  res <- list(sides = sides, prob = prob)
+  class(res) <- "coin"
+  return(res)
 }
 
 coin1 <- coin()
 coin1
+#> $sides
 #> [1] "heads" "tails"
-#> attr(,"prob")
+#> 
+#> $prob
 #> [1] 0.5 0.5
+#> 
 #> attr(,"class")
 #> [1] "coin"
+```
+
+
+## Print Method for `"coin"`
+
+Every time you type in the name of an object `"coin"`, like our `penny` example, the output is displayed in a default, "quick and dirty", way. R displays the values associated to the sides and their probabilities like any other list:
+
+
+```r
+# US penny
+penny <- coin(c("lincoln", "shield"))
+penny
+#> $sides
+#> [1] "lincoln" "shield" 
+#> 
+#> $prob
+#> [1] 0.5 0.5
+#> 
+#> attr(,"class")
+#> [1] "coin"
+```
+
+Sometimes the default displayed output is all you need. However, there are occasions in which you need to customize the amount and format of information displayed on the screen when you type in the name of an object.
+
+Instead of keeping the default printed values, it would be nice to print `penny` and see some output like this:
+
+```
+object "coin"
+
+        side  prob
+1  "lincoln"   0.5
+2   "shield"   0.5
+```
+
+How can we do this? The answer involves writing a `print` method for objects of class `"coin"`. Because `print()` is actually a generic function, what you need to do is to create a a specific print _flavor_ for class coin. Basically, you define a `print.coin()` function, and then include commands to print information in the desired way:
+
+
+```r
+print.coin <- function(x) {
+  cat('object "coin"\n\n')
+  cd <- data.frame(
+    side = x$side, prob = x$prob
+  )
+  print(cd)
+  invisible(x)
+}
+```
+
+Now, the next time you print the name of an object of class `"coin"`, R will look for a `print` method (which now exists) and dispatch such method.
+
+
+```r
+penny
+#> object "coin"
+#>      side prob
+#> 1 lincoln  0.5
+#> 2  shield  0.5
 ```
 
 
@@ -842,8 +932,10 @@ peso
 #> [1] "peso" "coin"
 ```
 
-<!--chapter:end:03-classes.Rmd-->
+<!--chapter:end:03-coin.Rmd-->
 
+
+# (PART) Methods {-}
 
 # Methods (part 1) {#methods1}
 
@@ -892,7 +984,8 @@ toss <- function(x, times = 1, prob = NULL) {
 
 # ok
 toss(coin1)
-#> [1] "tails"
+#> $prob
+#> [1] 0.5 0.5
 
 # bad coin
 toss(c('tic', 'tac', 'toe'))
@@ -953,7 +1046,8 @@ To use the `toss()` method on a `"coin"` object, you don't really have to call `
 
 ```r
 toss(coin1)
-#> [1] "heads"
+#> $sides
+#> [1] "heads" "tails"
 ```
 
 How does `toss()` work? Becasue `toss()` is now a generic method, everytime you use it, R will look at the class of the input, and see if there is an associated `"toss"` method. In the previous example, `coin1` is an object of class `"coin"`, for which there is a specific `toss.coin()` method. Thus using `toss()` on a `"coin"` object works fine. 
@@ -988,7 +1082,23 @@ Let's toss a loaded coin:
 set.seed(2341)
 loaded_coin <- coin(c('HEADS', 'tails'), prob = c(0.75, 0.25))
 toss(loaded_coin, times = 6)
-#> [1] "HEADS" "HEADS" "tails" "HEADS" "HEADS" "tails"
+#> $sides
+#> [1] "HEADS" "tails"
+#> 
+#> $sides
+#> [1] "HEADS" "tails"
+#> 
+#> $prob
+#> [1] 0.75 0.25
+#> 
+#> $sides
+#> [1] "HEADS" "tails"
+#> 
+#> $sides
+#> [1] "HEADS" "tails"
+#> 
+#> $prob
+#> [1] 0.75 0.25
 ```
 
 <!--chapter:end:04-methods1.Rmd-->
@@ -1022,8 +1132,35 @@ acoin <- coin(c('heads', 'tails'))
 
 toss10 <- toss(acoin, times = 10)
 toss10
-#>  [1] "tails" "tails" "heads" "heads" "heads" "heads" "heads" "heads"
-#>  [9] "heads" "tails"
+#> $prob
+#> [1] 0.5 0.5
+#> 
+#> $prob
+#> [1] 0.5 0.5
+#> 
+#> $sides
+#> [1] "heads" "tails"
+#> 
+#> $sides
+#> [1] "heads" "tails"
+#> 
+#> $sides
+#> [1] "heads" "tails"
+#> 
+#> $sides
+#> [1] "heads" "tails"
+#> 
+#> $sides
+#> [1] "heads" "tails"
+#> 
+#> $sides
+#> [1] "heads" "tails"
+#> 
+#> $sides
+#> [1] "heads" "tails"
+#> 
+#> $prob
+#> [1] 0.5 0.5
 ```
 
 Having obtained several tosses, we can calculate things like 1) the total number of tosses, 2) the total number of `heads`, and 3) the total number of `tails`:
@@ -1036,11 +1173,11 @@ length(toss10)
 
 # total number of heads
 sum(toss10 == 'heads')
-#> [1] 7
+#> [1] 0
 
 # total number of tails
 sum(toss10 == 'tails')
-#> [1] 3
+#> [1] 0
 ```
 
 In general, when tossing a coin, we are not only interested in keeping track of such tosses; we would also like to know (or keep track of) the number of tosses, the number of heads, and the number of tails. Consequently, it would be nice to have another class of object for this purpose.
@@ -1069,16 +1206,33 @@ a <- list(
 
 a
 #> $tosses
-#> [1] "tails" "heads" "tails" "heads" "tails" "heads"
+#> $tosses$prob
+#> [1] 0.5 0.5
+#> 
+#> $tosses$sides
+#> [1] "heads" "tails"
+#> 
+#> $tosses$prob
+#> [1] 0.5 0.5
+#> 
+#> $tosses$sides
+#> [1] "heads" "tails"
+#> 
+#> $tosses$prob
+#> [1] 0.5 0.5
+#> 
+#> $tosses$sides
+#> [1] "heads" "tails"
+#> 
 #> 
 #> $total
 #> [1] 6
 #> 
 #> $heads
-#> [1] 3
+#> [1] 0
 #> 
 #> $tails
-#> [1] 3
+#> [1] 0
 ```
 
 The idea is to be able to invoke `toss()`, and then obtain an object like the list `a` in the above code. But do it in such a way that the output is an object of class `"toss"`.
@@ -1124,27 +1278,7 @@ This is how `toss()` works:
 set.seed(2233)
 fair <- coin()
 toss(fair, times = 5)
-#> $coin
-#> [1] "heads" "tails"
-#> attr(,"prob")
-#> [1] 0.5 0.5
-#> attr(,"class")
-#> [1] "coin"
-#> 
-#> $tosses
-#> [1] "heads" "heads" "heads" "tails" "tails"
-#> 
-#> $total
-#> [1] 5
-#> 
-#> $heads
-#> [1] 3
-#> 
-#> $tails
-#> [1] 2
-#> 
-#> attr(,"class")
-#> [1] "toss"
+#> Error in flips == coin[1]: comparison of these types is not implemented
 ```
 
 You may ask: "Why do we need a function `make_toss()`, and another function `toss()`?". Can't we just write a single function `suppertoss()` that does everything at once?:
@@ -1185,34 +1319,13 @@ Let's consider our `quarter` coin, and apply `toss()` on it:
 quarter1 <- coin(c("washington", "fort")) 
 class(quarter1) <- c("quarter", "coin")
 quarter1
-#> [1] "washington" "fort"      
-#> attr(,"prob")
-#> [1] 0.5 0.5
-#> attr(,"class")
-#> [1] "quarter" "coin"
+#> object "coin"
+#>         side prob
+#> 1 washington  0.5
+#> 2       fort  0.5
 
 toss(quarter1, times = 4)
-#> $coin
-#> [1] "washington" "fort"      
-#> attr(,"prob")
-#> [1] 0.5 0.5
-#> attr(,"class")
-#> [1] "quarter" "coin"   
-#> 
-#> $tosses
-#> [1] "fort"       "fort"       "washington" "fort"      
-#> 
-#> $total
-#> [1] 4
-#> 
-#> $heads
-#> [1] 1
-#> 
-#> $tails
-#> [1] 3
-#> 
-#> attr(,"class")
-#> [1] "toss"
+#> Error in flips == coin[1]: comparison of these types is not implemented
 ```
 
 \bigskip
@@ -1241,27 +1354,7 @@ toss.coin <- function(x, times = 1) {
 
 # this works ok
 toss(quarter1, 5)
-#> $coin
-#> [1] "washington" "fort"      
-#> attr(,"prob")
-#> [1] 0.5 0.5
-#> attr(,"class")
-#> [1] "quarter" "coin"   
-#> 
-#> $tosses
-#> [1] "washington" "washington" "fort"       "fort"       "washington"
-#> 
-#> $total
-#> [1] 5
-#> 
-#> $heads
-#> [1] 3
-#> 
-#> $tails
-#> [1] 2
-#> 
-#> attr(,"class")
-#> [1] "toss"
+#> Error in flips == coin[1]: comparison of these types is not implemented
 
 # this doesn't work, but the error message is clear
 toss(quarter1, -4)
@@ -1294,27 +1387,7 @@ toss.coin <- function(x, times = 1) {
 }
 
 toss(quarter1, 5)
-#> $coin
-#> [1] "washington" "fort"      
-#> attr(,"prob")
-#> [1] 0.5 0.5
-#> attr(,"class")
-#> [1] "quarter" "coin"   
-#> 
-#> $tosses
-#> [1] "fort"       "fort"       "washington" "washington" "washington"
-#> 
-#> $total
-#> [1] 5
-#> 
-#> $heads
-#> [1] 3
-#> 
-#> $tails
-#> [1] 2
-#> 
-#> attr(,"class")
-#> [1] "toss"
+#> Error in flips == coin[1]: comparison of these types is not implemented
 ```
 
 
@@ -1322,7 +1395,7 @@ toss(quarter1, 5)
 
 The more you understand a problem (i.e. phenomenon, process), the better you will be prepared to design objects, and program their corresponding methods.
 
-<!--chapter:end:05-summary.Rmd-->
+<!--chapter:end:05-toss.Rmd-->
 
 
 # Methods (part 2) {#methods2}
@@ -1338,7 +1411,7 @@ Until now we have a `toss()` function that produces objects of the homonym class
 
 <div class="figure" style="text-align: center">
 <img src="images/peso.jpg" alt="An old Mexican peso (www.coinfactswiki.com)" width="275" />
-<p class="caption">(\#fig:unnamed-chunk-57)An old Mexican peso (www.coinfactswiki.com)</p>
+<p class="caption">(\#fig:unnamed-chunk-62)An old Mexican peso (www.coinfactswiki.com)</p>
 </div>
 
 By the way, flips are commonly referred to as _volados_ in Mexico:
@@ -1348,33 +1421,12 @@ By the way, flips are commonly referred to as _volados_ in Mexico:
 set.seed(789)
 peso <- coin(c('aguila', 'sol'))
 volados <- toss(peso, 15)
+#> Error in flips == coin[1]: comparison of these types is not implemented
 volados
-#> $coin
-#> [1] "aguila" "sol"   
-#> attr(,"prob")
-#> [1] 0.5 0.5
-#> attr(,"class")
-#> [1] "coin"
-#> 
-#> $tosses
-#>  [1] "sol"    "aguila" "aguila" "sol"    "aguila" "aguila" "sol"   
-#>  [8] "aguila" "aguila" "aguila" "aguila" "sol"    "aguila" "aguila"
-#> [15] "aguila"
-#> 
-#> $total
-#> [1] 15
-#> 
-#> $heads
-#> [1] 11
-#> 
-#> $tails
-#> [1] 4
-#> 
-#> attr(,"class")
-#> [1] "toss"
+#> Error in eval(expr, envir, enclos): object 'volados' not found
 ```
 
-Every time you type in the name of an object `"coin"`, like `volados` in the previous example, the output is displayed like any other list. R displays the values of `$coin` and its attributes (`attr`), the `$tosses`, the `$total`, the number of `$heads` and `$tails`, and finally the class attribute. 
+Every time you type in the name of an object `"toss"`, like `volados` in the previous example, the output is displayed like any other list. R displays the values of `$coin` and its attributes (`attr`), the `$tosses`, the `$total`, the number of `$heads` and `$tails`, and finally the class attribute. 
 
 Instead of displaying all the elements that are in the output list returned by `toss()`, it would be more convenient to display information in a more compact way, for instance some sort of text containing the following bullets:
 
@@ -1409,12 +1461,9 @@ After a `print` method has been defined for an object `"toss"`, everytime you ty
 # testing print method
 set.seed(789)
 volados <- toss(peso, 15)
+#> Error in flips == coin[1]: comparison of these types is not implemented
 volados
-#> object "toss"
-#> coin: "aguila", "sol" 
-#> total tosses: 15 
-#> num of aguila: 11 
-#> num of sol: 4
+#> Error in eval(expr, envir, enclos): object 'volados' not found
 ```
 
 Here's another example with the `quarter1` coin used in previous chapters:
@@ -1424,12 +1473,9 @@ Here's another example with the `quarter1` coin used in previous chapters:
 set.seed(555)
 quarter1 <- coin(c("washington", "fort")) 
 quarter_flips <- toss(quarter1, 50)
+#> Error in flips == coin[1]: comparison of these types is not implemented
 quarter_flips
-#> object "toss"
-#> coin: "washington", "fort" 
-#> total tosses: 50 
-#> num of washington: 30 
-#> num of fort: 20
+#> Error in eval(expr, envir, enclos): object 'quarter_flips' not found
 ```
 
 
@@ -1462,16 +1508,7 @@ Let's test it:
 
 ```r
 summary(quarter_flips)
-#> summary "toss"
-#> 
-#> coin: "washington", "fort" 
-#> total tosses: 50 
-#> 
-#> num of washington: 30 
-#> prop of washington: 0.6 
-#> 
-#> num of fort: 20 
-#> prop of fort: 0.4
+#> Error in summary(quarter_flips): object 'quarter_flips' not found
 ```
 
 
@@ -1523,9 +1560,8 @@ Let's test our `plot` method:
 
 ```r
 plot(quarter_flips)
+#> Error in plot(quarter_flips): object 'quarter_flips' not found
 ```
-
-<img src="packyourcode_files/figure-html4/unnamed-chunk-63-1.png" width="70%" style="display: block; margin: auto;" />
 
 <!--chapter:end:06-methods2.Rmd-->
 
@@ -1719,12 +1755,9 @@ Remember that `"+"` is a binary operator, which means that writing a `"+"` metho
 # add four more tosses
 mycoin <- coin()
 seven <- toss(mycoin, times = 7)
+#> Error in flips == coin[1]: comparison of these types is not implemented
 seven
-#> object "toss"
-#> coin: "heads", "tails" 
-#> total tosses: 7 
-#> num of heads: 3 
-#> num of tails: 4
+#> Error in eval(expr, envir, enclos): object 'seven' not found
 ```
 
 Let's add a couple of more tosses to `seven`:
@@ -1733,20 +1766,120 @@ Let's add a couple of more tosses to `seven`:
 ```r
 # two more flips
 seven + 2
-#> object "toss"
-#> coin: "heads", "tails" 
-#> total tosses: 9 
-#> num of heads: 5 
-#> num of tails: 4
+#> Error in eval(expr, envir, enclos): object 'seven' not found
 
 # three more flips
 seven + 3
-#> object "toss"
-#> coin: "heads", "tails" 
-#> total tosses: 10 
-#> num of heads: 4 
-#> num of tails: 6
+#> Error in eval(expr, envir, enclos): object 'seven' not found
 ```
 
 <!--chapter:end:07-methods3.Rmd-->
+
+
+# (PART) Packaging {-}
+
+# Toy Package
+
+## Introduction
+
+In this chapter you will learn how to quickly build an _off-the-shelf_ R package (in less than a minute) following the default options provided by RStudio. I prefer to show you this option first before describing how to create a package with the functions of our `"coin"` and `"toss"` objects. 
+
+
+## An off-the-shelf package
+
+Nowadays you can create an R package in an almost instant way. Here's the list of steps to follow in RStudio that allows you to create the structure of a package from scratch.
+
+1. On the menu bar, click __File__ and select __New Project__
+
+<div class="figure" style="text-align: center">
+<img src="images/pkg-step0-new.png" alt="Starting point for a new project" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-77)Starting point for a new project</p>
+</div>
+
+2. Then choose __New Directory__
+
+<div class="figure" style="text-align: center">
+<img src="images/pkg-step1-project.png" alt="Different types of RStudio projects" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-78)Different types of RStudio projects</p>
+</div>
+
+3. Choose __R package__
+
+<img src="images/pkg-step2-type.png" width="70%" style="display: block; margin: auto;" />
+
+4. Give it a name: e.g. "cointoss"
+
+<div class="figure" style="text-align: center">
+<img src="images/pkg-step4-name.png" alt="Choosing a name for a package" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-80)Choosing a name for a package</p>
+</div>
+
+5. The filestructure of your package will be created with some default content. Here's a screenshot of how the panes in RStudio look like in my computer. Notice the default R script `hello.R` and the file structure in the __Files__ tab:
+
+<img src="images/pkg-step5-panes.png" width="70%" style="display: block; margin: auto;" />
+
+
+## Minimal Filestructure
+
+If you look at pane with the __Files__ tab, you should be able to see the following files and directories:
+
+<div class="figure" style="text-align: center">
+<img src="images/pkg-step6-files.png" alt="Minimal filestructure created by devtools" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-82)Minimal filestructure created by devtools</p>
+</div>
+
+We've ended up with six components inside the package folder. Here's the description of each file:
+
+- `DESCRIPTION` is a text file (with no extension) that has metadata for your package. Simply put, this file is like the business card of your package.
+
+- `NAMESPACE` is a text file (also with no extension) that is used to list the functions that will be available to be called by the user.
+
+- The `R/` directory which is where you store all the R script files with the functions of the package.
+
+- `cointoss.Rproj` is an RStudio project file that is designed to make your package easy to use with RStudio.
+
+- `.Rbuildignore` is a _hidden_ text file used to specify files to be ignored by R when building the _tar-ball_ or _bundle_ of the package.
+
+
+## Quick Build
+
+With the _hello world_ content automatically created by `devtools`, you can quickly build a tiny package. In this case, there's only one function, the `hello()` function, that simply prints a hi message.
+
+If you inspect the content of the file `hello.R` (inside the `R/` directory), you will see some comments suggesting a list of steps and their keyboard shortcuts:
+
+- Build and Reload Package: `Cmd + Shift + B`
+- Check Package: `Cmd + Shift + E`
+- Test Package: `Cmd + Shift + T`
+
+Alternatively, if you go to the __Build__ tab, you will find the _Install and Restart_ button, the _Check_ button, and the _More_ menu with additional building options.
+
+<div class="figure" style="text-align: center">
+<img src="images/pkg-step6-build.png" alt="Options in the Build tab" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-83)Options in the Build tab</p>
+</div>
+
+I recommend that you follow the suggested steps to see what happens: build the package and check it:
+
+- Build and Reload Package: `Cmd + Shift + B`
+- Check Package: `Cmd + Shift + E`
+
+If everything went fine, you should have been able to create a toy _hello world_ R package (with one function) that you can load:
+
+
+```r
+library(hello)
+```
+
+
+
+and check that it works:
+
+
+```r
+hello()
+#> [1] "Hello, world!"
+```
+
+
+<!--chapter:end:08-toy.Rmd-->
 

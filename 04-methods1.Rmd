@@ -1,3 +1,5 @@
+# (PART) Methods {-}
+
 # Methods (part 1) {#methods1}
 
 ## Introduction

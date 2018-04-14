@@ -1,3 +1,5 @@
+# (PART) Motivation {-}
+
 # Let's toss a coin {#intro}
 
 To illustrate the concepts behind object-oriented programming in R, we are going to consider a classic chance process (or chance experiment) of flipping a coin.
@@ -173,7 +175,7 @@ To make things more interesting, let's consider how the frequency of `heads` evo
 heads_freq <- cumsum(flips == 'heads') / 1:num_flips
 ```
 
-In this case, we can make a plot of the relative frequencies:
+With the vector `heads_freq`, we can graph the relative frequencies with a line-plot:
 
 ```{r head_freqs_plot}
 plot(heads_freq,     # vector

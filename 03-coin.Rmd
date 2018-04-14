@@ -1,4 +1,6 @@
-# Classes {#classes}
+# (PART) Classes {-}
+
+# Coin Objects {#coin}
 
 ## Introduction
 
@@ -8,7 +10,7 @@ We begin describing how to create object classes.
 
 ## Objects and Classes
 
-Taking the code we've written for tossing a coin, we can generate two series of tosses. The first experiment involves tossing a coin five times, and then computing the proportion of heads:
+Let's use the `toss()` function of the previous chapter. We can invoke `toss()` to generate a first series of five tosses, and then compute the proportion of heads:
 
 ```{r}
 # random seed
@@ -22,7 +24,7 @@ five
 sum(five == "heads") / length(five)
 ```
 
-The second experiment involves tossing a coin six times and computing the proportion of heads:
+We can also get a second series of tosses, but this time involving tossing a coin six times. Similarly, we compute the proportion of heads:
 
 ```{r}
 # six tosses
@@ -83,37 +85,10 @@ You can also determine if an object inherits from a specific class using `inheri
 inherits(coin2, "coin")
 ```
 
-
-### Generic and Specific Methods
-
-Having a coin object, we can simulate flipping the coin with our previously defined function `toss()`:
+Having a `"coin"` object, we can pass it to the `toss()` function to simulate flipping the coin:
 
 ```{r}
 toss(coin1, times = 5)
-```
-
-The issue with the way `toss()` is defined, is that you can pass it any type of vector (not necessarily of class `"coin"`), and it will still work:
-
-```{r}
-toss(c('tic', 'tac', 'toe'))
-```
-
-
-To create a function `toss()` that only works for objects of class `"coin"`, we could add a `stop()` condition that checks if the argument `coin` is of the right class:
-
-```{r}
-toss <- function(x, times = 1, prob = NULL) {
-  if (class(x) != "coin") {
-    stop("\ntoss() requires an object 'coin'")
-  }
-  sample(x, size = times, replace = TRUE, prob = prob)
-}
-
-# ok
-toss(coin1)
-
-# bad coin
-toss(c('tic', 'tac', 'toe'))
 ```
 
 
@@ -168,21 +143,43 @@ coin <- function(object = c("heads", "tails")) {
   class(object) <- "coin"
   object
 }
+```
 
+Let's try our modified `coin()` function to create a US penny like the one in the image below:
+
+```{r echo = FALSE, fig.cap='US Penny (www.usacoinbook.com)'}
+knitr::include_graphics("images/penny.jpg")
+```
+
+```{r}
 # US penny
 penny <- coin(c("lincoln", "shield"))
 penny
 ```
 
+Now let's try `coin()` with an invalid input vector:
+
 ```{r invalid-coin}
 # invalid coin
+ttt <- c('tic', 'tac', 'toe')
 coin(ttt)
 ```
 
 
-Because the `toss()` function simulates flips using `sample()`, we can take advantage of the argument `prob` to specify probabilities for each side of the coin. In this way, we can create _loaded_ coins. 
+Because the `toss()` function simulates flips using `sample()`, we can take advantage of the argument `prob` to specify probabilities for each side of the coin. In this way, we can create _loaded_ (i.e. biased) coins. 
 
-We can add a `prob` argument to the constructor function. This argument takes a vector of probabilities for each element in `object`, and we pass this vector as an attribute of the coin object. Furthermore, we can set a default `prob = c(0.5, 0.5)`, that is, a _fair_ coin by default:
+The way we are going to keep the probability of each side of the coin is with the use an objetc's attributes. An example of an attribute is the class of an object. For example the class of our `"coin"` objects:
+
+```{r}
+penny
+```
+
+Notice how everytime you print the name of a `"coin"` object, its class is displayed in the form of `attr(,"class")`.
+
+
+### Attributes
+
+In addition to the class attribute of a coin, the idea is to assign another attribute for the probability values. We can do this by adding a `prob` argument to the constructor function, and then pass it as an attribute of the coin object inside the class-constructor function.
 
 ```{r}
 coin <- function(object = c("heads", "tails"), prob = c(0.5, 0.5)) {
@@ -191,12 +188,34 @@ coin <- function(object = c("heads", "tails"), prob = c(0.5, 0.5)) {
   }
   attr(object, "prob") <- prob
   class(object) <- "coin"
-  object
+  return(object)
 }
 
 coin()
 ```
 
+In the previous code, the `prob` argument takes a vector of probabilities for each element in `object`. This vector is passed to `object` via the function `attr()` inside the body of `coin()`. Notice the use of a default `prob = c(0.5, 0.5)`, that is, a _fair_ coin by default. 
+
+
+### Using a list
+
+Another way to implement a constructor function `coin()` that returns an object containing values for both the sides and the probabilities, is to use an R list. Here's the code for this option:
+
+```{r}
+coin <- function(sides = c("heads", "tails"), prob = c(0.5, 0.5)) {
+  if (length(sides) != 2) {
+    stop("\n'sides' must be of length 2")
+  }
+  res <- list(sides = sides, prob = prob)
+  class(res) <- "coin"
+  return(res)
+}
+
+coin()
+```
+
+
+### Auxiliary Checker
 
 Once again, we need to check for the validity of `prob`. We basically need to check that `prob` and its elements meet the following requirements:
 
@@ -247,18 +266,60 @@ check_prob(c(0.33, 0.66))
 Here's the improved constructor function `coin()`:
 
 ```{r}
-coin <- function(object = c("heads", "tails"), prob = c(0.5, 0.5)) {
-  if (length(object) != 2) {
-    stop("\n'object' must be of length 2")
+coin <- function(sides = c("heads", "tails"), prob = c(0.5, 0.5)) {
+  if (length(sides) != 2) {
+    stop("\n'sides' must be of length 2")
   }
   check_prob(prob)
-  attr(object, "prob") <- prob
-  class(object) <- "coin"
-  object
+  res <- list(sides = sides, prob = prob)
+  class(res) <- "coin"
+  return(res)
 }
 
 coin1 <- coin()
 coin1
+```
+
+
+## Print Method for `"coin"`
+
+Every time you type in the name of an object `"coin"`, like our `penny` example, the output is displayed in a default, "quick and dirty", way. R displays the values associated to the sides and their probabilities like any other list:
+
+```{r}
+# US penny
+penny <- coin(c("lincoln", "shield"))
+penny
+```
+
+Sometimes the default displayed output is all you need. However, there are occasions in which you need to customize the amount and format of information displayed on the screen when you type in the name of an object.
+
+Instead of keeping the default printed values, it would be nice to print `penny` and see some output like this:
+
+```
+object "coin"
+
+        side  prob
+1  "lincoln"   0.5
+2   "shield"   0.5
+```
+
+How can we do this? The answer involves writing a `print` method for objects of class `"coin"`. Because `print()` is actually a generic function, what you need to do is to create a a specific print _flavor_ for class coin. Basically, you define a `print.coin()` function, and then include commands to print information in the desired way:
+
+```{r}
+print.coin <- function(x) {
+  cat('object "coin"\n\n')
+  cd <- data.frame(
+    side = x$side, prob = x$prob
+  )
+  print(cd)
+  invisible(x)
+}
+```
+
+Now, the next time you print the name of an object of class `"coin"`, R will look for a `print` method (which now exists) and dispatch such method.
+
+```{r}
+penny
 ```
 
 

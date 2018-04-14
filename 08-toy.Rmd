@@ -1,0 +1,104 @@
+# (PART) Packaging {-}
+
+# Toy Package
+
+## Introduction
+
+In this chapter you will learn how to quickly build an _off-the-shelf_ R package (in less than a minute) following the default options provided by RStudio. I prefer to show you this option first before describing how to create a package with the functions of our `"coin"` and `"toss"` objects. 
+
+
+## An off-the-shelf package
+
+Nowadays you can create an R package in an almost instant way. Here's the list of steps to follow in RStudio that allows you to create the structure of a package from scratch.
+
+1. On the menu bar, click __File__ and select __New Project__
+
+```{r echo = FALSE, fig.cap = 'Starting point for a new project'}
+knitr::include_graphics("images/pkg-step0-new.png")
+```
+
+2. Then choose __New Directory__
+
+```{r echo = FALSE, fig.cap = 'Different types of RStudio projects'}
+knitr::include_graphics("images/pkg-step1-project.png")
+```
+
+3. Choose __R package__
+
+```{r echo = FALSE}
+knitr::include_graphics("images/pkg-step2-type.png")
+```
+
+4. Give it a name: e.g. "cointoss"
+
+```{r echo = FALSE, fig.cap = 'Choosing a name for a package'}
+knitr::include_graphics("images/pkg-step4-name.png")
+```
+
+5. The filestructure of your package will be created with some default content. Here's a screenshot of how the panes in RStudio look like in my computer. Notice the default R script `hello.R` and the file structure in the __Files__ tab:
+
+```{r echo = FALSE}
+knitr::include_graphics("images/pkg-step5-panes.png")
+```
+
+
+## Minimal Filestructure
+
+If you look at pane with the __Files__ tab, you should be able to see the following files and directories:
+
+```{r echo = FALSE, fig.cap = 'Minimal filestructure created by devtools'}
+knitr::include_graphics("images/pkg-step6-files.png")
+```
+
+We've ended up with six components inside the package folder. Here's the description of each file:
+
+- `DESCRIPTION` is a text file (with no extension) that has metadata for your package. Simply put, this file is like the business card of your package.
+
+- `NAMESPACE` is a text file (also with no extension) that is used to list the functions that will be available to be called by the user.
+
+- The `R/` directory which is where you store all the R script files with the functions of the package.
+
+- `cointoss.Rproj` is an RStudio project file that is designed to make your package easy to use with RStudio.
+
+- `.Rbuildignore` is a _hidden_ text file used to specify files to be ignored by R when building the _tar-ball_ or _bundle_ of the package.
+
+
+## Quick Build
+
+With the _hello world_ content automatically created by `devtools`, you can quickly build a tiny package. In this case, there's only one function, the `hello()` function, that simply prints a hi message.
+
+If you inspect the content of the file `hello.R` (inside the `R/` directory), you will see some comments suggesting a list of steps and their keyboard shortcuts:
+
+- Build and Reload Package: `Cmd + Shift + B`
+- Check Package: `Cmd + Shift + E`
+- Test Package: `Cmd + Shift + T`
+
+Alternatively, if you go to the __Build__ tab, you will find the _Install and Restart_ button, the _Check_ button, and the _More_ menu with additional building options.
+
+```{r echo = FALSE, fig.cap = 'Options in the Build tab'}
+knitr::include_graphics("images/pkg-step6-build.png")
+```
+
+I recommend that you follow the suggested steps to see what happens: build the package and check it:
+
+- Build and Reload Package: `Cmd + Shift + B`
+- Check Package: `Cmd + Shift + E`
+
+If everything went fine, you should have been able to create a toy _hello world_ R package (with one function) that you can load:
+
+```{r eval = FALSE}
+library(hello)
+```
+
+```{r echo = FALSE}
+hello <- function() {
+  print("Hello, world!")
+}
+```
+
+and check that it works:
+
+```{r}
+hello()
+```
+

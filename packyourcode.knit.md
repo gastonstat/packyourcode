@@ -1,5 +1,5 @@
 --- 
-title: "Pack Your Code"
+title: "Pack YouR Code"
 author: "Gaston Sanchez"
 date: ""
 site: bookdown::bookdown_site
@@ -11,15 +11,11 @@ description: "Basic example of how to create an R package based on S3 classes."
 ---
 
 
-# Preface {-}
+# Welcome {-}
 
-<img src="images/pack-your-code-logo.png" width="256" style="display: block; margin: auto;" />
+<img src="images/pack-your-code-logo.png" width="70%" style="display: block; margin: auto;" />
 
 This book aims to teach you how to create a relatively simple R package based on the so-called S3 classes.
-
-I assume that you are already familiar with R, RStudio. You don't need to be an expert useR but you do need to feel comfortable working with various data structures: vectors, factors, arrays, matrices, lists, data frames, etc.
-
-You also need to be familiar with programming structures: how to create simple functions, conditional `if-then-else()`, `for()` loops, `while()` loops, `repeat` loops.
 
 
 You will create various functions:
@@ -47,6 +43,30 @@ You will package your code, and learn an opinionated workflow to build packages:
 - build tarball
 - install your package
 - share it via github
+
+
+### About this book {-}
+
+The main reason to write this book was the lack of a teaching resource that I could use with the students in my computational statistics courses at the University of California Berkeley. Not only I saw the need, but also the opportunity, to refine a couple of tutorial documents that I had written for those courses. I hope that this book can help not only students in my courses but also many other useRs that are interested in creating R packages.
+
+This book assumes a couple of things about you: familiarity with R in general, and more specifically with RStudio. You should have used `.R` (R script) and `.Rmd` (R markdwon) files before. You don't need to be an expert useR but you do need to feel comfortable working with various data structures: vectors, factors, arrays, matrices, lists, data frames, etc. Also, I assume that you have some basic programming experience: for example, you know how to create simple functions, you know how to use conditional structures like `if-then-else`, as well as loop structures such as `for()` loops or `while()` loops.
+
+
+
+### Other Resources {-}
+
+This is NOT a comprehensive text that covers every single aspect about creating R packages. Instead, I've written this book more in the spirit of an extended tutorial or guide document with a relatively simple working example.
+
+If you are interested in the nitty gritty aspects about R packages, then you should read Hadley Wickham's excellent book on __[R Packages](http://r-pkgs.had.co.nz/package.html)__. In fact, in various chapters of _Pack YouR Code_, I will be constantly referring to the book _R Packages_ in the form of links like this: `r-pkgs: topic`; for example: [r-pkgs: Introduction](http://r-pkgs.had.co.nz/intro.html).
+
+I also recommend reading Friedrich Leisch's manuscript __[Creating R Packages: A Tutorial](https://cran.r-project.org/doc/contrib/Leisch-CreatingPackages.pdf)__. Personally, this tutorial helped me a lot to successfully complete creating my first R package in the spring of 2009, after several (enormously frustrating) failed attempts during 2007 and 2008. It's impressive to have witnessed how the package-creation process has been made smooth.
+
+Another classic book with material about R packages is __Software for Data Analysis__ by John Chamber, the "master mind" behind the S language, on which the R language is based on.
+
+If _R Packages_ is not enough for you, and you are still curious about more obscure and esoteric details, then you need to check the technical R manual __Writing R Extensions__ (by the R Core Team) available in the r-project website:
+
+https://cran.r-project.org/doc/manuals/r-release/R-exts.html
+
 
 -----
 
@@ -282,7 +302,7 @@ abline(h = 0.5, col = 'gray50')
 <img src="packyourcode_files/figure-html4/head_freqs_plot-1.png" width="70%" style="display: block; margin: auto;" />
 
 
-<!--chapter:end:01-introduction.Rmd-->
+<!--chapter:end:introduction.Rmd-->
 
 
 # Tossing Function {#function}
@@ -452,7 +472,7 @@ toss(coin, times = 10, prob = c(0.8, 0.2))
 At this point you may be asking yourself: "Do I really need to document my functions with roxygen comments?" The short answer is No; you don't. So why bother? Because royxgen comments are very convenient when you take a set of functions that will be used to build an R package. In later chapters we will describe more details about roxygen comments and roxygen keywords. The way we are going to build a package involves running some functions that will take the content of the roxygen comments and use them to generate what is called `Rd` (R-dcoumentation) files. These are actually the files behind all the help (or manual) documentation pages of any function.
 
 
-<!--chapter:end:02-functions.Rmd-->
+<!--chapter:end:functions.Rmd-->
 
 
 # (PART) Classes {-}
@@ -932,7 +952,7 @@ peso
 #> [1] "peso" "coin"
 ```
 
-<!--chapter:end:03-coin.Rmd-->
+<!--chapter:end:coin.Rmd-->
 
 
 # (PART) Methods {-}
@@ -1101,7 +1121,7 @@ toss(loaded_coin, times = 6)
 #> [1] 0.75 0.25
 ```
 
-<!--chapter:end:04-methods1.Rmd-->
+<!--chapter:end:methods1.Rmd-->
 
 
 # Object toss {#toss}
@@ -1395,7 +1415,7 @@ toss(quarter1, 5)
 
 The more you understand a problem (i.e. phenomenon, process), the better you will be prepared to design objects, and program their corresponding methods.
 
-<!--chapter:end:05-toss.Rmd-->
+<!--chapter:end:toss.Rmd-->
 
 
 # Methods (part 2) {#methods2}
@@ -1563,7 +1583,7 @@ plot(quarter_flips)
 #> Error in plot(quarter_flips): object 'quarter_flips' not found
 ```
 
-<!--chapter:end:06-methods2.Rmd-->
+<!--chapter:end:methods2.Rmd-->
 
 
 # Additional Methods {#methods3}
@@ -1773,16 +1793,16 @@ seven + 3
 #> Error in eval(expr, envir, enclos): object 'seven' not found
 ```
 
-<!--chapter:end:07-methods3.Rmd-->
+<!--chapter:end:methods3.Rmd-->
 
 
-# (PART) Packaging {-}
+# (PART) Package Structure {-}
 
 # Toy Package
 
 ## Introduction
 
-In this chapter you will learn how to quickly build an _off-the-shelf_ R package (in less than a minute) following the default options provided by RStudio. I prefer to show you this option first before describing how to create a package with the functions of our `"coin"` and `"toss"` objects. 
+In this chapter you will learn how to quickly build an _off-the-shelf_ R package (in less than a minute) following the default options provided by RStudio. I prefer to show you this option first, before describing how to create a package with the functions of our `"coin"` and `"toss"` objects. 
 
 
 ## An off-the-shelf package
@@ -1881,5 +1901,262 @@ hello()
 ```
 
 
-<!--chapter:end:08-toy.Rmd-->
+<!--chapter:end:toy.Rmd-->
+
+
+# Filestructure {#structure}
+
+## Introduction
+
+In this chapter we'll describe the anatomy of a package: the types of files and their organization into various directories.
+
+
+## Scenarios
+
+The following diagram depicts three possible filestructures for a package.
+
+<div class="figure" style="text-align: center">
+<img src="images/pkg-structures.png" alt="Three possible filestructures for a package" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-88)Three possible filestructures for a package</p>
+</div>
+
+The first option is what we usually consider to be a __minimal__ package involving four components: `DESCRIPTION` file, `NAMESPACE` file, `R/` directory, and `man/` directory.
+
+The second option corresponds to the __default structure__ generated by RStudio (via the package `"devtools"`) when you use an RStudio project. This is why you see the `.Rproj` file.
+
+The third option is the actual structure for our __working example__. Starting with a default structure, we can add more elements like a `README.md` files, and directories for `tests/` and `vignettes/`. The extra directory `inst/` is generated in the building process.
+
+In the following sections, I will describe an opinionated workflow to pack the source code of the third scenario.
+
+
+<!--chapter:end:structure.Rmd-->
+
+
+# Description File {#description}
+
+## Introduction
+
+Every package needs a `DESCRIPTION` file.
+
+
+## Minimal Description
+
+When creating an "off-the-shelf" package, like the _hello world_ example, the file `DESCRIPTION` will contain some default lines:
+
+<div class="figure" style="text-align: center">
+<img src="images/pkg-description.png" alt="Default content in DESCRIPTION" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-90)Default content in DESCRIPTION</p>
+</div>
+
+After customizing the content of `DESCRIPTION`, you could end up with something like this:
+
+```
+Package: cointoss
+Type: Package
+Title: Simulates tossing a coin
+Version: 0.1.0
+Author: Gaston Sanchez
+Maintainer: Gaston Sanchez <gaston@email.com>
+Description: Functions to create a coin object, to toss a coin multiple times,
+    and to summarize and visualize frequencies of the tosses.
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+```
+
+What licenses are available? There is a list of suggested licenses in the R-project website: [https://www.r-project.org/Licenses](https://www.r-project.org/Licenses/).
+
+- `MIT`: MIT license
+- `GPL-2` or `GPL-3`: GNU General Public License (GPL)
+- `Artistic-2.0`: Artistic License version 2.0
+- `apache-2` Apache License 2.0
+- `BSD_3_clause`: BSD 3-Clause "New" or "Revised" license
+- `BSD_2_clause`: BSD 2-Clause "Simplified" or "FreeBSD" license
+- `LGPL-2`: GNU Library or "Lesser" General Public License (LGPL)
+
+You can find more user friendly information about these and other popular licenses in the website of the [Open Source Initiative](https://opensource.org/licenses). Likewise, you can also check the "Choose a license" guidelines available at https://choosealicense.com/licenses/.
+
+Although R-project suggests the "Creative Commons Attribution-ShareAlike International License" version 4.0, I discourage the use of any Creative Commons (CC) license for software. CC licenses are good for __media__ content (ne.g. arrative, images, music), but not for source code.
+
+To know more about the different fields in a description file, see 
+<a href="http://r-pkgs.had.co.nz/description.html" target="_blank">r-pkgs: Package metadata</a>.
+
+<!--chapter:end:description.Rmd-->
+
+
+# (PART) Packaging {-}
+
+# Package States {#states}
+
+## Introduction
+
+In this chapter we describe the five states of a package, and the functions in `"devtools"` that allow you to generate such states. I will walk you through these states without diving very deep into more subtle details. To know more about the different states of a package, see 
+<a href="http://r-pkgs.had.co.nz/package.html" target="_blank">r-pkgs: Package structure</a>.
+
+
+## Package States
+
+The creation process of an R package can be done in several ways. Depending on the _modus operandi_ that you choose to follow, it is possible for a package to exist in five different states:
+
+- Source
+- Bundled
+- Binary
+- Installed
+- In-memory
+
+<div class="figure" style="text-align: center">
+<img src="images/pkg-states.png" alt="Five possible states of a package" width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-92)Five possible states of a package</p>
+</div>
+
+
+### Source Package
+
+The starting point is always a __source__ package. This is basically the directory (i.e. folder) containing the subdirectories and files that form your package. You can think of this state as a package in a _raw_ stage.
+From a source package, you can transition to more "mature" (less raw) states. 
+
+<div class="figure" style="text-align: center">
+<img src="images/state-source.png" alt="Source package" width="30%" />
+<p class="caption">(\#fig:unnamed-chunk-93)Source package</p>
+</div>
+
+
+### Bundled Package
+
+The next immediate state (although not mandatory) is a __bundled__ package. This involves wrapping the source package into a single compressed file with extension `.tar.gz`. What exactly is this file? A `.tar` file, also known as "tarball", is a standard format in the Unix/Linux environment, short for _Tape ARchive_. A `.gz` file is simply the type of compression. Therefore, a `.tar.gz` file is a compressed tarball.
+
+<div class="figure" style="text-align: center">
+<img src="images/state-bundled.png" alt="Bundled package (tarball)" width="25%" />
+<p class="caption">(\#fig:unnamed-chunk-94)Bundled package (tarball)</p>
+</div>
+
+To generate a bundled package from a source package, you can use the `"devtools"` function `build()`. This will combine of the necessary components in a single file, and gz-compress it for you.
+
+When/how do you use a `.tar.gz` package? In a not so distant past, this was the default option that I would use to share a package, via email, without passing through CRAN. I would took the bundled package of an experimental version and email it to my colleagues so they could install it in their machines. They would simple need to download the `.tar.gz` file, and then use `install.packages()` with the filepath of the bundled package.
+
+Nowadays you don't really need bundled packages that much, especially with file-sharing and file-hosting services like GitHub, google drive, dropbox, etc.
+
+
+### Binary Package
+
+A package in __binary__ form is another type of state for a package. This is another type of compressed file, but in a platform specific way depending on an operating system (e.g. Mac/Linux, Windows).
+
+<div class="figure" style="text-align: center">
+<img src="images/state-binary.png" alt="Binary package (platform specific)" width="35%" />
+<p class="caption">(\#fig:unnamed-chunk-95)Binary package (platform specific)</p>
+</div>
+
+To give you another description of the idea of a binary package, let me use the excellent metaphor written by David Eaton in the [Quora](https://www.quora.com/Whats-the-difference-between-an-installer-source-code-and-a-binary-package-when-installing-software) forum.
+
+> The package that you want to install is like a 3-course meal.
+>
+> The binary package is pretty much the food itself. That's the thing you want to eat. It's been specifically prepared for a guest based on her requirements (spiciness, temperature, intolerance to certain ingredients, etc).
+> 
+> The binary is the set of instructions that your computer understands how to run in order to make the software work. It's been specifically tailored for a particular type of computer operating system.
+
+
+
+### Installed Package
+
+An __installed__ package is a decompressed binary file that has been unwrapped into an actual package library. 
+
+<div class="figure" style="text-align: center">
+<img src="images/state-installed.png" alt="Installed package (decompressed binary)" width="50%" />
+<p class="caption">(\#fig:unnamed-chunk-96)Installed package (decompressed binary)</p>
+</div>
+
+Keeping with the metaphor of the 3-course meal, an installed package is associated with an _installer_. An installer is like the waiter, getting your food and preparing everything for you to eat it: plates, glasses, cutlery, napkins, portions of fodd, etc. The installer basically gets your food ready for you to eat it. 
+An installer does prep-work on your computer. While the binary may have all the instructions it needs, the installer may need to perform some set-up tasks.
+
+To install a package with `"devtools"`, you use the `install()` function. You can use this function to take a package in the form of source, bundled, or binary, to install it in your computer.
+
+
+### In-memory Package
+
+Lastly, in order to use an installed package you need to load it into memory. This is done with the `library()` function.
+
+<div class="figure" style="text-align: center">
+<img src="images/state-in-memory.png" alt="In-memory package (loaded to be used)" width="30%" />
+<p class="caption">(\#fig:unnamed-chunk-97)In-memory package (loaded to be used)</p>
+</div>
+
+
+### Remarks
+
+During the development of a package, you always start at the source level, and eventually make your way to an installed version. In theory, the building process would consist of the following flow: source -> bundle -> binary -> installed ---> in-memory. In practice, however, you can take some detours and shortcuts from source to installed.
+
+<div class="figure" style="text-align: center">
+<img src="images/packaging-ideal-flow.png" alt="Theoretical flow of package states" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-98)Theoretical flow of package states</p>
+</div>
+
+<!--chapter:end:states.Rmd-->
+
+
+# Packaging Flow {#flow}
+
+## Introduction
+
+For better or for worse, there is not a unique recipe to build a package. In other words, there is not a unique sequence of steps that you should always follow in order to take a source package and make it part of the installed packages.
+In this chapter I will describe an opinionated workflow to pack the source code of our working example.
+
+
+## Scenarios
+
+The following diagram depicts the filestructure for our working example with the package `cointoss`.
+
+<div class="figure" style="text-align: center">
+<img src="images/pkg-example.png" alt="Three possible filestructures for a package" width="50%" />
+<p class="caption">(\#fig:unnamed-chunk-100)Three possible filestructures for a package</p>
+</div>
+
+Starting with a default structure, we can add more elements like a `README.md` files, and directories for `tests/` and `vignettes/`. The extra directory `inst/` is generated in the building process.
+
+
+
+## Worklfow
+
+Because a package is made up of various types of files---which can be located in different subdirectories---that play different roles, you can actually break down the overall creation of a package into separate pieces. Interestingly, each of the resulting pieces can be created separately. Consequently, the packaging process that you follow may depend on the piece (or pieces) that need to be built as you add or change components in a package.
+
+The core part of a package is the code in the `R/` directory. Most of the modifications made at this level will very likely have a cascading effect on the rest of elements in the package. From this point of view, a typical packaging workflow involves the following steps:
+
+- Create Documentation
+- Check Documentation
+- Run Tests
+- Knit Vignettes
+- Build Bundle
+- Install Package
+
+You can use functions from `"devtools"` to individually perform each of the actions previously listed. The following table shows such functions:
+
+| Action               | Function      |
+|:---------------------|:--------------|
+| Create Documentation | `devtools::document()` |
+| Check Documentation  | `devtools::check_man()` |
+| Run Tests            | `devtools::test()` |
+| Knit Vignettes       | `devtools::build_vignettes()` |
+| Build Bundle         | `devtools::build()` |
+| Install binary       | `devtools::install()` |
+
+<br>
+
+__Create Documentation__: When you change the roxygen comments of your functions, you will need to (re)generate the corresponding manual documentation. This can be done with the function `devtools::document()` which generates the so-called `.Rd` (R documentation) files, located in the `man/` directory.
+
+__Check Documentation__: An optional, but strongly recommended, step after new documentation has been generated, is to check that it is correct. This step becomes mandatory if you plan to share your package via CRAN. To check that the `.Rd` files are okay, use the function `devtools::check_man()`. This function inspects that the content and syntax of the `.Rd` files are correct. A typical cause for this check-up to fail is when you have typos or inconsistencies. For example: when the definition of a function contains the argument `x` but your roxygen comment `@param` uses `y`.
+
+__Run Tests__: If your package contains unit-tests, included in the directory `tests/`, you can use the function `devtools::test()` to run such tests.
+
+__Build Vignettes__: If your package contains vignettes, included in the directory `vignettes/`, you can use the function `devtools::build_vignettes()` to build them. This function generates the vignettes by knitting the `.Rmd` files in the `vignettes/` directory, and it will produce output files in the `inst/` folder.
+
+__Build Bundle__: If you just simply want to convert a package source into a single bundled file, you use the function `devtools::build()`. This function will create, by default, the `.tar.gz` file that in turn can be installed on any platform.
+
+To create a binary package, you have to use the argument `binary = TRUE`. Keep in mind that this generated binary will be platform specific, and will only be installable on the current platform. Most of the time, there is no need to create a binary package.
+
+`build()` does not generate or check any documentation. It also does not run any tests. However, `build()` does build vignettes by default.
+
+__Install__: To install the package you can use `devtools::install()`. This function can install a source, bundle or a binary package. After the installation is done, you should be able to load the package with `library()` in order to use its functions, inspect its manual documentation, and read the available vignettes.
+
+
+
+<!--chapter:end:flow.Rmd-->
 

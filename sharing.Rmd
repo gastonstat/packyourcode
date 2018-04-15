@@ -1,0 +1,62 @@
+# Sharing {#sharing}
+
+## Introduction
+
+Once you've created a package, you may be interested in sharing it with your friends, colleagues, collaborators, boss, and maybe any useR in the world. In this chapter I will describe a couple of ways to share your package.
+
+
+## File sharing
+
+The most straighforward way to share your package is to take the bundled package (`.tar.gz` file) and share it with whoever you want. Perhaps the simplest way to do this is to email the bundle file, or share it through a file-sharing service like Google Drive, Dropbox, Box, etc.
+
+To install your package, the users will have to download it to their computers, and then install it with the function `install.packages()`, specifying the path of the `.tar.gz` file. Or they can also use the menu options from RStudio's Packages tab (see screenshot below).
+
+```{r echo = FALSE, fig.cap="Installing a .tar.gz file from RStudio's Packages tab"}
+knitr::include_graphics("images/share-install.png")
+```
+
+- Go to the __Packages__ tab
+- Click on the __Install__ button
+- Select the option __Install from:__
+- Select __Package Archive File (.tar.gz)__
+- Specify the location of the `.tar.gz` file
+- and finally click __Install__.
+
+
+## GitHub
+
+Another very convenient way to share your package is GitHub. I'm assuming that you have a GitHub account, and that you have some familiary with this service. If you use GitHub to host your package source, the `"devtools"` function `install_github()` is the way to go.
+
+All you (or any other user) have to do is specify the GitHub username, and the name of the repository containing the source code:
+
+```
+devtools::install_github("usrname/pkgname")
+```
+
+You can try installing my `"cointoss"` package with `install_github()` like this:
+
+```
+devtools::install_github("gastonstat/cointoss")
+```
+
+this is equivalent to:
+
+```
+devtools::install_github("cointoss", username = "gastonstat")
+```
+
+If a package is in some subdirectory inside a github repository, you can also use `install_github()`. Pretend that the source package is in the folder `"cointoss"`, inside my github repository `repo`. A user sould be able to install the package running the following command:
+
+```
+devtools::install_github("repo", username = "gastonstat", subdir = "cointoss")
+```
+
+A few things to keep in mind about `install_github()`:
+
+- `devtools::install_github()` allows you to install a remote package.
+- it downloads a source package, builds it and then installs it.
+- by default, it does not build vignettes (to save time).
+- to build vignettes use `devtools::install_github(build_vignettes = TRUE)`.
+
+To know more about sharing options with Git and GitHub see <a href="http://r-pkgs.had.co.nz/git.html" target="_blank">r-pkgs: Package Git</a>.
+If you are interested in sharing a package via CRAN, then see <a href="http://r-pkgs.had.co.nz/release.html" target="_blank">r-pkgs: Releasing a Package</a>.

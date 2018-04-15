@@ -1,0 +1,105 @@
+# Tests {#tests}
+
+## Introduction
+
+Test with `"testthat"`
+Instead of writing a list of more or less informal test, we are going to use 
+the functions provide by `"testthat"`. 
+
+
+## Including Tests
+
+You should make an honest effort to include tests in your package. This requires adding a subdirectory `tests/`. Inside this directory you have to include an `.R` script file `testthat.R` and a subdirectory called `testthat/`. More specifically:
+
+- In the directory of the package, create a folder `"tests"`.
+- Inside the folder `tests/` create another folder `"testthat"`; this is where 
+you include R scripts containing the unit tests.
+- All the script files inside `testthat/` should start with tha name __test__
+e.g. `test-coin.R`, `test-toss.R`, etc.
+- Inside the folder `testthat/`, create an R script `testthat.R`
+
+```{r echo = FALSE, fig.cap='Structure of test files', out.width = "35%"}
+knitr::include_graphics("images/test-files.png")
+```
+
+
+
+## Script `testthat.R`
+
+The script `testthat.R` is just an auxiliary. The content of this file is very minimalist, with three lines of code, something like this: 
+
+```
+library(testthat)
+library(cointoss)
+
+test_check("cointoss")
+```
+
+As you can tell, you simply load the package `testthat`, then load your package, and finally run `test_check()` on your package.
+
+
+## About `"testthat"`
+
+`"testthat"` is one of the packages in R that helps you write tests for your functions. One of the main references is the paper _testthat: Get Started with Testing_ by Hadley Wickham (see link below). This paper clearly describes the philisoply and workflow of `"testthat"`. But keep in mind that since the introduction of the package, many more functions haven been added to it.
+
+[https://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf](https://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf)
+
+- `"testthat"` provides a testing framework for R that is easy to learn and use
+- `"testthat"` has a hierarchical structure made up of:
+    + expectations
+    + tests
+    + contexts
+
+```{r echo = FALSE, fig.cap='Conceptual test structure', out.width = "30%"}
+knitr::include_graphics("images/test-concept.png")
+```
+
+- A __context__ involves __tests__ formed by groups of __expectations__
+
+```{r echo = FALSE, fig.cap='Abstract and functional representations'}
+knitr::include_graphics("images/test-hierarchy.png")
+```
+
+- Each structure has associated functions:
+    + `expect_that()` for expectations
+    + `test_that()` for groups of tests
+    + `context()` for contexts
+
+```{r echo = FALSE, fig.cap='Description of testthat components', out.width = "80%"}
+knitr::include_graphics("images/test-meaning.png")
+```
+
+
+### List of common expectation functions
+
+| Function                  | Description                             |
+|:--------------------------|:----------------------------------------|
+| `expect_true(x)`          | expects that `x` is `TRUE`              |
+| `expect_false(x)`         | expects that `x` is `FALSE`             |
+| `expect_null(x)`          | expects that `x` is `NULL`              |
+| `expect_type(x)`          | expects that `x` is of type `y`         |
+| `expect_is(x, y)`         | expects that `x` is of class `y`        |
+| `expect_length(x, y)`     | expects that `x` is of length `y`       |
+| `expect_equal(x, y)`      | expects that `x` is equal to `y`        |
+| `expect_equivalent(x, y)` | expects that `x` is equivalent to `y`   |
+| `expect_identical(x, y)`  | expects that `x` is identical to `y`    |
+| `expect_lt(x, y)`         | expects that `x` is less than `y`       |
+| `expect_gt(x, y)`         | expects that `x` is greater than `y`    |
+| `expect_lte(x, y)`        | expects that `x` is less than or equal to `y` |
+| `expect_gte(x, y)`        | expects that `x` is greater than or equal `y` |
+| `expect_named(x)`         | expects that `x` has names `y`          |
+| `expect_matches(x, y)`    | expects that `x` matches `y` (regex)    |
+| `expect_message(x, y)`    | expects that `x` gives message `y`      |
+| `expect_warning(x, y)`    | expects that `x` gives warning `y`      |
+| `expect_error(x, y)`      | expects that `x` throws error `y`       |
+
+
+### Remarks
+
+- Each testing file should contain a single `context()` call that provides a brief description of its contents.
+- You can organize your tests any way that you like. But again, the two extremes are clearly bad (all tests in one file, one file per test). You need to find a happy medium that works for you. A good starting place is to have one file of tests for each complicated function.
+
+
+
+To know more about testing a package with `"testthat"`, see 
+<a href="http://r-pkgs.had.co.nz/tests.html" target="_blank">r-pkgs: Testing</a>.

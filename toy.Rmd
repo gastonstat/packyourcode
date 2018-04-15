@@ -1,10 +1,10 @@
-# (PART) Packaging {-}
+# (PART) Package Structure {-}
 
 # Toy Package
 
 ## Introduction
 
-In this chapter you will learn how to quickly build an _off-the-shelf_ R package (in less than a minute) following the default options provided by RStudio. I prefer to show you this option first before describing how to create a package with the functions of our `"coin"` and `"toss"` objects. 
+In this chapter you will learn how to quickly build an _off-the-shelf_ R package (in less than a minute) following the default options provided by RStudio. I prefer to show you this option first, before describing how to create a package with the functions of our `"coin"` and `"toss"` objects. 
 
 
 ## An off-the-shelf package

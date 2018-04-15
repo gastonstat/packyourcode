@@ -1,0 +1,63 @@
+# Packaging Flow {#flow}
+
+## Introduction
+
+For better or for worse, there is not a unique recipe to build a package. In other words, there is not a unique sequence of steps that you should always follow in order to take a source package and make it part of the installed packages.
+In this chapter I will describe an opinionated workflow to pack the source code of our working example.
+
+
+## Scenarios
+
+The following diagram depicts the filestructure for our working example with the package `cointoss`.
+
+```{r echo = FALSE, fig.cap='Three possible filestructures for a package', out.width = "50%"}
+knitr::include_graphics("images/pkg-example.png")
+```
+
+Starting with a default structure, we can add more elements like a `README.md` files, and directories for `tests/` and `vignettes/`. The extra directory `inst/` is generated in the building process.
+
+
+
+## Worklfow
+
+Because a package is made up of various types of files---which can be located in different subdirectories---that play different roles, you can actually break down the overall creation of a package into separate pieces. Interestingly, each of the resulting pieces can be created separately. Consequently, the packaging process that you follow may depend on the piece (or pieces) that need to be built as you add or change components in a package.
+
+The core part of a package is the code in the `R/` directory. Most of the modifications made at this level will very likely have a cascading effect on the rest of elements in the package. From this point of view, a typical packaging workflow involves the following steps:
+
+- Create Documentation
+- Check Documentation
+- Run Tests
+- Knit Vignettes
+- Build Bundle
+- Install Package
+
+You can use functions from `"devtools"` to individually perform each of the actions previously listed. The following table shows such functions:
+
+| Action               | Function      |
+|:---------------------|:--------------|
+| Create Documentation | `devtools::document()` |
+| Check Documentation  | `devtools::check_man()` |
+| Run Tests            | `devtools::test()` |
+| Knit Vignettes       | `devtools::build_vignettes()` |
+| Build Bundle         | `devtools::build()` |
+| Install binary       | `devtools::install()` |
+
+<br>
+
+__Create Documentation__: When you change the roxygen comments of your functions, you will need to (re)generate the corresponding manual documentation. This can be done with the function `devtools::document()` which generates the so-called `.Rd` (R documentation) files, located in the `man/` directory.
+
+__Check Documentation__: An optional, but strongly recommended, step after new documentation has been generated, is to check that it is correct. This step becomes mandatory if you plan to share your package via CRAN. To check that the `.Rd` files are okay, use the function `devtools::check_man()`. This function inspects that the content and syntax of the `.Rd` files are correct. A typical cause for this check-up to fail is when you have typos or inconsistencies. For example: when the definition of a function contains the argument `x` but your roxygen comment `@param` uses `y`.
+
+__Run Tests__: If your package contains unit-tests, included in the directory `tests/`, you can use the function `devtools::test()` to run such tests.
+
+__Build Vignettes__: If your package contains vignettes, included in the directory `vignettes/`, you can use the function `devtools::build_vignettes()` to build them. This function generates the vignettes by knitting the `.Rmd` files in the `vignettes/` directory, and it will produce output files in the `inst/` folder.
+
+__Build Bundle__: If you just simply want to convert a package source into a single bundled file, you use the function `devtools::build()`. This function will create, by default, the `.tar.gz` file that in turn can be installed on any platform.
+
+To create a binary package, you have to use the argument `binary = TRUE`. Keep in mind that this generated binary will be platform specific, and will only be installable on the current platform. Most of the time, there is no need to create a binary package.
+
+`build()` does not generate or check any documentation. It also does not run any tests. However, `build()` does build vignettes by default.
+
+__Install__: To install the package you can use `devtools::install()`. This function can install a source, bundle or a binary package. After the installation is done, you should be able to load the package with `library()` in order to use its functions, inspect its manual documentation, and read the available vignettes.
+
+

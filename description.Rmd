@@ -1,0 +1,47 @@
+# Description File {#description}
+
+## Introduction
+
+Every package needs a `DESCRIPTION` file.
+
+
+## Minimal Description
+
+When creating an "off-the-shelf" package, like the _hello world_ example, the file `DESCRIPTION` will contain some default lines:
+
+```{r echo = FALSE, fig.cap = 'Default content in DESCRIPTION'}
+knitr::include_graphics("images/pkg-description.png")
+```
+
+After customizing the content of `DESCRIPTION`, you could end up with something like this:
+
+```
+Package: cointoss
+Type: Package
+Title: Simulates tossing a coin
+Version: 0.1.0
+Author: Gaston Sanchez
+Maintainer: Gaston Sanchez <gaston@email.com>
+Description: Functions to create a coin object, to toss a coin multiple times,
+    and to summarize and visualize frequencies of the tosses.
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+```
+
+What licenses are available? There is a list of suggested licenses in the R-project website: [https://www.r-project.org/Licenses](https://www.r-project.org/Licenses/).
+
+- `MIT`: MIT license
+- `GPL-2` or `GPL-3`: GNU General Public License (GPL)
+- `Artistic-2.0`: Artistic License version 2.0
+- `apache-2` Apache License 2.0
+- `BSD_3_clause`: BSD 3-Clause "New" or "Revised" license
+- `BSD_2_clause`: BSD 2-Clause "Simplified" or "FreeBSD" license
+- `LGPL-2`: GNU Library or "Lesser" General Public License (LGPL)
+
+You can find more user friendly information about these and other popular licenses in the website of the [Open Source Initiative](https://opensource.org/licenses). Likewise, you can also check the "Choose a license" guidelines available at https://choosealicense.com/licenses/.
+
+Although R-project suggests the "Creative Commons Attribution-ShareAlike International License" version 4.0, I discourage the use of any Creative Commons (CC) license for software. CC licenses are good for __media__ content (ne.g. arrative, images, music), but not for source code.
+
+To know more about the different fields in a description file, see 
+<a href="http://r-pkgs.had.co.nz/description.html" target="_blank">r-pkgs: Package metadata</a>.

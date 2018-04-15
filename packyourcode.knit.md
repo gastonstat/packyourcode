@@ -15,41 +15,22 @@ description: "Basic example of how to create an R package based on S3 classes."
 
 <img src="images/pack-your-code-logo.png" width="50%" style="display: block; margin: auto;" />
 
-This book aims to teach you how to create a relatively simple R package based on the so-called S3 classes.
+The ultimate goal of this book is to teach you how to create a relatively simple R package based on the so-called S3 classes. 
 
+The chapters of the book are organized in three major parts:
 
-You will create various functions:
+- The first part involves describing a motivating example about using R to write code for tossing a coin. We begin tackling this problem from a _classic programming_ style (as opposed to a more object-oriented style).
 
-- define a function to create a `"coin"` object.
+- The second part is dedicated to implement code in a more object-oriented programming (OOP) fashion by using S3-class objects. Keep in mind that the S3 system is a very informal OOP approach. However, it is the most common system among the universe of R packages.
 
-- write a function to `toss()` the coin and produce an object of class `"toss"`.
-
-- write common methods such as `print()`, `summary()`, and `plot()`.
-
-- write companion functions `is.toss()`, `as.toss()`
-
-- implement S3 methods for extraction `[.toss`, replacement `[<-.toss`, addition `+.toss`
-
-
-You will write unit tests for your functions
-
-
-You will package your code, and learn an opinionated workflow to build packages:
-
-- generate documentation
-- check manual documentation
-- run tests
-- build vignettes
-- build tarball
-- install your package
-- share it via github
+- The third part of the book has to do with the actual process of organizing the R code into a formal package. We discuss the anatomy of a package, its differrent possible states, some usual components that are worth including in a package, and the flow for building a package.
 
 
 ### About this book {-}
 
-The main reason to write this book was the lack of a teaching resource that I could use with the students in my computational statistics courses at the University of California Berkeley. Not only I saw the need, but also the opportunity, to refine a couple of tutorial documents that I had written for those courses. I hope that this book can help not only students in my courses but also many other useRs that are interested in creating R packages.
+The main reason to write this book was the lack of a teaching resource that I could use with the students in my computational statistics courses at the University of California Berkeley (e.g. Stat 133, 159, 243, 259). Not only I saw the need, but also the opportunity, to refine a couple of tutorial documents that I had written for those courses. I hope that this book can help not only students in my courses but also many other useRs that are interested in creating R packages.
 
-This book assumes a couple of things about you: familiarity with R in general, and more specifically with RStudio. You should have used `.R` (R script) and `.Rmd` (R markdwon) files before. You don't need to be an expert useR but you do need to feel comfortable working with various data structures: vectors, factors, arrays, matrices, lists, data frames, etc. Also, I assume that you have some basic programming experience: for example, you know how to create simple functions, you know how to use conditional structures like `if-then-else`, as well as loop structures such as `for()` loops or `while()` loops.
+This book assumes a couple of things about you: familiarity with R in general, and more specifically with RStudio. You should have used `.R` (R script) and `.Rmd` (R markdwon) files before. You don't need to be an expert useR but you do need to feel comfortable working with various data structures: vectors, factors, arrays, matrices, lists, data frames, etc. Also, I assume that you have some basic programming experience: for example, you know how to create simple functions, you know how to use conditional structures like `if-then-else`, as well as loop structures such as `for()` loops or `while()` loops. And that you also have some experience writing tests of functions (ideally using the package `"testthat"`).
 
 
 
@@ -59,7 +40,7 @@ This is NOT a comprehensive text that covers every single aspect about creating 
 
 If you are interested in the nitty gritty aspects about R packages, then you should read Hadley Wickham's excellent book on __[R Packages](http://r-pkgs.had.co.nz/package.html)__. In fact, in various chapters of _Pack YouR Code_, I will be constantly referring to the book _R Packages_ in the form of links like this: `r-pkgs: topic`; for example: [r-pkgs: Introduction](http://r-pkgs.had.co.nz/intro.html).
 
-I also recommend reading Friedrich Leisch's manuscript __[Creating R Packages: A Tutorial](https://cran.r-project.org/doc/contrib/Leisch-CreatingPackages.pdf)__. Personally, this tutorial helped me a lot to successfully complete creating my first R package in the spring of 2009, after several (enormously frustrating) failed attempts during 2007 and 2008. It's impressive to have witnessed how the package-creation process has been made more smooth.
+I also recommend reading Friedrich Leisch's manuscript __[Creating R Packages: A Tutorial](https://cran.r-project.org/doc/contrib/Leisch-CreatingPackages.pdf)__. Personally, this tutorial helped me a lot to successfully complete creating my first R package in the spring of 2009, after several (enormously frustrating) failed attempts during 2007 and 2008. It's impressive to have witnessed how the package-creation process has been made more smooth since those years.
 
 Another classic book with material about R packages is __Software for Data Analysis__ by John Chamber, the "master mind" behind the S language, on which the R language is based on.
 
@@ -155,7 +136,7 @@ To draw two elements WITHOUT replacement, use `sample()` like this:
 ```r
 # draw 2 elements without replacement
 sample(coin, size = 2)
-#> [1] "tails" "heads"
+#> [1] "heads" "tails"
 ```
 
 What if you try to toss the coin three or four times?
@@ -175,7 +156,7 @@ To be able to draw more elements, you need to sample __with replacement__, which
 ```r
 # draw 4 elements with replacement
 sample(coin, size = 4, replace = TRUE)
-#> [1] "heads" "heads" "tails" "heads"
+#> [1] "heads" "tails" "heads" "heads"
 ```
 
 
@@ -187,14 +168,14 @@ The way `sample()` works is by taking a random sample from the input vector. Thi
 ```r
 # five tosses
 sample(coin, size = 5, replace = TRUE)
-#> [1] "heads" "tails" "heads" "tails" "tails"
+#> [1] "tails" "heads" "tails" "tails" "heads"
 ```
 
 
 ```r
 # another five tosses
 sample(coin, size = 5, replace = TRUE)
-#> [1] "tails" "tails" "tails" "tails" "heads"
+#> [1] "tails" "tails" "heads" "heads" "tails"
 ```
 
 
@@ -485,7 +466,7 @@ We begin describing how to create object classes.
 
 ## Objects and Classes
 
-Let's use the `toss()` function of the previous chapter. We can invoke `toss()` to generate a first series of five tosses, and then compute the proportion of heads:
+Let's use the `toss()` function from the previous chapter. We can invoke `toss()` to generate a first series of five tosses, and then compute the proportion of heads:
 
 
 ```r
@@ -722,6 +703,8 @@ coin()
 In the previous code, the `prob` argument takes a vector of probabilities for each element in `object`. This vector is passed to `object` via the function `attr()` inside the body of `coin()`. Notice the use of a default `prob = c(0.5, 0.5)`, that is, a _fair_ coin by default. 
 
 
+
+
 ### Using a list
 
 Another way to implement a constructor function `coin()` that returns an object containing values for both the sides and the probabilities, is to use an R list. Here's the code for this option:
@@ -877,7 +860,7 @@ How can we do this? The answer involves writing a `print` method for objects of 
 print.coin <- function(x) {
   cat('object "coin"\n\n')
   cd <- data.frame(
-    side = x$side, prob = x$prob
+    side = x$sides, prob = x$prob
   )
   print(cd)
   invisible(x)
@@ -890,6 +873,7 @@ Now, the next time you print the name of an object of class `"coin"`, R will loo
 ```r
 penny
 #> object "coin"
+#> 
 #>      side prob
 #> 1 lincoln  0.5
 #> 2  shield  0.5
@@ -907,11 +891,11 @@ https://en.wikipedia.org/wiki/Quarter_(United_States_coin)
 quarter1 <- coin(c("washington", "fort")) 
 class(quarter1) <- c("quarter", "coin")
 quarter1
-#> [1] "washington" "fort"      
-#> attr(,"prob")
-#> [1] 0.5 0.5
-#> attr(,"class")
-#> [1] "quarter" "coin"
+#> object "coin"
+#> 
+#>         side prob
+#> 1 washington  0.5
+#> 2       fort  0.5
 ```
 
 Our coin `quarter1` inherits from `"coin"`:
@@ -929,11 +913,11 @@ Likewise, we can create a class for a slightly unbalanced `"dime"`:
 dime1 <- coin(c("roosevelt", "torch"), prob = c(0.48, 0.52))
 class(dime1) <- c("dime", "coin")
 dime1
-#> [1] "roosevelt" "torch"    
-#> attr(,"prob")
-#> [1] 0.48 0.52
-#> attr(,"class")
-#> [1] "dime" "coin"
+#> object "coin"
+#> 
+#>        side prob
+#> 1 roosevelt 0.48
+#> 2     torch 0.52
 ```
 
 Here's another coin example, a _peso_, from Mexico (where I grew up). When you flip a _peso_, you have two sides: _aguila_ (eagle) or _sol_ (sun):
@@ -943,11 +927,11 @@ Here's another coin example, a _peso_, from Mexico (where I grew up). When you f
 peso <- coin(c("aguila", "sol")) 
 class(peso) <- c("peso", "coin")
 peso
-#> [1] "aguila" "sol"   
-#> attr(,"prob")
-#> [1] 0.5 0.5
-#> attr(,"class")
-#> [1] "peso" "coin"
+#> object "coin"
+#> 
+#>     side prob
+#> 1 aguila  0.5
+#> 2    sol  0.5
 ```
 
 <!--chapter:end:coin.Rmd-->
@@ -971,7 +955,7 @@ From [chapter 2](#function), we ended up with the following `toss()` function:
 ```r
 #' @title Coin toss function 
 #' @description Simulates tossing a coin a given number of times
-#' @param x coin object (a vector)
+#' @param x coin object
 #' @param times number of tosses
 #' @param prob vector of probabilities for each side of the coin
 #' @return vector of tosses
@@ -985,7 +969,7 @@ The issue with the way `toss()` has been defined so far, is that you can pass it
 
 ```r
 toss(c('tic', 'tac', 'toe'))
-#> [1] "toe"
+#> [1] "tac"
 ```
 
 
@@ -997,13 +981,12 @@ toss <- function(x, times = 1, prob = NULL) {
   if (class(x) != "coin") {
     stop("\ntoss() requires an object 'coin'")
   }
-  sample(x, size = times, replace = TRUE, prob = prob)
+  sample(x$sides, size = times, replace = TRUE, prob = prob)
 }
 
 # ok
 toss(coin1)
-#> $prob
-#> [1] 0.5 0.5
+#> [1] "heads"
 
 # bad coin
 toss(c('tic', 'tac', 'toe'))
@@ -1020,7 +1003,7 @@ A more formal strategy, and one that follows OOP principles, is to create a toss
 print
 #> function (x, ...) 
 #> UseMethod("print")
-#> <bytecode: 0x7fdce3be35f0>
+#> <bytecode: 0x7fb02bcf0e78>
 #> <environment: namespace:base>
 ```
 
@@ -1053,7 +1036,7 @@ A generic method alone is not very useful. You need to create specific cases for
 
 ```r
 toss.coin <- function(x, times = 1, prob = NULL) {
-  sample(x, size = times, replace = TRUE, prob = prob)
+  sample(x$sides, size = times, replace = TRUE, prob = prob)
 }
 ```
 
@@ -1064,8 +1047,7 @@ To use the `toss()` method on a `"coin"` object, you don't really have to call `
 
 ```r
 toss(coin1)
-#> $sides
-#> [1] "heads" "tails"
+#> [1] "tails"
 ```
 
 How does `toss()` work? Becasue `toss()` is now a generic method, everytime you use it, R will look at the class of the input, and see if there is an associated `"toss"` method. In the previous example, `coin1` is an object of class `"coin"`, for which there is a specific `toss.coin()` method. Thus using `toss()` on a `"coin"` object works fine. 
@@ -1083,13 +1065,13 @@ When you try to use `toss()` on an object that is not of class `"coin"`, you get
 
 
 
-
-And the new definition of `toss.coin()`:
+Because an object `"coin"` already contains an element `prob`, the `toss.coin()` function does not really an argument `prob`. Instead, we can pass this value from the coin object.
+Here's a new definition of `toss.coin()`:
 
 
 ```r
 toss.coin <- function(x, times = 1) {
-  sample(x, size = times, replace = TRUE, prob = attr(coin, 'prob'))
+  sample(x$sides, size = times, replace = TRUE, prob = x$prob)
 }
 ```
 
@@ -1100,23 +1082,7 @@ Let's toss a loaded coin:
 set.seed(2341)
 loaded_coin <- coin(c('HEADS', 'tails'), prob = c(0.75, 0.25))
 toss(loaded_coin, times = 6)
-#> $sides
-#> [1] "HEADS" "tails"
-#> 
-#> $sides
-#> [1] "HEADS" "tails"
-#> 
-#> $prob
-#> [1] 0.75 0.25
-#> 
-#> $sides
-#> [1] "HEADS" "tails"
-#> 
-#> $sides
-#> [1] "HEADS" "tails"
-#> 
-#> $prob
-#> [1] 0.75 0.25
+#> [1] "HEADS" "HEADS" "HEADS" "HEADS" "HEADS" "tails"
 ```
 
 <!--chapter:end:methods1.Rmd-->
@@ -1136,7 +1102,7 @@ We finished the previous chapter with the following `toss()` function, which act
 
 ```r
 toss.coin <- function(x, times = 1) {
-  sample(x, size = times, replace = TRUE, prob = attr(coin, 'prob'))
+  sample(x$sides, size = times, replace = TRUE, prob = x$prob)
 }
 ```
 
@@ -1150,35 +1116,8 @@ acoin <- coin(c('heads', 'tails'))
 
 toss10 <- toss(acoin, times = 10)
 toss10
-#> $prob
-#> [1] 0.5 0.5
-#> 
-#> $prob
-#> [1] 0.5 0.5
-#> 
-#> $sides
-#> [1] "heads" "tails"
-#> 
-#> $sides
-#> [1] "heads" "tails"
-#> 
-#> $sides
-#> [1] "heads" "tails"
-#> 
-#> $sides
-#> [1] "heads" "tails"
-#> 
-#> $sides
-#> [1] "heads" "tails"
-#> 
-#> $sides
-#> [1] "heads" "tails"
-#> 
-#> $sides
-#> [1] "heads" "tails"
-#> 
-#> $prob
-#> [1] 0.5 0.5
+#>  [1] "heads" "heads" "tails" "tails" "tails" "tails" "tails" "tails"
+#>  [9] "tails" "heads"
 ```
 
 Having obtained several tosses, we can calculate things like 1) the total number of tosses, 2) the total number of `heads`, and 3) the total number of `tails`:
@@ -1191,11 +1130,11 @@ length(toss10)
 
 # total number of heads
 sum(toss10 == 'heads')
-#> [1] 0
+#> [1] 3
 
 # total number of tails
 sum(toss10 == 'tails')
-#> [1] 0
+#> [1] 7
 ```
 
 In general, when tossing a coin, we are not only interested in keeping track of such tosses; we would also like to know (or keep track of) the number of tosses, the number of heads, and the number of tails. Consequently, it would be nice to have another class of object for this purpose.
@@ -1218,39 +1157,22 @@ flips <- toss(coin1, times = 6)
 a <- list(
   tosses = flips, 
   total = length(flips),
-  heads = sum(flips == "heads"),
-  tails = sum(flips == "tails")
+  heads = sum(flips == coin1$sides[1]),
+  tails = sum(flips == coin1$sides[2])
 )
 
 a
 #> $tosses
-#> $tosses$prob
-#> [1] 0.5 0.5
-#> 
-#> $tosses$sides
-#> [1] "heads" "tails"
-#> 
-#> $tosses$prob
-#> [1] 0.5 0.5
-#> 
-#> $tosses$sides
-#> [1] "heads" "tails"
-#> 
-#> $tosses$prob
-#> [1] 0.5 0.5
-#> 
-#> $tosses$sides
-#> [1] "heads" "tails"
-#> 
+#> [1] "heads" "tails" "heads" "tails" "heads" "tails"
 #> 
 #> $total
 #> [1] 6
 #> 
 #> $heads
-#> [1] 0
+#> [1] 3
 #> 
 #> $tails
-#> [1] 0
+#> [1] 3
 ```
 
 The idea is to be able to invoke `toss()`, and then obtain an object like the list `a` in the above code. But do it in such a way that the output is an object of class `"toss"`.
@@ -1268,8 +1190,8 @@ make_toss <- function(coin, flips) {
     coin = coin,
     tosses = flips,
     total = length(flips),
-    heads = sum(flips == coin[1]),
-    tails = sum(flips == coin[2]))
+    heads = sum(flips == coin$sides[1]),
+    tails = sum(flips == coin$sides[2]))
   class(res) <- "toss"
   res
 }
@@ -1284,7 +1206,7 @@ Now that we have the auxiliary function `make_toss()`, we can encapsulate it in 
 
 ```r
 toss.coin <- function(x, times = 1) {
-  flips <- sample(x, size = times, replace = TRUE, prob = attr(coin, 'prob'))
+  flips <- sample(x$sides, size = times, replace = TRUE, prob = x$prob)
   make_toss(x, flips)
 }
 ```
@@ -1296,7 +1218,27 @@ This is how `toss()` works:
 set.seed(2233)
 fair <- coin()
 toss(fair, times = 5)
-#> Error in flips == coin[1]: comparison of these types is not implemented
+#> $coin
+#> object "coin"
+#> 
+#>    side prob
+#> 1 heads  0.5
+#> 2 tails  0.5
+#> 
+#> $tosses
+#> [1] "tails" "tails" "tails" "heads" "heads"
+#> 
+#> $total
+#> [1] 5
+#> 
+#> $heads
+#> [1] 2
+#> 
+#> $tails
+#> [1] 3
+#> 
+#> attr(,"class")
+#> [1] "toss"
 ```
 
 You may ask: "Why do we need a function `make_toss()`, and another function `toss()`?". Can't we just write a single function `suppertoss()` that does everything at once?:
@@ -1305,13 +1247,13 @@ You may ask: "Why do we need a function `make_toss()`, and another function `tos
 ```r
 # can't we just put everything in one function?
 supertoss <- function(x, times = 1) {
-  flips <- flip(x, times = times)
+  flips <- toss(x, times = times)
   res <- list(
     coin = x,
     tosses = flips,
     total = length(flips),
-    heads = sum(flips == x[1]),
-    tails = sum(flips == x[2]))
+    heads = sum(flips == x$sides[1]),
+    tails = sum(flips == x$sides[2]))
   class(res) <- "toss"
   res
 }
@@ -1338,12 +1280,33 @@ quarter1 <- coin(c("washington", "fort"))
 class(quarter1) <- c("quarter", "coin")
 quarter1
 #> object "coin"
+#> 
 #>         side prob
 #> 1 washington  0.5
 #> 2       fort  0.5
 
 toss(quarter1, times = 4)
-#> Error in flips == coin[1]: comparison of these types is not implemented
+#> $coin
+#> object "coin"
+#> 
+#>         side prob
+#> 1 washington  0.5
+#> 2       fort  0.5
+#> 
+#> $tosses
+#> [1] "washington" "washington" "fort"       "washington"
+#> 
+#> $total
+#> [1] 4
+#> 
+#> $heads
+#> [1] 3
+#> 
+#> $tails
+#> [1] 1
+#> 
+#> attr(,"class")
+#> [1] "toss"
 ```
 
 \bigskip
@@ -1366,13 +1329,33 @@ toss.coin <- function(x, times = 1) {
   if (times <= 0) {
     stop("\nargument 'times' must be a positive integer")
   }
-  flips <- sample(x, size = times, replace = TRUE, prob = attr(coin, 'prob'))
+  flips <- sample(x$sides, size = times, replace = TRUE, prob = x$prob)
   make_toss(x, flips)
 }
 
 # this works ok
 toss(quarter1, 5)
-#> Error in flips == coin[1]: comparison of these types is not implemented
+#> $coin
+#> object "coin"
+#> 
+#>         side prob
+#> 1 washington  0.5
+#> 2       fort  0.5
+#> 
+#> $tosses
+#> [1] "fort"       "fort"       "washington" "washington" "fort"      
+#> 
+#> $total
+#> [1] 5
+#> 
+#> $heads
+#> [1] 2
+#> 
+#> $tails
+#> [1] 3
+#> 
+#> attr(,"class")
+#> [1] "toss"
 
 # this doesn't work, but the error message is clear
 toss(quarter1, -4)
@@ -1400,12 +1383,32 @@ Once `check_times()` has been defined, we can include it inside `toss()`:
 ```r
 toss.coin <- function(x, times = 1) {
   check_times(times)
-  flips <- sample(x, size = times, replace = TRUE, prob = attr(coin, 'prob'))
+  flips <- sample(x$sides, size = times, replace = TRUE, prob = x$prob)
   make_toss(x, flips)
 }
 
 toss(quarter1, 5)
-#> Error in flips == coin[1]: comparison of these types is not implemented
+#> $coin
+#> object "coin"
+#> 
+#>         side prob
+#> 1 washington  0.5
+#> 2       fort  0.5
+#> 
+#> $tosses
+#> [1] "washington" "washington" "fort"       "fort"       "fort"      
+#> 
+#> $total
+#> [1] 5
+#> 
+#> $heads
+#> [1] 2
+#> 
+#> $tails
+#> [1] 3
+#> 
+#> attr(,"class")
+#> [1] "toss"
 ```
 
 
@@ -1429,7 +1432,7 @@ Until now we have a `toss()` function that produces objects of the homonym class
 
 <div class="figure" style="text-align: center">
 <img src="images/peso.jpg" alt="An old Mexican peso (www.coinfactswiki.com)" width="275" />
-<p class="caption">(\#fig:unnamed-chunk-62)An old Mexican peso (www.coinfactswiki.com)</p>
+<p class="caption">(\#fig:unnamed-chunk-63)An old Mexican peso (www.coinfactswiki.com)</p>
 </div>
 
 By the way, flips are commonly referred to as _volados_ in Mexico:
@@ -1439,9 +1442,30 @@ By the way, flips are commonly referred to as _volados_ in Mexico:
 set.seed(789)
 peso <- coin(c('aguila', 'sol'))
 volados <- toss(peso, 15)
-#> Error in flips == coin[1]: comparison of these types is not implemented
 volados
-#> Error in eval(expr, envir, enclos): object 'volados' not found
+#> $coin
+#> object "coin"
+#> 
+#>     side prob
+#> 1 aguila  0.5
+#> 2    sol  0.5
+#> 
+#> $tosses
+#>  [1] "aguila" "sol"    "sol"    "aguila" "sol"    "sol"    "aguila"
+#>  [8] "sol"    "sol"    "sol"    "sol"    "aguila" "sol"    "sol"   
+#> [15] "sol"   
+#> 
+#> $total
+#> [1] 15
+#> 
+#> $heads
+#> [1] 4
+#> 
+#> $tails
+#> [1] 11
+#> 
+#> attr(,"class")
+#> [1] "toss"
 ```
 
 Every time you type in the name of an object `"toss"`, like `volados` in the previous example, the output is displayed like any other list. R displays the values of `$coin` and its attributes (`attr`), the `$tosses`, the `$total`, the number of `$heads` and `$tails`, and finally the class attribute. 
@@ -1462,10 +1486,11 @@ a method we use the generic function `print()`. To be more precise, we declare a
 # print method for object of class "toss"
 print.toss <- function(x, ...) {
   cat('object "toss"\n')
-  cat(sprintf('coin: "%s", "%s"', x$coin[1], x$coin[2]), "\n")
+  cat(sprintf('sides: "%s", "%s"', x$coin$sides[1], x$coin$sides[2]), "\n")
+  cat(sprintf('prob: "%s", "%s"', x$coin$prob[1], x$coin$prob[2]), "\n")
   cat("total tosses:", x$total, "\n")
-  cat(sprintf("num of %s:", x$coin[1]), x$heads, "\n")
-  cat(sprintf("num of %s:", x$coin[2]), x$tails, "\n")
+  cat(sprintf("num of %s:", x$coin$sides[1]), x$heads, "\n")
+  cat(sprintf("num of %s:", x$coin$sides[2]), x$tails, "\n")
   invisible(x)
 }
 ```
@@ -1479,9 +1504,13 @@ After a `print` method has been defined for an object `"toss"`, everytime you ty
 # testing print method
 set.seed(789)
 volados <- toss(peso, 15)
-#> Error in flips == coin[1]: comparison of these types is not implemented
 volados
-#> Error in eval(expr, envir, enclos): object 'volados' not found
+#> object "toss"
+#> sides: "aguila", "sol" 
+#> prob: "0.5", "0.5" 
+#> total tosses: 15 
+#> num of aguila: 4 
+#> num of sol: 11
 ```
 
 Here's another example with the `quarter1` coin used in previous chapters:
@@ -1491,9 +1520,13 @@ Here's another example with the `quarter1` coin used in previous chapters:
 set.seed(555)
 quarter1 <- coin(c("washington", "fort")) 
 quarter_flips <- toss(quarter1, 50)
-#> Error in flips == coin[1]: comparison of these types is not implemented
 quarter_flips
-#> Error in eval(expr, envir, enclos): object 'quarter_flips' not found
+#> object "toss"
+#> sides: "washington", "fort" 
+#> prob: "0.5", "0.5" 
+#> total tosses: 50 
+#> num of washington: 20 
+#> num of fort: 30
 ```
 
 
@@ -1513,10 +1546,10 @@ print.summary.toss <- function(x, ...) {
   cat('summary "toss"\n\n')
   cat(sprintf('coin: "%s", "%s"', x$coin[1], x$coin[2]), "\n")
   cat("total tosses:", x$total, "\n\n")
-  cat(sprintf("num of %s:", x$coin[1]), x$heads, "\n")
-  cat(sprintf("prop of %s:", x$coin[1]), x$heads/x$total, "\n\n")
-  cat(sprintf("num of %s:", x$coin[2]), x$tails, "\n")
-  cat(sprintf("prop of %s:", x$coin[2]), x$tails/x$total, "\n")
+  cat(sprintf("num of %s:", x$coin$sides[1]), x$heads, "\n")
+  cat(sprintf("prop of %s:", x$coin$sides[1]), x$heads/x$total, "\n\n")
+  cat(sprintf("num of %s:", x$coin$sides[2]), x$tails, "\n")
+  cat(sprintf("prop of %s:", x$coin$sides[2]), x$tails/x$total, "\n")
   invisible(x)
 }
 ```
@@ -1526,7 +1559,16 @@ Let's test it:
 
 ```r
 summary(quarter_flips)
-#> Error in summary(quarter_flips): object 'quarter_flips' not found
+#> summary "toss"
+#> 
+#> coin: "c("washington", "fort")", "c(0.5, 0.5)" 
+#> total tosses: 50 
+#> 
+#> num of washington: 20 
+#> prop of washington: 0.4 
+#> 
+#> num of fort: 30 
+#> prop of fort: 0.6
 ```
 
 
@@ -1540,12 +1582,12 @@ What we want to plot of an object `"toss"` is the series of realtive frequencies
 
 ```r
 head_freqs <- function(x) {
-  cumsum(x$tosses == x$coin[1]) / 1:x$total
+  cumsum(x$tosses == x$coin$sides[1]) / 1:x$total
 }
 
 
 tail_freqs <- function(x) {
-  cumsum(x$tosses == x$coin[2]) / 1:x$total
+  cumsum(x$tosses == x$coin$sides[2]) / 1:x$total
 }
 
 
@@ -1566,7 +1608,7 @@ plot.toss <- function(x, side = 1, ...) {
   freqs <- frequencies(x, side = side)
   plot(1:x$total, freqs, type = "n", ylim = c(0, 1), las = 1,
        xlab = "number of tosses", bty = "n",
-       ylab = sprintf("relative frequency of %s", x$coin[side]))
+       ylab = sprintf("relative frequency of %s", x$coin$sides[side]))
   abline(h = 0.5, col = "gray70", lwd = 1.5)
   lines(1:x$total, freqs, col = "tomato", lwd = 2)
   title(sprintf("Relative Frequencies in a series of %s coin tosses", x$total))
@@ -1578,8 +1620,9 @@ Let's test our `plot` method:
 
 ```r
 plot(quarter_flips)
-#> Error in plot(quarter_flips): object 'quarter_flips' not found
 ```
+
+<img src="packyourcode_files/figure-html4/unnamed-chunk-69-1.png" width="70%" style="display: block; margin: auto;" />
 
 <!--chapter:end:methods2.Rmd-->
 
@@ -1603,8 +1646,9 @@ Replacement functions are those calls like `x[1] <- 3`. The function behind this
 
 ```r
 "[<-.toss" <- function(x, i, value) {
-  if (value != x$coin[1] & value != x$coin[2]) {
-    stop(sprintf('\nreplacing value must be %s or %s', x$coin[1], x$coin[2]))
+  if (value != x$coin$sides[1] & value != x$coin$sides[2]) {
+    stop(sprintf('\nreplacing value must be %s or %s',
+                 x$coin$sides[1], x$coin$sides[2]))
   }
   x$tosses[i] <- value
   make_toss(x$coin, x$tosses)
@@ -1634,7 +1678,8 @@ What about replacing out of the original range?
 b[6] <- "torch"
 b
 #> object "toss"
-#> coin: "roosevelt", "torch" 
+#> sides: "roosevelt", "torch" 
+#> prob: "0.48", "0.52" 
 #> total tosses: 6 
 #> num of roosevelt: 2 
 #> num of torch: 4
@@ -1648,7 +1693,8 @@ Or something like this?
 b[10] <- "torch"
 b
 #> object "toss"
-#> coin: "roosevelt", "torch" 
+#> sides: "roosevelt", "torch" 
+#> prob: "0.48", "0.52" 
 #> total tosses: 10 
 #> num of roosevelt: NA 
 #> num of torch: NA
@@ -1660,8 +1706,9 @@ Because it does not make sense to replace if index is out of the original length
 
 ```r
 "[<-.toss" <- function(x, i, value) {
-  if (value != x$coin[1] & value != x$coin[2]) {
-    stop(sprintf('\nreplacing value must be %s or %s', x$coin[1], x$coin[2]))
+  if (value != x$coin$sides[1] & value != x$coin$sides[2]) {
+    stop(sprintf('\nreplacing value must be %s or %s', 
+                 x$coin$sides[1], x$coin$sides[2]))
   }
   if (i > x$total) {
     stop("\nindex out of bounds")
@@ -1713,9 +1760,9 @@ Test it:
 set.seed(3752)
 b <- toss(dime1, times = 5)
 b$tosses
-#> [1] "torch"     "torch"     "torch"     "roosevelt" "roosevelt"
+#> [1] "roosevelt" "roosevelt" "roosevelt" "torch"     "torch"
 b[1]
-#> [1] "torch"
+#> [1] "roosevelt"
 ```
 
 
@@ -1773,9 +1820,13 @@ Remember that `"+"` is a binary operator, which means that writing a `"+"` metho
 # add four more tosses
 mycoin <- coin()
 seven <- toss(mycoin, times = 7)
-#> Error in flips == coin[1]: comparison of these types is not implemented
 seven
-#> Error in eval(expr, envir, enclos): object 'seven' not found
+#> object "toss"
+#> sides: "heads", "tails" 
+#> prob: "0.5", "0.5" 
+#> total tosses: 7 
+#> num of heads: 4 
+#> num of tails: 3
 ```
 
 Let's add a couple of more tosses to `seven`:
@@ -1784,11 +1835,21 @@ Let's add a couple of more tosses to `seven`:
 ```r
 # two more flips
 seven + 2
-#> Error in eval(expr, envir, enclos): object 'seven' not found
+#> object "toss"
+#> sides: "heads", "tails" 
+#> prob: "0.5", "0.5" 
+#> total tosses: 9 
+#> num of heads: 4 
+#> num of tails: 5
 
 # three more flips
 seven + 3
-#> Error in eval(expr, envir, enclos): object 'seven' not found
+#> object "toss"
+#> sides: "heads", "tails" 
+#> prob: "0.5", "0.5" 
+#> total tosses: 10 
+#> num of heads: 6 
+#> num of tails: 4
 ```
 
 <!--chapter:end:methods3.Rmd-->
@@ -1811,14 +1872,14 @@ Nowadays you can create an R package in an almost instant way. Here's the list o
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-step0-new.png" alt="Starting point for a new project" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-77)Starting point for a new project</p>
+<p class="caption">(\#fig:unnamed-chunk-78)Starting point for a new project</p>
 </div>
 
 2. Then choose __New Directory__
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-step1-project.png" alt="Different types of RStudio projects" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-78)Different types of RStudio projects</p>
+<p class="caption">(\#fig:unnamed-chunk-79)Different types of RStudio projects</p>
 </div>
 
 3. Choose __R package__
@@ -1829,7 +1890,7 @@ Nowadays you can create an R package in an almost instant way. Here's the list o
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-step4-name.png" alt="Choosing a name for a package" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-80)Choosing a name for a package</p>
+<p class="caption">(\#fig:unnamed-chunk-81)Choosing a name for a package</p>
 </div>
 
 5. The filestructure of your package will be created with some default content. Here's a screenshot of how the panes in RStudio look like in my computer. Notice the default R script `hello.R` and the file structure in the __Files__ tab:
@@ -1843,7 +1904,7 @@ If you look at pane with the __Files__ tab, you should be able to see the follow
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-step6-files.png" alt="Minimal filestructure created by devtools" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-82)Minimal filestructure created by devtools</p>
+<p class="caption">(\#fig:unnamed-chunk-83)Minimal filestructure created by devtools</p>
 </div>
 
 We've ended up with six components inside the package folder. Here's the description of each file:
@@ -1873,7 +1934,7 @@ Alternatively, if you go to the __Build__ tab, you will find the _Install and Re
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-step6-build.png" alt="Options in the Build tab" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-83)Options in the Build tab</p>
+<p class="caption">(\#fig:unnamed-chunk-84)Options in the Build tab</p>
 </div>
 
 I recommend that you follow the suggested steps to see what happens: build the package and check it:
@@ -1915,7 +1976,7 @@ The following diagram depicts three possible filestructures for a package.
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-structures.png" alt="Three possible filestructures for a package" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-88)Three possible filestructures for a package</p>
+<p class="caption">(\#fig:unnamed-chunk-89)Three possible filestructures for a package</p>
 </div>
 
 The first option is what we usually consider to be a __minimal__ package involving four components: `DESCRIPTION` file, `NAMESPACE` file, `R/` directory, and `man/` directory.
@@ -1943,7 +2004,7 @@ When creating an "off-the-shelf" package, like the _hello world_ example, the fi
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-description.png" alt="Typical default content in a DESCRIPTION file" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-90)Typical default content in a DESCRIPTION file</p>
+<p class="caption">(\#fig:unnamed-chunk-91)Typical default content in a DESCRIPTION file</p>
 </div>
 
 After customizing the content of `DESCRIPTION`, you could end up with something like this:
@@ -2006,27 +2067,25 @@ the functions provide by `"testthat"`.
 
 ## Including Tests
 
-You should make an honest effort to include tests in your package. This requires adding a subdirectory `tests/`. Inside this directory you have to include an `.R` script file `testthat.R` and a subdirectory called `testthat/`.
+You should make an honest effort to include tests in your package. This requires adding a subdirectory `tests/`. Inside this directory you have to include an `.R` script file `testthat.R` and a subdirectory called `testthat/`. More specifically:
 
 - In the directory of the package, create a folder `"tests"`.
 - Inside the folder `tests/` create another folder `"testthat"`; this is where 
 you include R scripts containing the unit tests.
 - All the script files inside `testthat/` should start with tha name __test__
-e.g. `test-coin.R`, `test-flip.R`, `test-toss.R`, etc.
+e.g. `test-coin.R`, `test-toss.R`, etc.
 - Inside the folder `testthat/`, create an R script `testthat.R`
 
 <div class="figure" style="text-align: center">
 <img src="images/test-files.png" alt="Structure of test files" width="35%" />
-<p class="caption">(\#fig:unnamed-chunk-92)Structure of test files</p>
+<p class="caption">(\#fig:unnamed-chunk-93)Structure of test files</p>
 </div>
 
-
-The script `testthat.R` is just an auxiliary. The important part is the files inside `testthat/`.
 
 
 ## Script `testthat.R`
 
-The content of `testthat.R` is very minimalist, with three lines of code, something like this: 
+The script `testthat.R` is just an auxiliary. The content of this file is very minimalist, with three lines of code, something like this: 
 
 ```
 library(testthat)
@@ -2052,14 +2111,14 @@ As you can tell, you simply load the package `testthat`, then load your package,
 
 <div class="figure" style="text-align: center">
 <img src="images/test-concept.png" alt="Conceptual test structure" width="30%" />
-<p class="caption">(\#fig:unnamed-chunk-93)Conceptual test structure</p>
+<p class="caption">(\#fig:unnamed-chunk-94)Conceptual test structure</p>
 </div>
 
 - A __context__ involves __tests__ formed by groups of __expectations__
 
 <div class="figure" style="text-align: center">
 <img src="images/test-hierarchy.png" alt="Abstract and functional representations" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-94)Abstract and functional representations</p>
+<p class="caption">(\#fig:unnamed-chunk-95)Abstract and functional representations</p>
 </div>
 
 - Each structure has associated functions:
@@ -2069,7 +2128,7 @@ As you can tell, you simply load the package `testthat`, then load your package,
 
 <div class="figure" style="text-align: center">
 <img src="images/test-meaning.png" alt="Description of testthat components" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-95)Description of testthat components</p>
+<p class="caption">(\#fig:unnamed-chunk-96)Description of testthat components</p>
 </div>
 
 
@@ -2125,7 +2184,7 @@ If you decide that your package needs one or more vignettes, then you need to ad
 
 <div class="figure" style="text-align: center">
 <img src="images/vignette-files.png" alt="Structure of vignette files" width="35%" />
-<p class="caption">(\#fig:unnamed-chunk-97)Structure of vignette files</p>
+<p class="caption">(\#fig:unnamed-chunk-98)Structure of vignette files</p>
 </div>
 
 When creating an `.Rmd` file for a vignette, you need to modify the _yaml_ header with the following fields:
@@ -2159,7 +2218,7 @@ The following screenshot shows part of the contents in the introductory vignette
 
 <div class="figure" style="text-align: center">
 <img src="images/vignette-rmd.png" alt="Screenshot of the vignette in cointoss" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-98)Screenshot of the vignette in cointoss</p>
+<p class="caption">(\#fig:unnamed-chunk-99)Screenshot of the vignette in cointoss</p>
 </div>
 
 
@@ -2190,7 +2249,7 @@ The creation process of an R package can be done in several ways. Depending on t
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-states.png" alt="Five possible states of a package" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-100)Five possible states of a package</p>
+<p class="caption">(\#fig:unnamed-chunk-101)Five possible states of a package</p>
 </div>
 
 
@@ -2201,7 +2260,7 @@ From a source package, you can transition to more "mature" (less raw) states.
 
 <div class="figure" style="text-align: center">
 <img src="images/state-source.png" alt="Source package" width="30%" />
-<p class="caption">(\#fig:unnamed-chunk-101)Source package</p>
+<p class="caption">(\#fig:unnamed-chunk-102)Source package</p>
 </div>
 
 
@@ -2211,7 +2270,7 @@ The next immediate state (although not mandatory) is a __bundled__ package. This
 
 <div class="figure" style="text-align: center">
 <img src="images/state-bundled.png" alt="Bundled package (tarball)" width="25%" />
-<p class="caption">(\#fig:unnamed-chunk-102)Bundled package (tarball)</p>
+<p class="caption">(\#fig:unnamed-chunk-103)Bundled package (tarball)</p>
 </div>
 
 To generate a bundled package from a source package, you can use the `"devtools"` function `build()`. This will combine of the necessary components in a single file, and gz-compress it for you.
@@ -2227,7 +2286,7 @@ A package in __binary__ form is another type of state for a package. This is ano
 
 <div class="figure" style="text-align: center">
 <img src="images/state-binary.png" alt="Binary package (platform specific)" width="35%" />
-<p class="caption">(\#fig:unnamed-chunk-103)Binary package (platform specific)</p>
+<p class="caption">(\#fig:unnamed-chunk-104)Binary package (platform specific)</p>
 </div>
 
 To give you another description of the idea of a binary package, let me use the excellent metaphor written by David Eaton in the [Quora](https://www.quora.com/Whats-the-difference-between-an-installer-source-code-and-a-binary-package-when-installing-software) forum.
@@ -2246,7 +2305,7 @@ An __installed__ package is a decompressed binary file that has been unwrapped i
 
 <div class="figure" style="text-align: center">
 <img src="images/state-installed.png" alt="Installed package (decompressed binary)" width="50%" />
-<p class="caption">(\#fig:unnamed-chunk-104)Installed package (decompressed binary)</p>
+<p class="caption">(\#fig:unnamed-chunk-105)Installed package (decompressed binary)</p>
 </div>
 
 Keeping with the metaphor of the 3-course meal, an installed package is associated with an _installer_. An installer is like the waiter, getting your food and preparing everything for you to eat it: plates, glasses, cutlery, napkins, portions of fodd, etc. The installer basically gets your food ready for you to eat it. 
@@ -2261,7 +2320,7 @@ Lastly, in order to use an installed package you need to load it into memory. Th
 
 <div class="figure" style="text-align: center">
 <img src="images/state-in-memory.png" alt="In-memory package (loaded to be used)" width="30%" />
-<p class="caption">(\#fig:unnamed-chunk-105)In-memory package (loaded to be used)</p>
+<p class="caption">(\#fig:unnamed-chunk-106)In-memory package (loaded to be used)</p>
 </div>
 
 
@@ -2271,7 +2330,7 @@ During the development of a package, you always start at the source level, and e
 
 <div class="figure" style="text-align: center">
 <img src="images/packaging-ideal-flow.png" alt="Theoretical flow of package states" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-106)Theoretical flow of package states</p>
+<p class="caption">(\#fig:unnamed-chunk-107)Theoretical flow of package states</p>
 </div>
 
 <!--chapter:end:states.Rmd-->
@@ -2291,7 +2350,7 @@ The following diagram depicts the filestructure for our working example with the
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-example.png" alt="Assumed filestructure" width="35%" />
-<p class="caption">(\#fig:unnamed-chunk-108)Assumed filestructure</p>
+<p class="caption">(\#fig:unnamed-chunk-109)Assumed filestructure</p>
 </div>
 
 Let's assume that the source package you are developing has the previous structure. If this is not the case for you, at least keep in mind that the mandatory components are  `DESCRIPTION`, `NAMESPACE`, `R/` and `man/`.
@@ -2398,12 +2457,12 @@ To install your package, the users will have to download it to their computers, 
 
 <div class="figure" style="text-align: center">
 <img src="images/share-install.png" alt="Installing a .tar.gz file from RStudio's Packages tab" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-110)Installing a .tar.gz file from RStudio's Packages tab</p>
+<p class="caption">(\#fig:unnamed-chunk-111)Installing a .tar.gz file from RStudio's Packages tab</p>
 </div>
 
 - Go to the __Packages__ tab
 - Click on the __Install__ button
-- Select the __Install from:__ option
+- Select the option __Install from:__
 - Select __Package Archive File (.tar.gz)__
 - Specify the location of the `.tar.gz` file
 - and finally click __Install__.
@@ -2431,13 +2490,13 @@ this is equivalent to:
 devtools::install_github("cointoss", username = "gastonstat")
 ```
 
-If a package is some subdirectory inside a github repository, you can also use `install_github()`. Pretend that the source `"cointoss"` is in the folder `pkg`, inside my github repository `repo`. A user sould be able to install the package running the following command:
+If a package is in some subdirectory inside a github repository, you can also use `install_github()`. Pretend that the source package is in the folder `"cointoss"`, inside my github repository `repo`. A user sould be able to install the package running the following command:
 
 ```
-devtools::install_github("cointoss", username = "gastonstat", subdir = "pkg")
+devtools::install_github("repo", username = "gastonstat", subdir = "cointoss")
 ```
 
-A few things to keep in ming about `install_github()`:
+A few things to keep in mind about `install_github()`:
 
 - `devtools::install_github()` allows you to install a remote package.
 - it downloads a source package, builds it and then installs it.
@@ -2445,7 +2504,7 @@ A few things to keep in ming about `install_github()`:
 - to build vignettes use `devtools::install_github(build_vignettes = TRUE)`.
 
 To know more about sharing options with Git and GitHub see <a href="http://r-pkgs.had.co.nz/git.html" target="_blank">r-pkgs: Package Git</a>.
-If you are interested in sharing a package via CRAN, then see <a href="http://r-pkgs.had.co.nz/release.html" target="_blank">r-pkgs: Releasing a Package Git</a>.
+If you are interested in sharing a package via CRAN, then see <a href="http://r-pkgs.had.co.nz/release.html" target="_blank">r-pkgs: Releasing a Package</a>.
 
 <!--chapter:end:sharing.Rmd-->
 

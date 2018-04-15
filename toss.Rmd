@@ -11,7 +11,7 @@ We finished the previous chapter with the following `toss()` function, which act
 
 ```{r}
 toss.coin <- function(x, times = 1) {
-  sample(x, size = times, replace = TRUE, prob = attr(coin, 'prob'))
+  sample(x$sides, size = times, replace = TRUE, prob = x$prob)
 }
 ```
 
@@ -58,8 +58,8 @@ flips <- toss(coin1, times = 6)
 a <- list(
   tosses = flips, 
   total = length(flips),
-  heads = sum(flips == "heads"),
-  tails = sum(flips == "tails")
+  heads = sum(flips == coin1$sides[1]),
+  tails = sum(flips == coin1$sides[2])
 )
 
 a
@@ -79,8 +79,8 @@ make_toss <- function(coin, flips) {
     coin = coin,
     tosses = flips,
     total = length(flips),
-    heads = sum(flips == coin[1]),
-    tails = sum(flips == coin[2]))
+    heads = sum(flips == coin$sides[1]),
+    tails = sum(flips == coin$sides[2]))
   class(res) <- "toss"
   res
 }
@@ -94,7 +94,7 @@ Now that we have the auxiliary function `make_toss()`, we can encapsulate it in 
 
 ```{r toss-ver1}
 toss.coin <- function(x, times = 1) {
-  flips <- sample(x, size = times, replace = TRUE, prob = attr(coin, 'prob'))
+  flips <- sample(x$sides, size = times, replace = TRUE, prob = x$prob)
   make_toss(x, flips)
 }
 ```
@@ -112,13 +112,13 @@ You may ask: "Why do we need a function `make_toss()`, and another function `tos
 ```{r}
 # can't we just put everything in one function?
 supertoss <- function(x, times = 1) {
-  flips <- flip(x, times = times)
+  flips <- toss(x, times = times)
   res <- list(
     coin = x,
     tosses = flips,
     total = length(flips),
-    heads = sum(flips == x[1]),
-    tails = sum(flips == x[2]))
+    heads = sum(flips == x$sides[1]),
+    tails = sum(flips == x$sides[2]))
   class(res) <- "toss"
   res
 }
@@ -164,7 +164,7 @@ toss.coin <- function(x, times = 1) {
   if (times <= 0) {
     stop("\nargument 'times' must be a positive integer")
   }
-  flips <- sample(x, size = times, replace = TRUE, prob = attr(coin, 'prob'))
+  flips <- sample(x$sides, size = times, replace = TRUE, prob = x$prob)
   make_toss(x, flips)
 }
 
@@ -193,7 +193,7 @@ Once `check_times()` has been defined, we can include it inside `toss()`:
 ```{r}
 toss.coin <- function(x, times = 1) {
   check_times(times)
-  flips <- sample(x, size = times, replace = TRUE, prob = attr(coin, 'prob'))
+  flips <- sample(x$sides, size = times, replace = TRUE, prob = x$prob)
   make_toss(x, flips)
 }
 

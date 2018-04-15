@@ -16,41 +16,22 @@ description: "Basic example of how to create an R package based on S3 classes."
 knitr::include_graphics("images/pack-your-code-logo.png")
 ```
 
-This book aims to teach you how to create a relatively simple R package based on the so-called S3 classes.
+The ultimate goal of this book is to teach you how to create a relatively simple R package based on the so-called S3 classes. 
 
+The chapters of the book are organized in three major parts:
 
-You will create various functions:
+- The first part involves describing a motivating example about using R to write code for tossing a coin. We begin tackling this problem from a _classic programming_ style (as opposed to a more object-oriented style).
 
-- define a function to create a `"coin"` object.
+- The second part is dedicated to implement code in a more object-oriented programming (OOP) fashion by using S3-class objects. Keep in mind that the S3 system is a very informal OOP approach. However, it is the most common system among the universe of R packages.
 
-- write a function to `toss()` the coin and produce an object of class `"toss"`.
-
-- write common methods such as `print()`, `summary()`, and `plot()`.
-
-- write companion functions `is.toss()`, `as.toss()`
-
-- implement S3 methods for extraction `[.toss`, replacement `[<-.toss`, addition `+.toss`
-
-
-You will write unit tests for your functions
-
-
-You will package your code, and learn an opinionated workflow to build packages:
-
-- generate documentation
-- check manual documentation
-- run tests
-- build vignettes
-- build tarball
-- install your package
-- share it via github
+- The third part of the book has to do with the actual process of organizing the R code into a formal package. We discuss the anatomy of a package, its differrent possible states, some usual components that are worth including in a package, and the flow for building a package.
 
 
 ### About this book {-}
 
-The main reason to write this book was the lack of a teaching resource that I could use with the students in my computational statistics courses at the University of California Berkeley. Not only I saw the need, but also the opportunity, to refine a couple of tutorial documents that I had written for those courses. I hope that this book can help not only students in my courses but also many other useRs that are interested in creating R packages.
+The main reason to write this book was the lack of a teaching resource that I could use with the students in my computational statistics courses at the University of California Berkeley (e.g. Stat 133, 159, 243, 259). Not only I saw the need, but also the opportunity, to refine a couple of tutorial documents that I had written for those courses. I hope that this book can help not only students in my courses but also many other useRs that are interested in creating R packages.
 
-This book assumes a couple of things about you: familiarity with R in general, and more specifically with RStudio. You should have used `.R` (R script) and `.Rmd` (R markdwon) files before. You don't need to be an expert useR but you do need to feel comfortable working with various data structures: vectors, factors, arrays, matrices, lists, data frames, etc. Also, I assume that you have some basic programming experience: for example, you know how to create simple functions, you know how to use conditional structures like `if-then-else`, as well as loop structures such as `for()` loops or `while()` loops.
+This book assumes a couple of things about you: familiarity with R in general, and more specifically with RStudio. You should have used `.R` (R script) and `.Rmd` (R markdwon) files before. You don't need to be an expert useR but you do need to feel comfortable working with various data structures: vectors, factors, arrays, matrices, lists, data frames, etc. Also, I assume that you have some basic programming experience: for example, you know how to create simple functions, you know how to use conditional structures like `if-then-else`, as well as loop structures such as `for()` loops or `while()` loops. And that you also have some experience writing tests of functions (ideally using the package `"testthat"`).
 
 
 
@@ -60,7 +41,7 @@ This is NOT a comprehensive text that covers every single aspect about creating 
 
 If you are interested in the nitty gritty aspects about R packages, then you should read Hadley Wickham's excellent book on __[R Packages](http://r-pkgs.had.co.nz/package.html)__. In fact, in various chapters of _Pack YouR Code_, I will be constantly referring to the book _R Packages_ in the form of links like this: `r-pkgs: topic`; for example: [r-pkgs: Introduction](http://r-pkgs.had.co.nz/intro.html).
 
-I also recommend reading Friedrich Leisch's manuscript __[Creating R Packages: A Tutorial](https://cran.r-project.org/doc/contrib/Leisch-CreatingPackages.pdf)__. Personally, this tutorial helped me a lot to successfully complete creating my first R package in the spring of 2009, after several (enormously frustrating) failed attempts during 2007 and 2008. It's impressive to have witnessed how the package-creation process has been made more smooth.
+I also recommend reading Friedrich Leisch's manuscript __[Creating R Packages: A Tutorial](https://cran.r-project.org/doc/contrib/Leisch-CreatingPackages.pdf)__. Personally, this tutorial helped me a lot to successfully complete creating my first R package in the spring of 2009, after several (enormously frustrating) failed attempts during 2007 and 2008. It's impressive to have witnessed how the package-creation process has been made more smooth since those years.
 
 Another classic book with material about R packages is __Software for Data Analysis__ by John Chamber, the "master mind" behind the S language, on which the R language is based on.
 

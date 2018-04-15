@@ -10,7 +10,7 @@ We begin describing how to create object classes.
 
 ## Objects and Classes
 
-Let's use the `toss()` function of the previous chapter. We can invoke `toss()` to generate a first series of five tosses, and then compute the proportion of heads:
+Let's use the `toss()` function from the previous chapter. We can invoke `toss()` to generate a first series of five tosses, and then compute the proportion of heads:
 
 ```{r}
 # random seed
@@ -196,6 +196,10 @@ coin()
 
 In the previous code, the `prob` argument takes a vector of probabilities for each element in `object`. This vector is passed to `object` via the function `attr()` inside the body of `coin()`. Notice the use of a default `prob = c(0.5, 0.5)`, that is, a _fair_ coin by default. 
 
+```{r echo = FALSE}
+rm(coin)
+```
+
 
 ### Using a list
 
@@ -309,7 +313,7 @@ How can we do this? The answer involves writing a `print` method for objects of 
 print.coin <- function(x) {
   cat('object "coin"\n\n')
   cd <- data.frame(
-    side = x$side, prob = x$prob
+    side = x$sides, prob = x$prob
   )
   print(cd)
   invisible(x)

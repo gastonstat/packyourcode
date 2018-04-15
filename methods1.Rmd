@@ -15,7 +15,7 @@ From [chapter 2](#function), we ended up with the following `toss()` function:
 ```{r}
 #' @title Coin toss function 
 #' @description Simulates tossing a coin a given number of times
-#' @param x coin object (a vector)
+#' @param x coin object
 #' @param times number of tosses
 #' @param prob vector of probabilities for each side of the coin
 #' @return vector of tosses
@@ -38,7 +38,7 @@ toss <- function(x, times = 1, prob = NULL) {
   if (class(x) != "coin") {
     stop("\ntoss() requires an object 'coin'")
   }
-  sample(x, size = times, replace = TRUE, prob = prob)
+  sample(x$sides, size = times, replace = TRUE, prob = prob)
 }
 
 # ok
@@ -78,7 +78,7 @@ A generic method alone is not very useful. You need to create specific cases for
 
 ```{r toss-coin-specific}
 toss.coin <- function(x, times = 1, prob = NULL) {
-  sample(x, size = times, replace = TRUE, prob = prob)
+  sample(x$sides, size = times, replace = TRUE, prob = prob)
 }
 ```
 
@@ -103,12 +103,12 @@ When you try to use `toss()` on an object that is not of class `"coin"`, you get
 
 
 
-
-And the new definition of `toss.coin()`:
+Because an object `"coin"` already contains an element `prob`, the `toss.coin()` function does not really an argument `prob`. Instead, we can pass this value from the coin object.
+Here's a new definition of `toss.coin()`:
 
 ```{r new-toss}
 toss.coin <- function(x, times = 1) {
-  sample(x, size = times, replace = TRUE, prob = attr(coin, 'prob'))
+  sample(x$sides, size = times, replace = TRUE, prob = x$prob)
 }
 ```
 

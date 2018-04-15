@@ -12,7 +12,7 @@ description: "Basic example of how to create an R package based on S3 classes."
 
 # Welcome {-}
 
-```{r echo = FALSE}
+```{r echo = FALSE, out.width = "50%"}
 knitr::include_graphics("images/pack-your-code-logo.png")
 ```
 
@@ -60,13 +60,11 @@ This is NOT a comprehensive text that covers every single aspect about creating 
 
 If you are interested in the nitty gritty aspects about R packages, then you should read Hadley Wickham's excellent book on __[R Packages](http://r-pkgs.had.co.nz/package.html)__. In fact, in various chapters of _Pack YouR Code_, I will be constantly referring to the book _R Packages_ in the form of links like this: `r-pkgs: topic`; for example: [r-pkgs: Introduction](http://r-pkgs.had.co.nz/intro.html).
 
-I also recommend reading Friedrich Leisch's manuscript __[Creating R Packages: A Tutorial](https://cran.r-project.org/doc/contrib/Leisch-CreatingPackages.pdf)__. Personally, this tutorial helped me a lot to successfully complete creating my first R package in the spring of 2009, after several (enormously frustrating) failed attempts during 2007 and 2008. It's impressive to have witnessed how the package-creation process has been made smooth.
+I also recommend reading Friedrich Leisch's manuscript __[Creating R Packages: A Tutorial](https://cran.r-project.org/doc/contrib/Leisch-CreatingPackages.pdf)__. Personally, this tutorial helped me a lot to successfully complete creating my first R package in the spring of 2009, after several (enormously frustrating) failed attempts during 2007 and 2008. It's impressive to have witnessed how the package-creation process has been made more smooth.
 
 Another classic book with material about R packages is __Software for Data Analysis__ by John Chamber, the "master mind" behind the S language, on which the R language is based on.
 
-If _R Packages_ is not enough for you, and you are still curious about more obscure and esoteric details, then you need to check the technical R manual __Writing R Extensions__ (by the R Core Team) available in the r-project website:
-
-https://cran.r-project.org/doc/manuals/r-release/R-exts.html
+If _R Packages_ is not enough for you, and you are still curious about more obscure and esoteric details, then you need to check the technical R manual __[Writing R Extensions](https://cran.r-project.org/doc/manuals/r-release/R-exts.html)__ (by the R Core Team). I should warn you: this is NOT a beginner friendly document.
 
 
 -----

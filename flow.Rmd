@@ -6,16 +6,15 @@ For better or for worse, there is not a unique recipe to build a package. In oth
 In this chapter I will describe an opinionated workflow to pack the source code of our working example.
 
 
-## Scenarios
+## Example Structure
 
 The following diagram depicts the filestructure for our working example with the package `cointoss`.
 
-```{r echo = FALSE, fig.cap='Three possible filestructures for a package', out.width = "50%"}
+```{r echo = FALSE, fig.cap='Assumed filestructure', out.width = "35%"}
 knitr::include_graphics("images/pkg-example.png")
 ```
 
-Starting with a default structure, we can add more elements like a `README.md` files, and directories for `tests/` and `vignettes/`. The extra directory `inst/` is generated in the building process.
-
+Let's assume that the source package you are developing has the previous structure. If this is not the case for you, at least keep in mind that the mandatory components are  `DESCRIPTION`, `NAMESPACE`, `R/` and `man/`.
 
 
 ## Worklfow
@@ -60,4 +59,43 @@ To create a binary package, you have to use the argument `binary = TRUE`. Keep i
 
 __Install__: To install the package you can use `devtools::install()`. This function can install a source, bundle or a binary package. After the installation is done, you should be able to load the package with `library()` in order to use its functions, inspect its manual documentation, and read the available vignettes.
 
+
+### Optional devtools file
+
+Unless you are constantly creating packages, you will very likely forget what functions to use for a specific purpose. One small hack that I tend to use is to include an auxiliary `.R` file in the source package, which I typically name as `devtools-flow.R` (or something like that). This file basically contains the list of `"devtools"` functions that we've discussed so far. The following code shows the typical commands of the auxiliary file:
+
+```
+# =====================================================
+# Devtools workflow
+# =====================================================
+
+devtools::document()          # generate documentation
+devtools::check_man()         # check documentation
+devtools::test()              # run tests
+devtools::build_vignettes()   # build vignettes
+devtools::build()             # build bundle
+devtools::install()           # install package
+```
+
+You can think of this auxiliary file, e.g. `devtools-flow.R`, as a cheat-sheet. But keep in mind that this is an additional file that the building functions are NOT expecting to find. That's why you should include the name of this file in your `.Rbuildignore` file.
+Add a new line with the name of the file to `.Rbuildignore`, and remember to anchor it with the caret `^` character. Here's what your `.Rbuildignore` file may look like:
+
+```
+^.*\.Rproj$
+^\.Rproj\.user$
+^devtools-flow.R
+```
+
+I should also say that the inclusion of a `devtools-flow.R` file is completely optional, and there are actually more efficient (but also more advanced/complex) ways to add a _master_ script that you execute in a programmatic way everytime something new has to be built.
+
+
+### Sample Package `cointoss`
+
+You can find the source package of `"cointoss"` in the following github repository:
+
+https://github.com/gastonstat/cointoss
+
+Feel free to download (or clone) the repository and modify its contents to experiment and practice how to create an R package.
+
+Happy packaging and ... _May the FoRce be with You!_
 

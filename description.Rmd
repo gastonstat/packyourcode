@@ -9,7 +9,7 @@ Every package needs a `DESCRIPTION` file.
 
 When creating an "off-the-shelf" package, like the _hello world_ example, the file `DESCRIPTION` will contain some default lines:
 
-```{r echo = FALSE, fig.cap = 'Default content in DESCRIPTION'}
+```{r echo = FALSE, fig.cap = 'Typical default content in a DESCRIPTION file'}
 knitr::include_graphics("images/pkg-description.png")
 ```
 
@@ -28,6 +28,19 @@ License: GPL-2
 Encoding: UTF-8
 LazyData: true
 ```
+
+
+### Author and Maintainer
+
+You need to provide the name(s) of the author(s). You also need to designate one (and only one) person who will be in charge of maintaining the package. The role of the maintainer is essentially fixing bugs, and integrate new code and build a new version.
+
+
+### License
+
+- Your package needs a license.
+- You should choose a license intended for software.
+- Software licenses generally refer to source code.
+- The explicit reference to source code recognizes the fact that software code can exist in its source form, in addition to its binary form.
 
 What licenses are available? There is a list of suggested licenses in the R-project website: [https://www.r-project.org/Licenses](https://www.r-project.org/Licenses/).
 

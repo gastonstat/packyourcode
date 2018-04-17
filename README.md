@@ -1,6 +1,6 @@
 # Pack YouR Code
 
-This repository contains the work in progress of the book __[Pack YouR Code](http://www.gastonsanchez.com/packyourcode)__.
+This repository contains the text, images, and code behind the book __[Pack YouR Code](http://www.gastonsanchez.com/packyourcode)__ (work in progress).
 
 <a href="http://www.gastonsanchez.com/packyourcode" target="_blank"><img src="images/pack-your-code-logo.png" alt="cover image" height="375" width="380"></a>
 

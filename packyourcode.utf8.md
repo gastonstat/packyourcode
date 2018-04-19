@@ -120,7 +120,7 @@ Here's how to simulate a coin toss using `sample()` to take a random sample of s
 coin <- c('heads', 'tails')
 
 sample(coin, size = 1)
-#> [1] "tails"
+#> [1] "heads"
 ```
 
 You use the argument `size = 1` to specify that you want to take a sample of size 1 from the input vector `coin`.
@@ -156,7 +156,7 @@ To be able to draw more elements, you need to sample __with replacement__, which
 ```r
 # draw 4 elements with replacement
 sample(coin, size = 4, replace = TRUE)
-#> [1] "tails" "tails" "heads" "heads"
+#> [1] "tails" "heads" "heads" "tails"
 ```
 
 
@@ -168,14 +168,14 @@ The way `sample()` works is by taking a random sample from the input vector. Thi
 ```r
 # five tosses
 sample(coin, size = 5, replace = TRUE)
-#> [1] "heads" "tails" "heads" "tails" "tails"
+#> [1] "tails" "tails" "tails" "heads" "heads"
 ```
 
 
 ```r
 # another five tosses
 sample(coin, size = 5, replace = TRUE)
-#> [1] "heads" "tails" "tails" "heads" "tails"
+#> [1] "heads" "heads" "heads" "tails" "heads"
 ```
 
 
@@ -1003,7 +1003,7 @@ A more formal strategy, and one that follows OOP principles, is to create a toss
 print
 #> function (x, ...) 
 #> UseMethod("print")
-#> <bytecode: 0x7fad2c1b2d78>
+#> <bytecode: 0x7f855de2b580>
 #> <environment: namespace:base>
 ```
 
@@ -2151,7 +2151,7 @@ What licenses are available? There is a list of suggested licenses in the R-proj
 
 You can find more user friendly information about these and other popular licenses in the website of the [Open Source Initiative](https://opensource.org/licenses). Likewise, you can also check the "Choose a license" guidelines available at https://choosealicense.com/licenses/.
 
-Although R-project suggests the "Creative Commons Attribution-ShareAlike International License" version 4.0, I discourage the use of any Creative Commons (CC) license for software. CC licenses are good for __media__ content (ne.g. arrative, images, music), but not for source code.
+Although R-project suggests the "Creative Commons Attribution-ShareAlike International License" version 4.0, I discourage the use of any Creative Commons (CC) license for software. CC licenses are good for __media__ content (e.g. arrative, images, music), but not for source code.
 
 To know more about the different fields in a description file, see 
 <a href="http://r-pkgs.had.co.nz/description.html" target="_blank">r-pkgs: Package metadata</a>.
@@ -2173,7 +2173,122 @@ Ideally, the `DESCRIPTION` file should be written entirely in ASCII characters. 
 The `LazyData` field is a logical field that controls whether the R datasets use lazy-loading. This implies that your package contains data files (`"cointoss"` does not have any data files).
 
 
+### Type
+
+Another optional field is `Type`, which specifies the type of the package. This field is kind of a historical _left-over_. In the past, there used to be a `Translation` type (no longer used). If you don't include `Type`, then it is assumed to be `Package`.
+
+
+### VignetteBuilder
+
+If your package includes vignettes (i.e. there's a `vignettes/` subdirectory) written with `.Rmd` files, then `DESCRIPTION` needs a field and value `VignetteBuilder: knitr`. 
+
+
+
 <!--chapter:end:description.Rmd-->
+
+
+# Namespace {#namespace}
+
+## Introduction
+
+In addition to the mandatory `DESCRIPTION` file in the top level of the package directory, an R package also requires another mandatory text file called `NAMESPACE`. This file, with its syntax and its purpose, is perhaps one of the more disorienting elements in a package. So let me try to demistify and explain what a name `NAMESPACE` file is used for.
+
+
+## About Namespaces
+
+Admittedly, the word _namespace_ is one of those terms that says everything and nothing at the same time. The meaning behind _namespace_ is basically that: space for a name. That's the simple part. The complication arises when we naturally ask: What name? What space?
+
+According to [Wikipedia](https://en.wikipedia.org/wiki/Namespace):
+
+> In computing, a namespace is a set of symbols that are used to organize objects of various kinds, so that these objects may be referred to by name. Prominent examples include:
+>
+> - file systems are namespaces that assign names to files
+> - some programming languages organize their variables and subroutines in namespaces
+> - computer networks and distributed systems assign names to resources, such as computers, printers, websites, (remote) files, etc.
+
+
+The main concept is that of a __name__ of an object and its __value__. For example, consider the following code in which objects `a` and `b` are created:
+
+
+```r
+a <- 1
+b <- c('hi', 'there')
+```
+
+From a technical point of view, the command `a <- 1` implies that an object named `a` is being assigned the value of 1. In turn, the command `b <- c('hi', 'there')` involves creating an object named `b` which takes the value of a character vector.
+
+When you type the name of an object, R will look up for it and see what value is associated to (if the object exists). In order to uniquely and correctly identified the value of a name (i.e. named object), R uses a formal system of environments, scoping rules, and namespaces. Without entering into the details of environments, and scoping rules, the idea of a namespace is to provide a context so that R knows how to find the value of an object associated with a name. The lack of such a context would result in total chaos.
+
+Why is this context extremely important with R packages? The best way to answer this question is by thinking about two (or more) different packages containing a function with the same name. For instance, base R contains the function `norm()` which computes the norm of a matrix (and returns an error when you pass a vector to it). Say that I write my own function `norm()` to compute the norm of a vector. If I run the command `norm(1:5)`, what's going to happen? Will R get confused about which `norm()` to use? Will it use R's base `norm()`? Or will it use my `norm()`?
+
+This is where namespaces come very handy. Let's assume that my function `norm()` is actually part of a package called `"vectortools"`. By having a dedicated namespace for each package, we can use the `::` operator to tell R which function (which name) to use: either `base::norm()` or `vectortools::norm()`.
+
+
+## Namespace of a Package
+
+So far we've discussed the idea of a _namescape_, which is what allows you to invoke commands such as `vectortools::norm()`, so that R does not get confused about which function `norm()` to use. But what about the file `NAMESPACE`?
+
+According the technical manual _[Writing R Extensions](https://cran.r-project.org/doc/manuals/r-release/R-exts.html#Package-namespaces)_, 
+
+> This file contains _namespace directives_ describing the imports and exports of the namespace.
+
+What does this mean? 
+
+In regards to a package, the concept of __names__ has to do with the names of the objects in the package. Most objects in a package are the functions that it is made of. But a package can also contain data sets typically in the form of data frames, or matrices, or other types of data structures.
+
+The so-called _namespace directives_ is just the fancy name used to indicate: 1) which functions of your package will be _exported_, and optionally 2) which functions from other packages are _imported_ by your package, or 3) which packages need to be imported because your package depends on them. 
+
+
+### Exported Functions
+
+Not all the functions that you write have to be available for the end-user. Often, you will be writing small auxiliary functions that are called by other functions. A typical example of these functions are checkers (or validators). In the `"cointoss"` package example, we have functions like `check_sides()` and `check_prob()`, which are the auxiliary functions called by the constructor function `coin()`. The constructor is the function that has been designed for the end user; the auxiliary functions are not intended to be called by the end user.
+
+You can tell R which functions are to be exported: those that the end user is supposed to invoke. And which functions to keep "under the hood" (by not exporting them, by default). The list of functions and methods that will be exported (export directives) goes inside the `NAMESPACE`.
+
+Likewise, if your package uses functions from other packages that don't form part of R's base distribution, you should also specify these in the `NAMESPACE` file.
+
+
+### Roxygen export
+
+This book assumes that you are using roxygen comments to document the functions. The good news is that roxygen has a dedicated keyword that let's you specify an _export directive_: the `@export` keyword. Every time you include an `@export` comment in the documentation of a function, this will be taken into account when running the code that generates the corresponding documentation (i.e. in an `.Rd` file).
+
+Here's an example with the code of the `coin()` function. Notice the roxygen comment `@export` to indicate that this function must be exported in the namespace of the package.
+
+
+```r
+#' @title Coin
+#' @description Creates an object of class \code{"coin"}
+#' @param sides vector of coin sides
+#' @param prob vector of side probabilities
+#' @return an object of class \code{"coin"}
+#' @export
+#' @examples
+#' # default 
+#' coin1 <- coin()
+#' 
+coin <- function(sides = c("heads", "tails"), prob = c(0.5, 0.5)) {
+  check_sides(sides)
+  check_prob(prob)
+
+  object <- list(
+    sides = sides,
+    prob = prob)
+  class(object) <- "coin"
+  object
+}
+```
+
+The way we are going to build a package will be done in such a manner that R will automatically generate content for the `NAMESPACE` file. Assuming that `coin()` was the only exported function, then `NAMESPACE` would look like this:
+
+```
+# Generated by roxygen2: do not edit by hand
+
+export(coin)
+```
+
+This means that the package `"roxygen2"` is actually doing the work for us, automatically updating `NAMESPACE`. Observe the syntax `export(coin)`, meaning that `coin()` will be exported.
+
+<!--chapter:end:namespace.Rmd-->
 
 
 # Tests {#tests}
@@ -2198,7 +2313,7 @@ e.g. `test-coin.R`, `test-toss.R`, etc.
 
 <div class="figure" style="text-align: center">
 <img src="images/test-files.png" alt="Structure of test files" width="35%" />
-<p class="caption">(\#fig:unnamed-chunk-96)Structure of test files</p>
+<p class="caption">(\#fig:unnamed-chunk-99)Structure of test files</p>
 </div>
 
 
@@ -2231,14 +2346,14 @@ As you can tell, you simply load the package `testthat`, then load your package,
 
 <div class="figure" style="text-align: center">
 <img src="images/test-concept.png" alt="Conceptual test structure" width="30%" />
-<p class="caption">(\#fig:unnamed-chunk-97)Conceptual test structure</p>
+<p class="caption">(\#fig:unnamed-chunk-100)Conceptual test structure</p>
 </div>
 
 - A __context__ involves __tests__ formed by groups of __expectations__
 
 <div class="figure" style="text-align: center">
 <img src="images/test-hierarchy.png" alt="Abstract and functional representations" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-98)Abstract and functional representations</p>
+<p class="caption">(\#fig:unnamed-chunk-101)Abstract and functional representations</p>
 </div>
 
 - Each structure has associated functions:
@@ -2248,7 +2363,7 @@ As you can tell, you simply load the package `testthat`, then load your package,
 
 <div class="figure" style="text-align: center">
 <img src="images/test-meaning.png" alt="Description of testthat components" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-99)Description of testthat components</p>
+<p class="caption">(\#fig:unnamed-chunk-102)Description of testthat components</p>
 </div>
 
 
@@ -2300,11 +2415,11 @@ https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html
 
 ## Including Vignettes
 
-If you decide that your package needs one or more vignettes, then you need to add a subdirectory called `vignettes/`. You can have as many vignettes as you consider convenient. Inside the `vignettes/` subdirectory, you add either `.Rmd` (R markdown) files or `.Rnw` (R noweb) files. Since the markdown syntax is simpler than latex, I prefer to use `.Rmd` files to write the content of the vignettes.
+If you decide that your package needs one or more vignettes (which I strongly recommend), then you need to add a subdirectory called `vignettes/`. You can have as many vignettes as you consider convenient. Inside the `vignettes/` subdirectory, you add either `.Rmd` (R markdown) files or `.Rnw` (R noweb) files. Since the markdown syntax is simpler than latex, I prefer to use `.Rmd` files to write the content of the vignettes.
 
 <div class="figure" style="text-align: center">
 <img src="images/vignette-files.png" alt="Structure of vignette files" width="35%" />
-<p class="caption">(\#fig:unnamed-chunk-101)Structure of vignette files</p>
+<p class="caption">(\#fig:unnamed-chunk-104)Structure of vignette files</p>
 </div>
 
 When creating an `.Rmd` file for a vignette, you need to modify the _yaml_ header with the following fields:
@@ -2334,11 +2449,11 @@ Don't forget to customize the values of the yaml fields:
 
 - `vignette`: this is the last yaml field which contains a special block of metadata needed by R. You only need to modify the `\VignetteIndexEntry` to provide the title of your vignette. The other two lines should not be changed. They tell R to use knitr to process the file, and that the file is encoded in UTF-8 (the only encoding you should ever use to write vignettes).
 
-The following screenshot shows part of the contents in the introductory vignette for our package `"cointoss"`:
+The following screenshot shows part of the contents in the introductory vignette for the working example package `"cointoss"`. Notice that there is a code chunk with the `library()` function in order to load the package: e.g. `library(cointos`.
 
 <div class="figure" style="text-align: center">
 <img src="images/vignette-rmd.png" alt="Screenshot of the vignette in cointoss" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-102)Screenshot of the vignette in cointoss</p>
+<p class="caption">(\#fig:unnamed-chunk-105)Screenshot of the vignette in cointoss</p>
 </div>
 
 
@@ -2369,7 +2484,7 @@ The creation process of an R package can be done in several ways. Depending on t
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-states.png" alt="Five possible states of a package" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-104)Five possible states of a package</p>
+<p class="caption">(\#fig:unnamed-chunk-107)Five possible states of a package</p>
 </div>
 
 
@@ -2380,7 +2495,7 @@ From a source package, you can transition to more "mature" (less raw) states.
 
 <div class="figure" style="text-align: center">
 <img src="images/state-source.png" alt="Source package" width="30%" />
-<p class="caption">(\#fig:unnamed-chunk-105)Source package</p>
+<p class="caption">(\#fig:unnamed-chunk-108)Source package</p>
 </div>
 
 
@@ -2390,7 +2505,7 @@ The next immediate state (although not mandatory) is a __bundled__ package. This
 
 <div class="figure" style="text-align: center">
 <img src="images/state-bundled.png" alt="Bundled package (tarball)" width="25%" />
-<p class="caption">(\#fig:unnamed-chunk-106)Bundled package (tarball)</p>
+<p class="caption">(\#fig:unnamed-chunk-109)Bundled package (tarball)</p>
 </div>
 
 To generate a bundled package from a source package, you can use the `"devtools"` function `build()`. This will combine of the necessary components in a single file, and gz-compress it for you.
@@ -2406,7 +2521,7 @@ A package in __binary__ form is another type of state for a package. This is ano
 
 <div class="figure" style="text-align: center">
 <img src="images/state-binary.png" alt="Binary package (platform specific)" width="35%" />
-<p class="caption">(\#fig:unnamed-chunk-107)Binary package (platform specific)</p>
+<p class="caption">(\#fig:unnamed-chunk-110)Binary package (platform specific)</p>
 </div>
 
 To give you another description of the idea of a binary package, let me use the excellent metaphor written by David Eaton in the [Quora](https://www.quora.com/Whats-the-difference-between-an-installer-source-code-and-a-binary-package-when-installing-software) forum.
@@ -2425,7 +2540,7 @@ An __installed__ package is a decompressed binary file that has been unwrapped i
 
 <div class="figure" style="text-align: center">
 <img src="images/state-installed.png" alt="Installed package (decompressed binary)" width="50%" />
-<p class="caption">(\#fig:unnamed-chunk-108)Installed package (decompressed binary)</p>
+<p class="caption">(\#fig:unnamed-chunk-111)Installed package (decompressed binary)</p>
 </div>
 
 Keeping with the metaphor of the 3-course meal, an installed package is associated with an _installer_. An installer is like the waiter, getting your food and preparing everything for you to eat it: plates, glasses, cutlery, napkins, portions of fodd, etc. The installer basically gets your food ready for you to eat it. 
@@ -2440,7 +2555,7 @@ Lastly, in order to use an installed package you need to load it into memory. Th
 
 <div class="figure" style="text-align: center">
 <img src="images/state-in-memory.png" alt="In-memory package (loaded to be used)" width="30%" />
-<p class="caption">(\#fig:unnamed-chunk-109)In-memory package (loaded to be used)</p>
+<p class="caption">(\#fig:unnamed-chunk-112)In-memory package (loaded to be used)</p>
 </div>
 
 
@@ -2450,7 +2565,7 @@ During the development of a package, you always start at the source level, and e
 
 <div class="figure" style="text-align: center">
 <img src="images/packaging-ideal-flow.png" alt="Theoretical flow of package states" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-110)Theoretical flow of package states</p>
+<p class="caption">(\#fig:unnamed-chunk-113)Theoretical flow of package states</p>
 </div>
 
 <!--chapter:end:states.Rmd-->
@@ -2470,7 +2585,7 @@ The following diagram depicts the filestructure for our working example with the
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-example.png" alt="Assumed filestructure" width="35%" />
-<p class="caption">(\#fig:unnamed-chunk-112)Assumed filestructure</p>
+<p class="caption">(\#fig:unnamed-chunk-115)Assumed filestructure</p>
 </div>
 
 Let's assume that the source package you are developing has the previous structure. If this is not the case for you, at least keep in mind that the mandatory components are  `DESCRIPTION`, `NAMESPACE`, `R/` and `man/`.
@@ -2577,7 +2692,7 @@ To install your package, the users will have to download it to their computers, 
 
 <div class="figure" style="text-align: center">
 <img src="images/share-install.png" alt="Installing a .tar.gz file from RStudio's Packages tab" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-114)Installing a .tar.gz file from RStudio's Packages tab</p>
+<p class="caption">(\#fig:unnamed-chunk-117)Installing a .tar.gz file from RStudio's Packages tab</p>
 </div>
 
 - Go to the __Packages__ tab

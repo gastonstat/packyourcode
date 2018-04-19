@@ -117,7 +117,7 @@ What licenses are available? There is a list of suggested licenses in the R-proj
 
 You can find more user friendly information about these and other popular licenses in the website of the [Open Source Initiative](https://opensource.org/licenses). Likewise, you can also check the "Choose a license" guidelines available at https://choosealicense.com/licenses/.
 
-Although R-project suggests the "Creative Commons Attribution-ShareAlike International License" version 4.0, I discourage the use of any Creative Commons (CC) license for software. CC licenses are good for __media__ content (ne.g. arrative, images, music), but not for source code.
+Although R-project suggests the "Creative Commons Attribution-ShareAlike International License" version 4.0, I discourage the use of any Creative Commons (CC) license for software. CC licenses are good for __media__ content (e.g. arrative, images, music), but not for source code.
 
 To know more about the different fields in a description file, see 
 <a href="http://r-pkgs.had.co.nz/description.html" target="_blank">r-pkgs: Package metadata</a>.
@@ -137,4 +137,15 @@ Ideally, the `DESCRIPTION` file should be written entirely in ASCII characters. 
 ### LazyData
 
 The `LazyData` field is a logical field that controls whether the R datasets use lazy-loading. This implies that your package contains data files (`"cointoss"` does not have any data files).
+
+
+### Type
+
+Another optional field is `Type`, which specifies the type of the package. This field is kind of a historical _left-over_. In the past, there used to be a `Translation` type (no longer used). If you don't include `Type`, then it is assumed to be `Package`.
+
+
+### VignetteBuilder
+
+If your package includes vignettes (i.e. there's a `vignettes/` subdirectory) written with `.Rmd` files, then `DESCRIPTION` needs a field and value `VignetteBuilder: knitr`. 
+
 

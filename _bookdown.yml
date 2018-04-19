@@ -15,6 +15,7 @@ rmd_files: [
   "toy.Rmd",
   "structure.Rmd",
   "description.Rmd",
+  "namespace.Rmd",
   "tests.Rmd",
   "vignettes.Rmd",
   

@@ -9,7 +9,7 @@ https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html
 
 ## Including Vignettes
 
-If you decide that your package needs one or more vignettes, then you need to add a subdirectory called `vignettes/`. You can have as many vignettes as you consider convenient. Inside the `vignettes/` subdirectory, you add either `.Rmd` (R markdown) files or `.Rnw` (R noweb) files. Since the markdown syntax is simpler than latex, I prefer to use `.Rmd` files to write the content of the vignettes.
+If you decide that your package needs one or more vignettes (which I strongly recommend), then you need to add a subdirectory called `vignettes/`. You can have as many vignettes as you consider convenient. Inside the `vignettes/` subdirectory, you add either `.Rmd` (R markdown) files or `.Rnw` (R noweb) files. Since the markdown syntax is simpler than latex, I prefer to use `.Rmd` files to write the content of the vignettes.
 
 ```{r echo = FALSE, fig.cap='Structure of vignette files', out.width = "35%"}
 knitr::include_graphics("images/vignette-files.png")
@@ -42,7 +42,7 @@ Don't forget to customize the values of the yaml fields:
 
 - `vignette`: this is the last yaml field which contains a special block of metadata needed by R. You only need to modify the `\VignetteIndexEntry` to provide the title of your vignette. The other two lines should not be changed. They tell R to use knitr to process the file, and that the file is encoded in UTF-8 (the only encoding you should ever use to write vignettes).
 
-The following screenshot shows part of the contents in the introductory vignette for our package `"cointoss"`:
+The following screenshot shows part of the contents in the introductory vignette for the working example package `"cointoss"`. Notice that there is a code chunk with the `library()` function in order to load the package: e.g. `library(cointos`.
 
 ```{r echo = FALSE, fig.cap = 'Screenshot of the vignette in cointoss', out.width = "80%"}
 knitr::include_graphics("images/vignette-rmd.png")

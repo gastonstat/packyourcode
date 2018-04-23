@@ -29,6 +29,7 @@ The core part of a package is the code in the `R/` directory. Most of the modifi
 - Knit Vignettes
 - Build Bundle
 - Install Package
+- Check Package
 
 You can use functions from `"devtools"` to individually perform each of the actions previously listed. The following table shows such functions:
 
@@ -40,6 +41,7 @@ You can use functions from `"devtools"` to individually perform each of the acti
 | Knit Vignettes       | `devtools::build_vignettes()` |
 | Build Bundle         | `devtools::build()` |
 | Install binary       | `devtools::install()` |
+| Check       | `devtools::check()` |
 
 <br>
 
@@ -58,6 +60,8 @@ To create a binary package, you have to use the argument `binary = TRUE`. Keep i
 `build()` does not generate or check any documentation. It also does not run any tests. However, `build()` does build vignettes by default.
 
 __Install__: To install the package you can use `devtools::install()`. This function can install a source, bundle or a binary package. After the installation is done, you should be able to load the package with `library()` in order to use its functions, inspect its manual documentation, and read the available vignettes.
+
+__Check__: Optionally, you can carry out an integral check of the package. This checking is a comprehensive one, and it will verify pretty much every single detail.
 
 
 ### Optional devtools file

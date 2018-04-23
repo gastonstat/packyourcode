@@ -306,7 +306,7 @@ In this chapter I will describe an opinionated workflow to pack the source code 
 <div id="example-structure" class="section level2">
 <h2><span class="header-section-number">15.2</span> Example Structure</h2>
 <p>The following diagram depicts the filestructure for our working example with the package <code>cointoss</code>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-115"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-116"></span>
 <img src="images/pkg-example.png" alt="Assumed filestructure" width="35%" />
 <p class="caption">
 Figure 15.1: Assumed filestructure
@@ -325,6 +325,7 @@ Figure 15.1: Assumed filestructure
 <li>Knit Vignettes</li>
 <li>Build Bundle</li>
 <li>Install Package</li>
+<li>Check Package</li>
 </ul>
 <p>You can use functions from <code>&quot;devtools&quot;</code> to individually perform each of the actions previously listed. The following table shows such functions:</p>
 <table>
@@ -359,6 +360,10 @@ Figure 15.1: Assumed filestructure
 <td align="left">Install binary</td>
 <td align="left"><code>devtools::install()</code></td>
 </tr>
+<tr class="odd">
+<td align="left">Check</td>
+<td align="left"><code>devtools::check()</code></td>
+</tr>
 </tbody>
 </table>
 <p><br></p>
@@ -370,6 +375,7 @@ Figure 15.1: Assumed filestructure
 <p>To create a binary package, you have to use the argument <code>binary = TRUE</code>. Keep in mind that this generated binary will be platform specific, and will only be installable on the current platform. Most of the time, there is no need to create a binary package.</p>
 <p><code>build()</code> does not generate or check any documentation. It also does not run any tests. However, <code>build()</code> does build vignettes by default.</p>
 <p><strong>Install</strong>: To install the package you can use <code>devtools::install()</code>. This function can install a source, bundle or a binary package. After the installation is done, you should be able to load the package with <code>library()</code> in order to use its functions, inspect its manual documentation, and read the available vignettes.</p>
+<p><strong>Check</strong>: Optionally, you can carry out an integral check of the package. This checking is a comprehensive one, and it will verify pretty much every single detail.</p>
 <div id="optional-devtools-file" class="section level3">
 <h3><span class="header-section-number">15.3.1</span> Optional devtools file</h3>
 <p>Unless you are constantly creating packages, you will very likely forget what functions to use for a specific purpose. One small hack that I tend to use is to include an auxiliary <code>.R</code> file in the source package, which I typically name as <code>devtools-flow.R</code> (or something like that). This file basically contains the list of <code>&quot;devtools&quot;</code> functions that we’ve discussed so far. The following code shows the typical commands of the auxiliary file:</p>

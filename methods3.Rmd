@@ -29,6 +29,7 @@ Test it:
 
 ```{r test-replacement}
 set.seed(3752)
+dime1 <- coin(c("roosevelt", "torch"), prob = c(0.48, 0.52))
 b <- toss(dime1, times = 5)
 b$tosses
 
@@ -54,7 +55,7 @@ b
 ```
 
 
-Because it does not make sense to replace if index is out of the original length, we can add a `stop()` condition:
+Because, in general, it does not make sense to replace if index is out of the original length, we can add a `stop()` condition:
 
 ```{r better-replacement-toss}
 "[<-.toss" <- function(x, i, value) {

@@ -156,7 +156,7 @@ To be able to draw more elements, you need to sample __with replacement__, which
 ```r
 # draw 4 elements with replacement
 sample(coin, size = 4, replace = TRUE)
-#> [1] "tails" "heads" "heads" "tails"
+#> [1] "tails" "heads" "tails" "heads"
 ```
 
 
@@ -168,14 +168,14 @@ The way `sample()` works is by taking a random sample from the input vector. Thi
 ```r
 # five tosses
 sample(coin, size = 5, replace = TRUE)
-#> [1] "tails" "tails" "tails" "heads" "heads"
+#> [1] "tails" "heads" "heads" "tails" "tails"
 ```
 
 
 ```r
 # another five tosses
 sample(coin, size = 5, replace = TRUE)
-#> [1] "heads" "heads" "heads" "tails" "heads"
+#> [1] "tails" "tails" "heads" "heads" "heads"
 ```
 
 
@@ -1003,7 +1003,7 @@ A more formal strategy, and one that follows OOP principles, is to create a toss
 print
 #> function (x, ...) 
 #> UseMethod("print")
-#> <bytecode: 0x7f855de2b580>
+#> <bytecode: 0x7fa473aa7628>
 #> <environment: namespace:base>
 ```
 
@@ -1321,7 +1321,7 @@ toss(quarter1, times = -4)
 
 R produces an error when `times = -4`, but it's an error that may not be very helpful for the user. The error message clearly says that `'size'` is an invalid argument, but `toss()` just has one argument: `times`.
 
-To be more user friendly, among other reasons, it would be better to check whether `times` has a valid value. One way to do that is to include a conditional statement like following one:
+To be more user friendly, among other reasons, it would be better to check whether `times` has a valid value. One way to do that is to include a conditional statement like the following one:
 
 
 ```r
@@ -1479,7 +1479,7 @@ Instead of displaying all the elements that are in the output list returned by `
 - num of sol: 4
 
 Typically, most classes in R have a dedicated printing method. Depending on the type of object, the default printed information may consist of a couple of lines, or sometimes a very verbose output. To create such
-a method we use the generic function `print()`. To be more precise, we declare a new print method for objects of class `"coin"` like so:
+a method we use the generic function `print()`. To be more precise, we declare a new print method for objects of class `"toss"` like so:
 
 
 ```r
@@ -1534,7 +1534,11 @@ quarter_flips
 
 For most purposes the standard `print` method will be sufficient output. However, sometimes a more extensive display is required. This can be done with a `summary` function. To define this type of method we use the function `summary()`.
 
-The way you declare a `summary` method is similar to the way we declare `print`. You need to specify `summary.toss`, indicating that there will be a new summary methods for objects of class `"toss"`:
+The way you declare a `summary` method is similar to the way you declare `print`. You need to specify `summary.toss`, indicating that there will be a new summary method for objects of class `"toss"`. The `summary` will return an object of class `"summary.toss"`, which is typically a list (although you can return any other type of data object).
+
+There's actually one more method that you typically have to create in addition to `summary`: a sibling `print.summary` method. The reason why you need these pair of methods is because an object `"summary.toss"`---returned by `summary()`---will very likely need its own `print` method, thus requiring a `print.summary.toss()` function. 
+
+Here's the `summary.toss()` and the `print.summary.toss()` functions:
 
 
 ```r
@@ -1569,6 +1573,15 @@ summary(quarter_flips)
 #> 
 #> num of fort: 30 
 #> prop of fort: 0.6
+```
+
+You can actually store the output of `summary()` and inspect its contents:
+
+
+```r
+quater_sum <- summary(quarter_flips)
+names(quarter_sum)
+#> Error in eval(expr, envir, enclos): object 'quarter_sum' not found
 ```
 
 
@@ -1622,7 +1635,7 @@ Let's test our `plot` method:
 plot(quarter_flips)
 ```
 
-<img src="packyourcode_files/figure-html4/unnamed-chunk-69-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="packyourcode_files/figure-html4/unnamed-chunk-70-1.png" width="70%" style="display: block; margin: auto;" />
 
 <!--chapter:end:methods2.Rmd-->
 
@@ -1660,6 +1673,7 @@ Test it:
 
 ```r
 set.seed(3752)
+dime1 <- coin(c("roosevelt", "torch"), prob = c(0.48, 0.52))
 b <- toss(dime1, times = 5)
 b$tosses
 #> [1] "roosevelt" "roosevelt" "roosevelt" "torch"     "torch"
@@ -1701,7 +1715,7 @@ b
 ```
 
 
-Because it does not make sense to replace if index is out of the original length, we can add a `stop()` condition:
+Because, in general, it does not make sense to replace if index is out of the original length, we can add a `stop()` condition:
 
 
 ```r
@@ -1872,14 +1886,14 @@ Nowadays you can create an R package in an almost instant way. Here's the list o
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-step0-new.png" alt="Starting point for a new project" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-78)Starting point for a new project</p>
+<p class="caption">(\#fig:unnamed-chunk-79)Starting point for a new project</p>
 </div>
 
 2. Then choose __New Directory__
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-step1-project.png" alt="Different types of RStudio projects" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-79)Different types of RStudio projects</p>
+<p class="caption">(\#fig:unnamed-chunk-80)Different types of RStudio projects</p>
 </div>
 
 3. Choose __R package__
@@ -1890,7 +1904,7 @@ Nowadays you can create an R package in an almost instant way. Here's the list o
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-step4-name.png" alt="Choosing a name for a package" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-81)Choosing a name for a package</p>
+<p class="caption">(\#fig:unnamed-chunk-82)Choosing a name for a package</p>
 </div>
 
 5. The filestructure of your package will be created with some default content. Here's a screenshot of how the panes in RStudio look like in my computer. Notice the default R script `hello.R` and the file structure in the __Files__ tab:
@@ -1904,7 +1918,7 @@ If you look at pane with the __Files__ tab, you should be able to see the follow
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-step6-files.png" alt="Minimal filestructure created by devtools" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-83)Minimal filestructure created by devtools</p>
+<p class="caption">(\#fig:unnamed-chunk-84)Minimal filestructure created by devtools</p>
 </div>
 
 We've ended up with six components inside the package folder. Here's the description of each file:
@@ -1934,7 +1948,7 @@ Alternatively, if you go to the __Build__ tab, you will find the _Install and Re
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-step6-build.png" alt="Options in the Build tab" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-84)Options in the Build tab</p>
+<p class="caption">(\#fig:unnamed-chunk-85)Options in the Build tab</p>
 </div>
 
 I recommend that you follow the suggested steps to see what happens: build the package and check it:
@@ -1976,7 +1990,7 @@ The following diagram depicts three possible filestructures for a package.
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-structures.png" alt="Three possible filestructures for a package" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-89)Three possible filestructures for a package</p>
+<p class="caption">(\#fig:unnamed-chunk-90)Three possible filestructures for a package</p>
 </div>
 
 
@@ -1986,7 +2000,7 @@ The first option is what is considered to be a __minimal__ package.
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-structures1.png" alt="Filestructure of a minimal package" width="30%" />
-<p class="caption">(\#fig:unnamed-chunk-90)Filestructure of a minimal package</p>
+<p class="caption">(\#fig:unnamed-chunk-91)Filestructure of a minimal package</p>
 </div>
 
 Every package must have at least the following four components: 
@@ -2004,7 +2018,7 @@ The second option corresponds to the __default structure__ generated by RStudio 
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-structures2.png" alt="Default filestructure created by devtools" width="30%" />
-<p class="caption">(\#fig:unnamed-chunk-91)Default filestructure created by devtools</p>
+<p class="caption">(\#fig:unnamed-chunk-92)Default filestructure created by devtools</p>
 </div>
 
 In addition to the files and directories of the previous option, now there are two more files:
@@ -2020,7 +2034,7 @@ The third option is the actual structure for our __working example__. Starting w
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-structures3.png" alt="Filestructure of the working example" width="30%" />
-<p class="caption">(\#fig:unnamed-chunk-92)Filestructure of the working example</p>
+<p class="caption">(\#fig:unnamed-chunk-93)Filestructure of the working example</p>
 </div>
 
 Starting with a default structure, we can add more elements like a `README.md` files, and directories for `tests/` and `vignettes/`. The extra directory `inst/` is generated in the building process.
@@ -2044,7 +2058,7 @@ When creating an "off-the-shelf" package, like the _hello world_ example, the fi
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-description.png" alt="Typical default content in a DESCRIPTION file" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-94)Typical default content in a DESCRIPTION file</p>
+<p class="caption">(\#fig:unnamed-chunk-95)Typical default content in a DESCRIPTION file</p>
 </div>
 
 Although the `DESCRIPTION` file is a text with no file extension, it does follow a special type of format known as a _Debian Control File_:
@@ -2313,7 +2327,7 @@ e.g. `test-coin.R`, `test-toss.R`, etc.
 
 <div class="figure" style="text-align: center">
 <img src="images/test-files.png" alt="Structure of test files" width="35%" />
-<p class="caption">(\#fig:unnamed-chunk-99)Structure of test files</p>
+<p class="caption">(\#fig:unnamed-chunk-100)Structure of test files</p>
 </div>
 
 
@@ -2346,14 +2360,14 @@ As you can tell, you simply load the package `testthat`, then load your package,
 
 <div class="figure" style="text-align: center">
 <img src="images/test-concept.png" alt="Conceptual test structure" width="30%" />
-<p class="caption">(\#fig:unnamed-chunk-100)Conceptual test structure</p>
+<p class="caption">(\#fig:unnamed-chunk-101)Conceptual test structure</p>
 </div>
 
 - A __context__ involves __tests__ formed by groups of __expectations__
 
 <div class="figure" style="text-align: center">
 <img src="images/test-hierarchy.png" alt="Abstract and functional representations" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-101)Abstract and functional representations</p>
+<p class="caption">(\#fig:unnamed-chunk-102)Abstract and functional representations</p>
 </div>
 
 - Each structure has associated functions:
@@ -2363,7 +2377,7 @@ As you can tell, you simply load the package `testthat`, then load your package,
 
 <div class="figure" style="text-align: center">
 <img src="images/test-meaning.png" alt="Description of testthat components" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-102)Description of testthat components</p>
+<p class="caption">(\#fig:unnamed-chunk-103)Description of testthat components</p>
 </div>
 
 
@@ -2419,7 +2433,7 @@ If you decide that your package needs one or more vignettes (which I strongly re
 
 <div class="figure" style="text-align: center">
 <img src="images/vignette-files.png" alt="Structure of vignette files" width="35%" />
-<p class="caption">(\#fig:unnamed-chunk-104)Structure of vignette files</p>
+<p class="caption">(\#fig:unnamed-chunk-105)Structure of vignette files</p>
 </div>
 
 When creating an `.Rmd` file for a vignette, you need to modify the _yaml_ header with the following fields:
@@ -2453,7 +2467,7 @@ The following screenshot shows part of the contents in the introductory vignette
 
 <div class="figure" style="text-align: center">
 <img src="images/vignette-rmd.png" alt="Screenshot of the vignette in cointoss" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-105)Screenshot of the vignette in cointoss</p>
+<p class="caption">(\#fig:unnamed-chunk-106)Screenshot of the vignette in cointoss</p>
 </div>
 
 
@@ -2484,7 +2498,7 @@ The creation process of an R package can be done in several ways. Depending on t
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-states.png" alt="Five possible states of a package" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-107)Five possible states of a package</p>
+<p class="caption">(\#fig:unnamed-chunk-108)Five possible states of a package</p>
 </div>
 
 
@@ -2495,7 +2509,7 @@ From a source package, you can transition to more "mature" (less raw) states.
 
 <div class="figure" style="text-align: center">
 <img src="images/state-source.png" alt="Source package" width="30%" />
-<p class="caption">(\#fig:unnamed-chunk-108)Source package</p>
+<p class="caption">(\#fig:unnamed-chunk-109)Source package</p>
 </div>
 
 
@@ -2505,7 +2519,7 @@ The next immediate state (although not mandatory) is a __bundled__ package. This
 
 <div class="figure" style="text-align: center">
 <img src="images/state-bundled.png" alt="Bundled package (tarball)" width="25%" />
-<p class="caption">(\#fig:unnamed-chunk-109)Bundled package (tarball)</p>
+<p class="caption">(\#fig:unnamed-chunk-110)Bundled package (tarball)</p>
 </div>
 
 To generate a bundled package from a source package, you can use the `"devtools"` function `build()`. This will combine of the necessary components in a single file, and gz-compress it for you.
@@ -2521,7 +2535,7 @@ A package in __binary__ form is another type of state for a package. This is ano
 
 <div class="figure" style="text-align: center">
 <img src="images/state-binary.png" alt="Binary package (platform specific)" width="35%" />
-<p class="caption">(\#fig:unnamed-chunk-110)Binary package (platform specific)</p>
+<p class="caption">(\#fig:unnamed-chunk-111)Binary package (platform specific)</p>
 </div>
 
 To give you another description of the idea of a binary package, let me use the excellent metaphor written by David Eaton in the [Quora](https://www.quora.com/Whats-the-difference-between-an-installer-source-code-and-a-binary-package-when-installing-software) forum.
@@ -2540,7 +2554,7 @@ An __installed__ package is a decompressed binary file that has been unwrapped i
 
 <div class="figure" style="text-align: center">
 <img src="images/state-installed.png" alt="Installed package (decompressed binary)" width="50%" />
-<p class="caption">(\#fig:unnamed-chunk-111)Installed package (decompressed binary)</p>
+<p class="caption">(\#fig:unnamed-chunk-112)Installed package (decompressed binary)</p>
 </div>
 
 Keeping with the metaphor of the 3-course meal, an installed package is associated with an _installer_. An installer is like the waiter, getting your food and preparing everything for you to eat it: plates, glasses, cutlery, napkins, portions of fodd, etc. The installer basically gets your food ready for you to eat it. 
@@ -2555,7 +2569,7 @@ Lastly, in order to use an installed package you need to load it into memory. Th
 
 <div class="figure" style="text-align: center">
 <img src="images/state-in-memory.png" alt="In-memory package (loaded to be used)" width="30%" />
-<p class="caption">(\#fig:unnamed-chunk-112)In-memory package (loaded to be used)</p>
+<p class="caption">(\#fig:unnamed-chunk-113)In-memory package (loaded to be used)</p>
 </div>
 
 
@@ -2565,7 +2579,7 @@ During the development of a package, you always start at the source level, and e
 
 <div class="figure" style="text-align: center">
 <img src="images/packaging-ideal-flow.png" alt="Theoretical flow of package states" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-113)Theoretical flow of package states</p>
+<p class="caption">(\#fig:unnamed-chunk-114)Theoretical flow of package states</p>
 </div>
 
 <!--chapter:end:states.Rmd-->
@@ -2585,7 +2599,7 @@ The following diagram depicts the filestructure for our working example with the
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-example.png" alt="Assumed filestructure" width="35%" />
-<p class="caption">(\#fig:unnamed-chunk-115)Assumed filestructure</p>
+<p class="caption">(\#fig:unnamed-chunk-116)Assumed filestructure</p>
 </div>
 
 Let's assume that the source package you are developing has the previous structure. If this is not the case for you, at least keep in mind that the mandatory components are  `DESCRIPTION`, `NAMESPACE`, `R/` and `man/`.
@@ -2603,6 +2617,7 @@ The core part of a package is the code in the `R/` directory. Most of the modifi
 - Knit Vignettes
 - Build Bundle
 - Install Package
+- Check Package
 
 You can use functions from `"devtools"` to individually perform each of the actions previously listed. The following table shows such functions:
 
@@ -2614,6 +2629,7 @@ You can use functions from `"devtools"` to individually perform each of the acti
 | Knit Vignettes       | `devtools::build_vignettes()` |
 | Build Bundle         | `devtools::build()` |
 | Install binary       | `devtools::install()` |
+| Check       | `devtools::check()` |
 
 <br>
 
@@ -2632,6 +2648,8 @@ To create a binary package, you have to use the argument `binary = TRUE`. Keep i
 `build()` does not generate or check any documentation. It also does not run any tests. However, `build()` does build vignettes by default.
 
 __Install__: To install the package you can use `devtools::install()`. This function can install a source, bundle or a binary package. After the installation is done, you should be able to load the package with `library()` in order to use its functions, inspect its manual documentation, and read the available vignettes.
+
+__Check__: Optionally, you can carry out an integral check of the package. This checking is a comprehensive one, and it will verify pretty much every single detail.
 
 
 ### Optional devtools file
@@ -2692,7 +2710,7 @@ To install your package, the users will have to download it to their computers, 
 
 <div class="figure" style="text-align: center">
 <img src="images/share-install.png" alt="Installing a .tar.gz file from RStudio's Packages tab" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-117)Installing a .tar.gz file from RStudio's Packages tab</p>
+<p class="caption">(\#fig:unnamed-chunk-118)Installing a .tar.gz file from RStudio's Packages tab</p>
 </div>
 
 - Go to the __Packages__ tab

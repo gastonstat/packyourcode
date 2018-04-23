@@ -33,7 +33,7 @@ Instead of displaying all the elements that are in the output list returned by `
 - num of sol: 4
 
 Typically, most classes in R have a dedicated printing method. Depending on the type of object, the default printed information may consist of a couple of lines, or sometimes a very verbose output. To create such
-a method we use the generic function `print()`. To be more precise, we declare a new print method for objects of class `"coin"` like so:
+a method we use the generic function `print()`. To be more precise, we declare a new print method for objects of class `"toss"` like so:
 
 ```{r print-toss}
 # print method for object of class "toss"
@@ -73,7 +73,11 @@ quarter_flips
 
 For most purposes the standard `print` method will be sufficient output. However, sometimes a more extensive display is required. This can be done with a `summary` function. To define this type of method we use the function `summary()`.
 
-The way you declare a `summary` method is similar to the way we declare `print`. You need to specify `summary.toss`, indicating that there will be a new summary methods for objects of class `"toss"`:
+The way you declare a `summary` method is similar to the way you declare `print`. You need to specify `summary.toss`, indicating that there will be a new summary method for objects of class `"toss"`. The `summary` will return an object of class `"summary.toss"`, which is typically a list (although you can return any other type of data object).
+
+There's actually one more method that you typically have to create in addition to `summary`: a sibling `print.summary` method. The reason why you need these pair of methods is because an object `"summary.toss"`---returned by `summary()`---will very likely need its own `print` method, thus requiring a `print.summary.toss()` function. 
+
+Here's the `summary.toss()` and the `print.summary.toss()` functions:
 
 ```{r summary-toss}
 summary.toss <- function(object) {
@@ -96,6 +100,15 @@ Let's test it:
 
 ```{r}
 summary(quarter_flips)
+```
+
+You can actually store the output of `summary()` and inspect its contents:
+
+```{r}
+quater_sum <- summary(quarter_flips)
+names(quarter_sum)
+
+
 ```
 
 

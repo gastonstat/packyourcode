@@ -157,7 +157,7 @@ toss(quarter1, times = -4)
 
 R produces an error when `times = -4`, but it's an error that may not be very helpful for the user. The error message clearly says that `'size'` is an invalid argument, but `toss()` just has one argument: `times`.
 
-To be more user friendly, among other reasons, it would be better to check whether `times` has a valid value. One way to do that is to include a conditional statement like following one:
+To be more user friendly, among other reasons, it would be better to check whether `times` has a valid value. One way to do that is to include a conditional statement like the following one:
 
 ```{r}
 toss.coin <- function(x, times = 1) {

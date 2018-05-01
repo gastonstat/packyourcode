@@ -41,7 +41,7 @@ You can use functions from `"devtools"` to individually perform each of the acti
 | Knit Vignettes       | `devtools::build_vignettes()` |
 | Build Bundle         | `devtools::build()` |
 | Install binary       | `devtools::install()` |
-| Check       | `devtools::check()` |
+| Check                | `devtools::check()` |
 
 <br>
 
@@ -79,6 +79,7 @@ devtools::test()              # run tests
 devtools::build_vignettes()   # build vignettes
 devtools::build()             # build bundle
 devtools::install()           # install package
+devtools::check()             # comprehensive check (optional)
 ```
 
 You can think of this auxiliary file, e.g. `devtools-flow.R`, as a cheat-sheet. But keep in mind that this is an additional file that the building functions are NOT expecting to find. That's why you should include the name of this file in your `.Rbuildignore` file.
@@ -91,6 +92,43 @@ Add a new line with the name of the file to `.Rbuildignore`, and remember to anc
 ```
 
 I should also say that the inclusion of a `devtools-flow.R` file is completely optional, and there are actually more efficient (but also more advanced/complex) ways to add a _master_ script that you execute in a programmatic way everytime something new has to be built.
+
+
+### RStudio Build and Check
+
+When you use an RStudio R.project, you will see that the pane containing the Environment, History, and Connections, will show one additonal tab called __Build__.
+
+```{r echo = FALSE, fig.cap='Build tab', out.width = "55%"}
+knitr::include_graphics("images/flow-build-tab.png")
+```
+
+This tab displays three buttons:
+
+- Install and Restart
+- Check
+- More
+
+The __Install and Restart__ button will install and reload your package, starting a fresh session.
+
+```{r echo = FALSE, fig.cap='Install icon', out.width = "35%"}
+knitr::include_graphics("images/flow-icon-install.png")
+```
+
+
+The __Check__ button will perform a comprehensive check of your package.
+
+```{r echo = FALSE, fig.cap='Check icon', out.width = "25%"}
+knitr::include_graphics("images/flow-icon-check.png")
+```
+
+
+The __Build__ button shows more building options.
+
+```{r echo = FALSE, fig.cap='Build icon', out.width = "35%"}
+knitr::include_graphics("images/flow-icon-build.png")
+```
+
+
 
 
 ### Sample Package `cointoss`

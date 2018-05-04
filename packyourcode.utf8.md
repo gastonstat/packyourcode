@@ -156,7 +156,7 @@ To be able to draw more elements, you need to sample __with replacement__, which
 ```r
 # draw 4 elements with replacement
 sample(coin, size = 4, replace = TRUE)
-#> [1] "tails" "heads" "tails" "heads"
+#> [1] "tails" "tails" "heads" "heads"
 ```
 
 
@@ -168,14 +168,14 @@ The way `sample()` works is by taking a random sample from the input vector. Thi
 ```r
 # five tosses
 sample(coin, size = 5, replace = TRUE)
-#> [1] "tails" "heads" "heads" "tails" "tails"
+#> [1] "heads" "tails" "heads" "tails" "tails"
 ```
 
 
 ```r
 # another five tosses
 sample(coin, size = 5, replace = TRUE)
-#> [1] "tails" "tails" "heads" "heads" "heads"
+#> [1] "heads" "tails" "heads" "heads" "tails"
 ```
 
 
@@ -1003,7 +1003,7 @@ A more formal strategy, and one that follows OOP principles, is to create a toss
 print
 #> function (x, ...) 
 #> UseMethod("print")
-#> <bytecode: 0x7fa473aa7628>
+#> <bytecode: 0x7fc44b135c28>
 #> <environment: namespace:base>
 ```
 
@@ -2629,7 +2629,7 @@ You can use functions from `"devtools"` to individually perform each of the acti
 | Knit Vignettes       | `devtools::build_vignettes()` |
 | Build Bundle         | `devtools::build()` |
 | Install binary       | `devtools::install()` |
-| Check       | `devtools::check()` |
+| Check                | `devtools::check()` |
 
 <br>
 
@@ -2667,6 +2667,7 @@ devtools::test()              # run tests
 devtools::build_vignettes()   # build vignettes
 devtools::build()             # build bundle
 devtools::install()           # install package
+devtools::check()             # comprehensive check (optional)
 ```
 
 You can think of this auxiliary file, e.g. `devtools-flow.R`, as a cheat-sheet. But keep in mind that this is an additional file that the building functions are NOT expecting to find. That's why you should include the name of this file in your `.Rbuildignore` file.
@@ -2679,6 +2680,47 @@ Add a new line with the name of the file to `.Rbuildignore`, and remember to anc
 ```
 
 I should also say that the inclusion of a `devtools-flow.R` file is completely optional, and there are actually more efficient (but also more advanced/complex) ways to add a _master_ script that you execute in a programmatic way everytime something new has to be built.
+
+
+### RStudio Build and Check
+
+When you use an RStudio R.project, you will see that the pane containing the Environment, History, and Connections, will show one additonal tab called __Build__.
+
+<div class="figure" style="text-align: center">
+<img src="images/flow-build-tab.png" alt="Build tab" width="55%" />
+<p class="caption">(\#fig:unnamed-chunk-117)Build tab</p>
+</div>
+
+This tab displays three buttons:
+
+- Install and Restart
+- Check
+- More
+
+The __Install and Restart__ button will install and reload your package, starting a fresh session.
+
+<div class="figure" style="text-align: center">
+<img src="images/flow-icon-install.png" alt="Install icon" width="35%" />
+<p class="caption">(\#fig:unnamed-chunk-118)Install icon</p>
+</div>
+
+
+The __Check__ button will perform a comprehensive check of your package.
+
+<div class="figure" style="text-align: center">
+<img src="images/flow-icon-check.png" alt="Check icon" width="25%" />
+<p class="caption">(\#fig:unnamed-chunk-119)Check icon</p>
+</div>
+
+
+The __Build__ button shows more building options.
+
+<div class="figure" style="text-align: center">
+<img src="images/flow-icon-build.png" alt="Build icon" width="35%" />
+<p class="caption">(\#fig:unnamed-chunk-120)Build icon</p>
+</div>
+
+
 
 
 ### Sample Package `cointoss`
@@ -2710,7 +2752,7 @@ To install your package, the users will have to download it to their computers, 
 
 <div class="figure" style="text-align: center">
 <img src="images/share-install.png" alt="Installing a .tar.gz file from RStudio's Packages tab" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-118)Installing a .tar.gz file from RStudio's Packages tab</p>
+<p class="caption">(\#fig:unnamed-chunk-122)Installing a .tar.gz file from RStudio's Packages tab</p>
 </div>
 
 - Go to the __Packages__ tab

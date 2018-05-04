@@ -268,7 +268,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="15.2" data-path="flow.html"><a href="flow.html#example-structure"><i class="fa fa-check"></i><b>15.2</b> Example Structure</a></li>
 <li class="chapter" data-level="15.3" data-path="flow.html"><a href="flow.html#worklfow"><i class="fa fa-check"></i><b>15.3</b> Worklfow</a><ul>
 <li class="chapter" data-level="15.3.1" data-path="flow.html"><a href="flow.html#optional-devtools-file"><i class="fa fa-check"></i><b>15.3.1</b> Optional devtools file</a></li>
-<li class="chapter" data-level="15.3.2" data-path="flow.html"><a href="flow.html#sample-package-cointoss"><i class="fa fa-check"></i><b>15.3.2</b> Sample Package <code>cointoss</code></a></li>
+<li class="chapter" data-level="15.3.2" data-path="flow.html"><a href="flow.html#rstudio-build-and-check"><i class="fa fa-check"></i><b>15.3.2</b> RStudio Build and Check</a></li>
+<li class="chapter" data-level="15.3.3" data-path="flow.html"><a href="flow.html#sample-package-cointoss"><i class="fa fa-check"></i><b>15.3.3</b> Sample Package <code>cointoss</code></a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="16" data-path="sharing.html"><a href="sharing.html"><i class="fa fa-check"></i><b>16</b> Sharing</a><ul>
@@ -388,7 +389,8 @@ devtools::check_man()         # check documentation
 devtools::test()              # run tests
 devtools::build_vignettes()   # build vignettes
 devtools::build()             # build bundle
-devtools::install()           # install package</code></pre>
+devtools::install()           # install package
+devtools::check()             # comprehensive check (optional)</code></pre>
 <p>You can think of this auxiliary file, e.g. <code>devtools-flow.R</code>, as a cheat-sheet. But keep in mind that this is an additional file that the building functions are NOT expecting to find. That’s why you should include the name of this file in your <code>.Rbuildignore</code> file.
 Add a new line with the name of the file to <code>.Rbuildignore</code>, and remember to anchor it with the caret <code>^</code> character. Here’s what your <code>.Rbuildignore</code> file may look like:</p>
 <pre><code>^.*\.Rproj$
@@ -396,8 +398,45 @@ Add a new line with the name of the file to <code>.Rbuildignore</code>, and reme
 ^devtools-flow.R</code></pre>
 <p>I should also say that the inclusion of a <code>devtools-flow.R</code> file is completely optional, and there are actually more efficient (but also more advanced/complex) ways to add a <em>master</em> script that you execute in a programmatic way everytime something new has to be built.</p>
 </div>
+<div id="rstudio-build-and-check" class="section level3">
+<h3><span class="header-section-number">15.3.2</span> RStudio Build and Check</h3>
+<p>When you use an RStudio R.project, you will see that the pane containing the Environment, History, and Connections, will show one additonal tab called <strong>Build</strong>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-117"></span>
+<img src="images/flow-build-tab.png" alt="Build tab" width="55%" />
+<p class="caption">
+Figure 15.2: Build tab
+</p>
+</div>
+<p>This tab displays three buttons:</p>
+<ul>
+<li>Install and Restart</li>
+<li>Check</li>
+<li>More</li>
+</ul>
+<p>The <strong>Install and Restart</strong> button will install and reload your package, starting a fresh session.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-118"></span>
+<img src="images/flow-icon-install.png" alt="Install icon" width="35%" />
+<p class="caption">
+Figure 15.3: Install icon
+</p>
+</div>
+<p>The <strong>Check</strong> button will perform a comprehensive check of your package.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-119"></span>
+<img src="images/flow-icon-check.png" alt="Check icon" width="25%" />
+<p class="caption">
+Figure 15.4: Check icon
+</p>
+</div>
+<p>The <strong>Build</strong> button shows more building options.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-120"></span>
+<img src="images/flow-icon-build.png" alt="Build icon" width="35%" />
+<p class="caption">
+Figure 15.5: Build icon
+</p>
+</div>
+</div>
 <div id="sample-package-cointoss" class="section level3">
-<h3><span class="header-section-number">15.3.2</span> Sample Package <code>cointoss</code></h3>
+<h3><span class="header-section-number">15.3.3</span> Sample Package <code>cointoss</code></h3>
 <p>You can find the source package of <code>&quot;cointoss&quot;</code> in the following github repository:</p>
 <p><a href="https://github.com/gastonstat/cointoss" class="uri">https://github.com/gastonstat/cointoss</a></p>
 <p>Feel free to download (or clone) the repository and modify its contents to experiment and practice how to create an R package.</p>

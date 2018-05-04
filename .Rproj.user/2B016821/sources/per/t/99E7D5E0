@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1524493983024.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3242869245",
+    "id" : "99E7D5E0",
+    "lastKnownWriteTime" : 1524494006,
+    "last_content_update" : 1524494006035,
+    "path" : "~/Dropbox/packyourcode/flow.Rmd",
+    "project_path" : "flow.Rmd",
+    "properties" : {
+        "cursorPosition" : "99,56",
+        "scrollLine" : "93"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

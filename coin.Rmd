@@ -234,7 +234,6 @@ Once again, we need to check for the validity of `prob`. We basically need to ch
 Here is one possible function to check the aspects of `prob` listed above: 
 
 ```{r check-prob}
-# constructor function (version 5)
 check_prob <- function(prob) {
   if (length(prob) != 2 | !is.numeric(prob)) {
     stop("\n'prob' must be a numeric vector of length 2")
@@ -275,6 +274,7 @@ check_prob(c(0.33, 0.66))
 Here's the improved constructor function `coin()`:
 
 ```{r}
+# constructor function (version 5)
 coin <- function(sides = c("heads", "tails"), prob = c(0.5, 0.5)) {
   if (length(sides) != 2) {
     stop("\n'sides' must be of length 2")

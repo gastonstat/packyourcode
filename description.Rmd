@@ -55,7 +55,7 @@ All other fields are optional.
 
 Every R package needs a name, specified in the `Package` field. The package of our study-case is `"cointoss"` but you can actually use a different name. However, you need to follow three rules to choose a valid package name:
 
-- the name can only consist of (ASCII) letters, numbers and dot. 
+- the name can only consist of (ASCII) letters, numbers and the dot (or period). 
 - it must start with a letter.
 - it cannot end with a period. 
 
@@ -76,10 +76,27 @@ The `Title` field corresponds to a short description of the package. If the idea
 - if you refer to other packages and external software then that has to be done in single quotes.
 - if you refer to book titles (and similar), then that has to be done in double quotes.
 
+The `Title` value of our working example is:
+
+```
+Title: Simulates Tossing a Coin
+```
+
+But you could also specify a title like:
+
+```
+Title: Functions for Tossing a Coin
+```
+
+
 
 ### Description
 
 The `Description` field provides a comprehensive description of what your package is designed for. The entire description must be given with one paragraph, which can contain various sentences.
+
+```Description: Functions to create a coin object, to toss a coin multiple times,
+    and to summarize and visualize frequencies of the tosses.
+```
 
 The same rules of double quotes used in `Title` apply to `Description`. If you use URLs in your description, these should be enclosed in angle brackets, e.g. `<https://www.r-project.org>`.
 
@@ -88,10 +105,19 @@ The same rules of double quotes used in `Title` apply to `Description`. If you u
 
 You need to provide the name(s) of the author(s). You also need to designate one (and only one) person who will be in charge of maintaining the package. The role of the maintainer is essentially fixing bugs, and integrate new code and build a new version.
 
+```
+Author: Gaston Sanchez
+Maintainer: Gaston Sanchez <gaston@email.com>
+```
+
 
 ### Version
 
 Another mandatory field is `Version`, which as you may guess, gives the version of the package. The version is a sequence of at least two (and usually three) non-negative integers separated by single `.` (dot) or `-` (hyphen) characters.
+
+```
+Version: 0.1.0
+```
 
 Among the different versioning schemes, perhaps the most common one consists of `<major>.<minor>.<patch>`. For example, consider a version number `1.5.3`, 1 is the major number, 5 is the minor number, and 3 is the patch number. 
 

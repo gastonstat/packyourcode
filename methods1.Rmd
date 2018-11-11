@@ -15,7 +15,7 @@ From [chapter 2](#function), we ended up with the following `toss()` function:
 ```{r}
 #' @title Coin toss function 
 #' @description Simulates tossing a coin a given number of times
-#' @param x coin object
+#' @param x coin object (a vector)
 #' @param times number of tosses
 #' @param prob vector of probabilities for each side of the coin
 #' @return vector of tosses
@@ -69,14 +69,16 @@ methods(class = "matrix")
 When implementing new methods, you begin by creating a __generic__ method with the function `UseMethod()`:
 
 ```{r toss-method}
+# generic method 'toss'
 toss <- function(x, ...) UseMethod("toss")
 ```
 
 The function `UseMethod()` allows you to declare the name of a method. In this example we are telling R that the function `toss()` is now a generic `"toss"` method. Note the use of `"..."` in the function definition, this will allow you to include more arguments when you define specific methods based on `"toss"`. 
 
-A generic method alone is not very useful. You need to create specific cases for the generic. In our example, we only have one class `"coin"`,so that is the only class we will allow `toss` to be applied on. The way to do this is by defining `toss.coin()`:
+A generic method alone is not very useful. You need to create specific cases for the generic. In our example, we only have one class `"coin"`, so that is the only class we will allow `toss` to be applied on. The way to do this is by defining `toss.coin()`:
 
 ```{r toss-coin-specific}
+# specific method 'toss' for objects "coin"
 toss.coin <- function(x, times = 1, prob = NULL) {
   sample(x$sides, size = times, replace = TRUE, prob = prob)
 }

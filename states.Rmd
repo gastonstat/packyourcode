@@ -35,22 +35,22 @@ knitr::include_graphics("images/state-source.png")
 
 ### Bundled Package
 
-The next immediate state (although not mandatory) is a __bundled__ package. This involves wrapping the source package into a single compressed file with extension `.tar.gz`. What exactly is this file? A `.tar` file, also known as "tarball", is a standard format in the Unix/Linux environment, short for _Tape ARchive_. A `.gz` file is simply the type of compression. Therefore, a `.tar.gz` file is a compressed tarball.
+The next immediate state (although not mandatory) is a __bundled__ package. This involves wrapping the source package into a single compressed file with extension `.tar.gz`. What exactly is this file? A `.tar` file, also known as "tarball", is a standard format in the Unix/Linux environment, short for _Tape ARchive_. In turn, a `.gz` file is simply the type of compression. Therefore, a `.tar.gz` file is a compressed tarball.
 
 ```{r echo = FALSE, fig.cap='Bundled package (tarball)', out.width = "25%"}
 knitr::include_graphics("images/state-bundled.png")
 ```
 
-To generate a bundled package from a source package, you can use the `"devtools"` function `build()`. This will combine of the necessary components in a single file, and gz-compress it for you.
+To generate a bundled package from a source package, you can use the `"devtools"` function `build()`. This will combine the necessary components in a single file, and gz-compress it for you.
 
-When/how do you use a `.tar.gz` package? In a not so distant past, this was the default option that I would use to share a package, via email, without passing through CRAN. I would took the bundled package of an experimental version and email it to my colleagues so they could install it in their machines. They would simple need to download the `.tar.gz` file, and then use `install.packages()` with the filepath of the bundled package.
+When/how do you use a `.tar.gz` package? In a not so distant past, this was the default option that I would use to share a package with one of my colleagues, via email, without passing through CRAN. I would took the bundled package of an experimental version and email it to one or more friends so they could install it in their machines. They would simple need to download the `.tar.gz` file, and then use `install.packages()` with the filepath of the bundled package.
 
-Nowadays you don't really need bundled packages that much, especially with file-sharing and file-hosting services like GitHub, google drive, dropbox, etc.
+Nowadays you don't really need bundled packages that much, especially with file-sharing and file-hosting services like GitHub, Google Drive, Dropbox, etc.
 
 
 ### Binary Package
 
-A package in __binary__ form is another type of state for a package. This is another type of compressed file, but in a platform specific way depending on an operating system (e.g. Mac/Linux, Windows).
+A package in __binary__ form is another type of state for a package. This is another type of compressed file that is platform specific, and depends on the operating system you are working with (e.g. Mac/Linux, Windows).
 
 ```{r echo = FALSE, fig.cap='Binary package (platform specific)', out.width = "35%"}
 knitr::include_graphics("images/state-binary.png")

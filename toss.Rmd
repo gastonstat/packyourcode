@@ -7,9 +7,24 @@ Let's keep improving our function `toss()`, but now changing its output in order
 
 ## Motivation for object `"toss"`
 
-We finished the previous chapter with the following `toss()` function, which actually corresponds to the `toss` _method_ for objects of class `"coin"`:
+So far we have a constructor function `coin()` (from [chapter 3](#function)) and a `toss()` (from [chapter 4](#methods1)) which actually corresponds to the `toss` _method_ for objects of class `"coin"`:
 
 ```{r}
+# constructor function
+coin <- function(sides = c("heads", "tails"), prob = c(0.5, 0.5)) {
+  if (length(sides) != 2) {
+    stop("\n'sides' must be of length 2")
+  }
+  check_prob(prob)
+  res <- list(sides = sides, prob = prob)
+  class(res) <- "coin"
+  return(res)
+}
+```
+
+
+```{r}
+# toss method for "coin" objects
 toss.coin <- function(x, times = 1) {
   sample(x$sides, size = times, replace = TRUE, prob = x$prob)
 }
@@ -26,7 +41,11 @@ toss10 <- toss(acoin, times = 10)
 toss10
 ```
 
-Having obtained several tosses, we can calculate things like 1) the total number of tosses, 2) the total number of `heads`, and 3) the total number of `tails`:
+Having obtained several tosses, we can calculate things like:
+
+1) the total number of tosses
+2) the total number of `heads`
+3) the total number of `tails`
 
 ```{r}
 # number of tosses
@@ -86,13 +105,15 @@ make_toss <- function(coin, flips) {
 }
 ```
 
+This auxiliary function is not intended to be called by the user. Instead, it's an _internal_ function for auxiliary purposes.
 
 
 ## Main Function `toss()`
 
-Now that we have the auxiliary function `make_toss()`, we can encapsulate it in a _master_ function `toss.coin()`:
+Now that we have the auxiliary function `make_toss()`, we can integrate it inside the specific method `toss.coin()`. In this way, the function `toss.coin()` becomes the _master_ function: the one designed to be called by the user:
 
 ```{r toss-ver1}
+# redefining toss.coin()
 toss.coin <- function(x, times = 1) {
   flips <- sample(x$sides, size = times, replace = TRUE, prob = x$prob)
   make_toss(x, flips)
@@ -133,6 +154,7 @@ Here's a brief recap of the main functions we have so far:
 - `make_toss()` is an auxiliary function that takes a `"coin"` and a vector of 
 flips, and which produces an object `"toss"`.
 - `toss.coin()` is the specific `"toss"` method to be used on `"coin"` objects.
+- notice that `make_toss()` is called by `toss.coin()`.
 
 
 ## Upgrading `toss()`
@@ -203,4 +225,6 @@ toss(quarter1, 5)
 
 ### In Summary
 
-The more you understand a problem (i.e. phenomenon, process), the better you will be prepared to design objects, and program their corresponding methods.
+The more you understand a problem (i.e. phenomenon, process), the better you will be prepared to design objects, and program their corresponding methods, auxiliary functions, classes, etc.
+
+In my experience, you will very likely need to iterate several times with the creation of objects and functions for your code. At one iteration you will realize that you need to break down a given function into two ore more simpler functions. Sometimes you will see an opportunity to create a secondary function to check ceratin inputs. Likewise, you will identify situations when derived methods are needed to make your code more flexible an duser friendly. Of course, like anything in this life, learning when all these components are needed takes a lot of time and practice.

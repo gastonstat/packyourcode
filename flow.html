@@ -307,7 +307,7 @@ In this chapter I will describe an opinionated workflow to pack the source code 
 <div id="example-structure" class="section level2">
 <h2><span class="header-section-number">15.2</span> Example Structure</h2>
 <p>The following diagram depicts the filestructure for our working example with the package <code>cointoss</code>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-116"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-117"></span>
 <img src="images/pkg-example.png" alt="Assumed filestructure" width="35%" />
 <p class="caption">
 Figure 15.1: Assumed filestructure
@@ -328,7 +328,7 @@ Figure 15.1: Assumed filestructure
 <li>Install Package</li>
 <li>Check Package</li>
 </ul>
-<p>You can use functions from <code>&quot;devtools&quot;</code> to individually perform each of the actions previously listed. The following table shows such functions:</p>
+<p>You can use functions from <code>&quot;devtools&quot;</code> to individually perform each of the actions previously listed. The following table shows such functions.</p>
 <table>
 <thead>
 <tr class="header">
@@ -368,6 +368,8 @@ Figure 15.1: Assumed filestructure
 </tbody>
 </table>
 <p><br></p>
+<p><em>Note: Assuming that your working directory is the one containing all the files and subdirectories of your package, you can invoke the <code>devtools</code> functions from the console.</em></p>
+<p><br></p>
 <p><strong>Create Documentation</strong>: When you change the roxygen comments of your functions, you will need to (re)generate the corresponding manual documentation. This can be done with the function <code>devtools::document()</code> which generates the so-called <code>.Rd</code> (R documentation) files, located in the <code>man/</code> directory.</p>
 <p><strong>Check Documentation</strong>: An optional, but strongly recommended, step after new documentation has been generated, is to check that it is correct. This step becomes mandatory if you plan to share your package via CRAN. To check that the <code>.Rd</code> files are okay, use the function <code>devtools::check_man()</code>. This function inspects that the content and syntax of the <code>.Rd</code> files are correct. A typical cause for this check-up to fail is when you have typos or inconsistencies. For example: when the definition of a function contains the argument <code>x</code> but your roxygen comment <code>@param</code> uses <code>y</code>.</p>
 <p><strong>Run Tests</strong>: If your package contains unit-tests, included in the directory <code>tests/</code>, you can use the function <code>devtools::test()</code> to run such tests.</p>
@@ -401,7 +403,7 @@ Add a new line with the name of the file to <code>.Rbuildignore</code>, and reme
 <div id="rstudio-build-and-check" class="section level3">
 <h3><span class="header-section-number">15.3.2</span> RStudio Build and Check</h3>
 <p>When you use an RStudio R.project, you will see that the pane containing the Environment, History, and Connections, will show one additonal tab called <strong>Build</strong>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-117"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-118"></span>
 <img src="images/flow-build-tab.png" alt="Build tab" width="55%" />
 <p class="caption">
 Figure 15.2: Build tab
@@ -414,21 +416,21 @@ Figure 15.2: Build tab
 <li>More</li>
 </ul>
 <p>The <strong>Install and Restart</strong> button will install and reload your package, starting a fresh session.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-118"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-119"></span>
 <img src="images/flow-icon-install.png" alt="Install icon" width="35%" />
 <p class="caption">
 Figure 15.3: Install icon
 </p>
 </div>
 <p>The <strong>Check</strong> button will perform a comprehensive check of your package.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-119"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-120"></span>
 <img src="images/flow-icon-check.png" alt="Check icon" width="25%" />
 <p class="caption">
 Figure 15.4: Check icon
 </p>
 </div>
 <p>The <strong>Build</strong> button shows more building options.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-120"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-121"></span>
 <img src="images/flow-icon-build.png" alt="Build icon" width="35%" />
 <p class="caption">
 Figure 15.5: Build icon

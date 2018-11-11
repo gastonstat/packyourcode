@@ -58,6 +58,8 @@ We've ended up with six components inside the package folder. Here's the descrip
 
 - The `R/` directory which is where you store all the R script files with the functions of the package.
 
+- The `man/` directory which is the folder containing the `Rd` (R documentation) files, that is, the text files with the technical _help_ documentation of the functions in your package.
+
 - `cointoss.Rproj` is an RStudio project file that is designed to make your package easy to use with RStudio.
 
 - `.Rbuildignore` is a _hidden_ text file used to specify files to be ignored by R when building the _tar-ball_ or _bundle_ of the package.
@@ -84,7 +86,7 @@ I recommend that you follow the suggested steps to see what happens: build the p
 - Build and Reload Package: `Cmd + Shift + B`
 - Check Package: `Cmd + Shift + E`
 
-If everything went fine, you should have been able to create a toy _hello world_ R package (with one function) that you can load:
+If everything went fine, you should have been able to create a toy _hello world_ R package (with one function) that you can load with `library()`:
 
 ```{r eval = FALSE}
 library(hello)

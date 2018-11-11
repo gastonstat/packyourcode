@@ -25,7 +25,7 @@ knitr::include_graphics("images/share-install.png")
 
 ## GitHub
 
-Another very convenient way to share your package is GitHub. I'm assuming that you have a GitHub account, and that you have some familiary with this service. If you use GitHub to host your package source, the `"devtools"` function `install_github()` is the way to go.
+Another very convenient way to share your package is GitHub. I'm assuming that you have a GitHub account, and that you have some familiarity with this service. If you use GitHub to host your package source, the `"devtools"` function `install_github()` is the way to go.
 
 All you (or any other user) have to do is specify the GitHub username, and the name of the repository containing the source code:
 

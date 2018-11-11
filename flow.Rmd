@@ -31,7 +31,7 @@ The core part of a package is the code in the `R/` directory. Most of the modifi
 - Install Package
 - Check Package
 
-You can use functions from `"devtools"` to individually perform each of the actions previously listed. The following table shows such functions:
+You can use functions from `"devtools"` to individually perform each of the actions previously listed. The following table shows such functions.
 
 | Action               | Function      |
 |:---------------------|:--------------|
@@ -42,6 +42,10 @@ You can use functions from `"devtools"` to individually perform each of the acti
 | Build Bundle         | `devtools::build()` |
 | Install binary       | `devtools::install()` |
 | Check                | `devtools::check()` |
+
+<br>
+
+_Note: Assuming that your working directory is the one containing all the files and subdirectories of your package, you can invoke the `devtools` functions from the console._
 
 <br>
 

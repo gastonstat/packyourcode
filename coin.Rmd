@@ -4,13 +4,13 @@
 
 ## Introduction
 
-We begin describing how to create object classes.
-
+In this chapter we describe how to create object classes in R. Specifically, we will focus on the so-called __S3 classes__ or S3 system.
+This is one of the three types of Object Oriented (OO) systems available in R, and it is the most common among R packages.
 
 
 ## Objects and Classes
 
-Let's use the `toss()` function from the previous chapter. We can invoke `toss()` to generate a first series of five tosses, and then compute the proportion of heads:
+In the previous chapter we learned how to create a `toss()` function, and also how to document it with roxygen comments. We can invoke `toss()` to generate a first series of five tosses, and then compute the proportion of heads:
 
 ```{r}
 # random seed
@@ -20,7 +20,7 @@ set.seed(534)
 five <- toss(coin, times = 5)
 five
 
-# prop of heads in five
+# proportion of heads in five
 sum(five == "heads") / length(five)
 ```
 
@@ -42,10 +42,10 @@ Wouldn't it be prefarable to have some mechanism that prevented this type of err
 
 ## S3 Classes
 
-R has two (plus one) object oriented systems, so it can be a bit intimidatingwhen you read and learn about them for the first time. 
-The goal of this tutorial is not to make you an expert in all R's OOP systems, but to help you become familiar with the so-called _S3 class_.
+R has two (plus one) object oriented systems, so it can be a bit intimidatin gwhen you read and learn about them for the first time. 
+The goal of this tutorial is not to make you an expert in all R's OO systems, but to help you become familiar with the so-called _S3 class_.
 
-__S3__ implements a style of OO programming called generic-function OO. S3 uses a special type of function called a _generic_ function that decides which method to call. Keep in mind that S3 is a very casual system: it does not really have a formal definition of classes.
+__S3__ implements a style of object oriented programming called generic-function OO. S3 uses a special type of function called a _generic_ function that decides which method to call. Keep in mind that S3 is a very casual system: it does not really have a formal definition of classes.
 
 S3 classes are widely-used, in particular for statistical models in the `"stats"` package. S3 classes are very informal in that there is not a formal definition for an S3 class. Usually, S3 objects are built on top of lists, or atomic vectors with attributes. But you can also turn functions into S3 objects.
 
@@ -118,6 +118,7 @@ For convenience purposes, we can define a __class constructor__ function to
 initialize a `"coin"` object:
 
 ```{r}
+# constructor function (version 1)
 coin <- function(object = c("heads", "tails")) {
   class(object) <- "coin"
   object
@@ -133,9 +134,10 @@ coin(c("h", "t"))
 
 ## Improving `"coin"` objects
 
-To implement the requirement that a coin must have two sides, we can check for the length of the input vector:
+To implement the requirement that a coin must have two sides, we can add an _if_ condition to check for the length of the input vector:
 
 ```{r}
+# constructor function (version 2)
 coin <- function(object = c("heads", "tails")) {
   if (length(object) != 2) {
     stop("\n'object' must be of length 2")
@@ -145,7 +147,7 @@ coin <- function(object = c("heads", "tails")) {
 }
 ```
 
-Let's try our modified `coin()` function to create a US penny like the one in the image below:
+Let's try our modified constructor function `coin()` to create a virtual version of the US penny like the one in the image below:
 
 ```{r echo = FALSE, fig.cap='US Penny (www.usacoinbook.com)'}
 knitr::include_graphics("images/penny.jpg")
@@ -157,7 +159,7 @@ penny <- coin(c("lincoln", "shield"))
 penny
 ```
 
-Now let's try `coin()` with an invalid input vector:
+Now let's try `coin()` with an invalid input vector. In this case, the constructor function will `stop()` execution with an error message because the input argument has more than 2 elements.
 
 ```{r invalid-coin}
 # invalid coin
@@ -182,6 +184,7 @@ Notice how everytime you print the name of a `"coin"` object, its class is displ
 In addition to the class attribute of a coin, the idea is to assign another attribute for the probability values. We can do this by adding a `prob` argument to the constructor function, and then pass it as an attribute of the coin object inside the class-constructor function.
 
 ```{r}
+# constructor function (version 3)
 coin <- function(object = c("heads", "tails"), prob = c(0.5, 0.5)) {
   if (length(object) != 2) {
     stop("\n'object' must be of length 2")
@@ -206,6 +209,7 @@ rm(coin)
 Another way to implement a constructor function `coin()` that returns an object containing values for both the sides and the probabilities, is to use an R list. Here's the code for this option:
 
 ```{r}
+# constructor function (version 4)
 coin <- function(sides = c("heads", "tails"), prob = c(0.5, 0.5)) {
   if (length(sides) != 2) {
     stop("\n'sides' must be of length 2")
@@ -230,6 +234,7 @@ Once again, we need to check for the validity of `prob`. We basically need to ch
 Here is one possible function to check the aspects of `prob` listed above: 
 
 ```{r check-prob}
+# constructor function (version 5)
 check_prob <- function(prob) {
   if (length(prob) != 2 | !is.numeric(prob)) {
     stop("\n'prob' must be a numeric vector of length 2")
@@ -297,7 +302,7 @@ penny
 
 Sometimes the default displayed output is all you need. However, there are occasions in which you need to customize the amount and format of information displayed on the screen when you type in the name of an object.
 
-Instead of keeping the default printed values, it would be nice to print `penny` and see some output like this:
+Instead of keeping the default printed values, it would be nice to print `penny` and see some _cleaner_ output like this:
 
 ```
 object "coin"
@@ -307,9 +312,10 @@ object "coin"
 2   "shield"   0.5
 ```
 
-How can we do this? The answer involves writing a `print` method for objects of class `"coin"`. Because `print()` is actually a generic function, what you need to do is to create a a specific print _flavor_ for class coin. Basically, you define a `print.coin()` function, and then include commands to print information in the desired way:
+How can we do this? The answer involves writing a `print` method for objects of class `"coin"`. Because `print()` is actually a generic function, what you need to do is to create a a specific print _flavor_ for class `"coin"`. Basically, you define a `print.coin()` function, and then include commands to print information in the desired way:
 
 ```{r}
+# print method for objects of class "coin"
 print.coin <- function(x) {
   cat('object "coin"\n\n')
   cd <- data.frame(
@@ -327,23 +333,28 @@ penny
 ```
 
 
+
 ## Extending classes
 
-We can extend the class `"coin"` and create a derived class for special types of coins. For instance, say we want to create a class `"quarter"`. One side of the coin refers to George Washington, while the other side refers to John Brown's Fort:
+We can extend the class `"coin"` and create a derived class for special types of coins. For instance, say we want to create a class `"quarter"`. One side of the coin refers to George Washington, while the other side refers to the bald eagle:
 
 https://en.wikipedia.org/wiki/Quarter_(United_States_coin)
 
+We can create a quarter by first starting with a `coin()` of `sides` _washington_ and _bald-eagle_, and then assign a `"quarter"` class:
+
 ```{r quarter-coin}
-quarter1 <- coin(c("washington", "fort")) 
+quarter1 <- coin(c("washington", "bald-eagle")) 
 class(quarter1) <- c("quarter", "coin")
 quarter1
 ```
 
-Our coin `quarter1` inherits from `"coin"`:
+Interestingly, our coin `quarter1` inherits from `"coin"`:
 
 ```{r}
 inherits(quarter1, "coin")
 ```
+
+In other words, `quartier1` is of class `"quarter"` but it is also a `"coin"` object.
 
 Likewise, we can create a class for a slightly unbalanced `"dime"`:
 
@@ -353,7 +364,7 @@ class(dime1) <- c("dime", "coin")
 dime1
 ```
 
-Here's another coin example, a _peso_, from Mexico (where I grew up). When you flip a _peso_, you have two sides: _aguila_ (eagle) or _sol_ (sun):
+Here's another coin example, a _peso_, from Mexico (where I grew up). When you flip a _peso_, mexicans will talk about two sides: _aguila_ (eagle) or _sol_ (sun):
 
 ```{r peso}
 peso <- coin(c("aguila", "sol")) 

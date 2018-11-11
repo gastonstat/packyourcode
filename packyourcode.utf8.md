@@ -90,9 +90,9 @@ You can also create a _numeric_ coin that shows `1` and `0` instead of
 
 
 ```r
-num_coin <- c(0, 1)
+num_coin <- c(1, 0)
 num_coin
-#> [1] 0 1
+#> [1] 1 0
 ```
 
 Likewise, you can also create a _logical_ coin that shows `TRUE` and `FALSE` 
@@ -120,7 +120,7 @@ Here's how to simulate a coin toss using `sample()` to take a random sample of s
 coin <- c('heads', 'tails')
 
 sample(coin, size = 1)
-#> [1] "heads"
+#> [1] "tails"
 ```
 
 You use the argument `size = 1` to specify that you want to take a sample of size 1 from the input vector `coin`.
@@ -148,7 +148,7 @@ sample(coin, size = 3)
 #> Error in sample.int(length(x), size, replace, prob): cannot take a sample larger than the population when 'replace = FALSE'
 ```
 
-Notice that R produced an error message. This is because the default behavior of `sample()` cannot draw more elements that the length of the input vector.
+Notice that R produced an error message. This is because the default behavior of `sample()` cannot draw more elements than the length of the input vector.
 
 To be able to draw more elements, you need to sample __with replacement__, which is done by specifying the argument `replace = TRUE`, like this:
 
@@ -156,7 +156,7 @@ To be able to draw more elements, you need to sample __with replacement__, which
 ```r
 # draw 4 elements with replacement
 sample(coin, size = 4, replace = TRUE)
-#> [1] "tails" "tails" "heads" "heads"
+#> [1] "tails" "heads" "tails" "heads"
 ```
 
 
@@ -168,14 +168,14 @@ The way `sample()` works is by taking a random sample from the input vector. Thi
 ```r
 # five tosses
 sample(coin, size = 5, replace = TRUE)
-#> [1] "heads" "tails" "heads" "tails" "tails"
+#> [1] "tails" "tails" "heads" "heads" "tails"
 ```
 
 
 ```r
 # another five tosses
 sample(coin, size = 5, replace = TRUE)
-#> [1] "heads" "tails" "heads" "heads" "tails"
+#> [1] "heads" "heads" "tails" "heads" "heads"
 ```
 
 
@@ -244,7 +244,7 @@ freqs
 
 In my case, I got 56 heads and 44 tails. Your results will probably be different than mine. Sometimes you will get more `"heads"`, sometimes you will get more `"tails"`, and sometimes you will get exactly 50 `"heads"` and 50 `"tails"`.
 
-Run another series of 100 flips, and find the frequency of `"heads"` and `"tails"`:
+Let's run another series of 100 flips, and find the frequency of `"heads"` and `"tails"` with the help of the `table()` function:
 
 
 ```r
@@ -258,23 +258,24 @@ freqs
 ```
 
 
-To make things more interesting, let's consider how the frequency of `heads` evolves over a series of `n` tosses.
+To make things more interesting, let's consider how the frequency of `heads` evolves over a series of _n_ tosses (in this case _n_ = `num_flips`).
 
 
 ```r
 heads_freq <- cumsum(flips == 'heads') / 1:num_flips
 ```
 
-With the vector `heads_freq`, we can graph the relative frequencies with a line-plot:
+With the vector `heads_freq`, we can graph the (cumulative) relative frequencies with a line-plot:
 
 
 ```r
-plot(heads_freq,     # vector
-     type = 'l',     # line type
-     lwd = 2,        # width of line
-     col = 'tomato', # color of line
-     las = 1,        # tick-marks labels orientation
-     ylim = c(0, 1)) # range of y-axis
+plot(heads_freq,      # vector
+     type = 'l',      # line type
+     lwd = 2,         # width of line
+     col = 'tomato',  # color of line
+     las = 1,         # orientation of tick-mark labels
+     ylim = c(0, 1),  # range of y-axis
+     ylab = "relative frequency")  # y-axis label
 abline(h = 0.5, col = 'gray50')
 ```
 
@@ -332,7 +333,7 @@ Recall that, to define a new function in R, you use the function `function()`. Y
 - Usually, you wrap the body of the functions with curly braces.
 - A function returns a single value.
 
-Once defined, you can use a function like any other function in R:
+Once defined, you can use `toss()` like any other function in R:
 
 
 ```r
@@ -349,7 +350,7 @@ Because we can make use of the `prob` argument inside `sample()`, we can make th
 
 
 ```r
-# toss function (version 1)
+# toss function (version 2)
 toss <- function(x, times = 1, prob = NULL) {
   sample(x, size = times, replace = TRUE, prob = prob)
 }
@@ -393,9 +394,9 @@ toss <- function(x, times = 1, prob = NULL) {
 
 ## Roxygen Comments
 
-I'm going to take advantage of our first function to introduce __Roxygen__ comments. As you know, the hash symbol `#` has a special meaning in R: you use it to indicate comments in your code. Interestingly, there is a special kind of comment called an "R oxygen" comment, or simply _roxygen_. As any R comment, Roxygen comments are also indicated with a hash; unlike standard comments, Roxygen comments have an appended apostrophe: `#'`.
+I'm going to take advantage of our first function to introduce __Roxygen__ comments. As you know, the hash symbol `#` has a special meaning in R: you use it to indicate comments in your code. Interestingly, there is a special kind of comment called an "R oxygen" comment, or simply _roxygen_ comment. As any R comment, Roxygen comments are also indicated with a hash; unlike standard comments, Roxygen comments have an appended apostrophe: `#'`.
 
-You use Roxygen comments to write documentation for your functions. One way to do this is by using Roxygen comments. Let's see an example and then I will explain what's going on with the special comments:
+You use Roxygen comments to write documentation for your functions. Let's see an example and then I will explain what's going on with the special comments:
 
 
 ```r
@@ -438,14 +439,6 @@ When you see Roxygen comments like the above ones, the text in the first line is
 The `@return` keyword is optional. But I strongly recommend including `@return` because it is part of a function's documentation: tile, description, inputs, and output.
 
 
-```r
-# toss a loaded coin 10 times
-toss(coin, times = 10, prob = c(0.8, 0.2))
-#>  [1] "heads" "heads" "heads" "heads" "heads" "heads" "heads" "heads"
-#>  [9] "heads" "heads"
-```
-
-
 ### About Roxygen Comments
 
 At this point you may be asking yourself: "Do I really need to document my functions with roxygen comments?" The short answer is No; you don't. So why bother? Because royxgen comments are very convenient when you take a set of functions that will be used to build an R package. In later chapters we will describe more details about roxygen comments and roxygen keywords. The way we are going to build a package involves running some functions that will take the content of the roxygen comments and use them to generate what is called `Rd` (R-dcoumentation) files. These are actually the files behind all the help (or manual) documentation pages of any function.
@@ -460,13 +453,13 @@ At this point you may be asking yourself: "Do I really need to document my funct
 
 ## Introduction
 
-We begin describing how to create object classes.
-
+In this chapter we describe how to create object classes in R. Specifically, we will focus on the so-called __S3 classes__ or S3 system.
+This is one of the three types of Object Oriented (OO) systems available in R, and it is the most common among R packages.
 
 
 ## Objects and Classes
 
-Let's use the `toss()` function from the previous chapter. We can invoke `toss()` to generate a first series of five tosses, and then compute the proportion of heads:
+In the previous chapter we learned how to create a `toss()` function, and also how to document it with roxygen comments. We can invoke `toss()` to generate a first series of five tosses, and then compute the proportion of heads:
 
 
 ```r
@@ -478,7 +471,7 @@ five <- toss(coin, times = 5)
 five
 #> [1] "heads" "heads" "tails" "tails" "heads"
 
-# prop of heads in five
+# proportion of heads in five
 sum(five == "heads") / length(five)
 #> [1] 0.6
 ```
@@ -504,10 +497,10 @@ Wouldn't it be prefarable to have some mechanism that prevented this type of err
 
 ## S3 Classes
 
-R has two (plus one) object oriented systems, so it can be a bit intimidatingwhen you read and learn about them for the first time. 
-The goal of this tutorial is not to make you an expert in all R's OOP systems, but to help you become familiar with the so-called _S3 class_.
+R has two (plus one) object oriented systems, so it can be a bit intimidatin gwhen you read and learn about them for the first time. 
+The goal of this tutorial is not to make you an expert in all R's OO systems, but to help you become familiar with the so-called _S3 class_.
 
-__S3__ implements a style of OO programming called generic-function OO. S3 uses a special type of function called a _generic_ function that decides which method to call. Keep in mind that S3 is a very casual system: it does not really have a formal definition of classes.
+__S3__ implements a style of object oriented programming called generic-function OO. S3 uses a special type of function called a _generic_ function that decides which method to call. Keep in mind that S3 is a very casual system: it does not really have a formal definition of classes.
 
 S3 classes are widely-used, in particular for statistical models in the `"stats"` package. S3 classes are very informal in that there is not a formal definition for an S3 class. Usually, S3 objects are built on top of lists, or atomic vectors with attributes. But you can also turn functions into S3 objects.
 
@@ -599,6 +592,7 @@ initialize a `"coin"` object:
 
 
 ```r
+# constructor function (version 1)
 coin <- function(object = c("heads", "tails")) {
   class(object) <- "coin"
   object
@@ -620,10 +614,11 @@ coin(c("h", "t"))
 
 ## Improving `"coin"` objects
 
-To implement the requirement that a coin must have two sides, we can check for the length of the input vector:
+To implement the requirement that a coin must have two sides, we can add an _if_ condition to check for the length of the input vector:
 
 
 ```r
+# constructor function (version 2)
 coin <- function(object = c("heads", "tails")) {
   if (length(object) != 2) {
     stop("\n'object' must be of length 2")
@@ -633,11 +628,11 @@ coin <- function(object = c("heads", "tails")) {
 }
 ```
 
-Let's try our modified `coin()` function to create a US penny like the one in the image below:
+Let's try our modified constructor function `coin()` to create a virtual version of the US penny like the one in the image below:
 
 <div class="figure" style="text-align: center">
 <img src="images/penny.jpg" alt="US Penny (www.usacoinbook.com)" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-31)US Penny (www.usacoinbook.com)</p>
+<p class="caption">(\#fig:unnamed-chunk-30)US Penny (www.usacoinbook.com)</p>
 </div>
 
 
@@ -650,7 +645,7 @@ penny
 #> [1] "coin"
 ```
 
-Now let's try `coin()` with an invalid input vector:
+Now let's try `coin()` with an invalid input vector. In this case, the constructor function will `stop()` execution with an error message because the input argument has more than 2 elements.
 
 
 ```r
@@ -683,6 +678,7 @@ In addition to the class attribute of a coin, the idea is to assign another attr
 
 
 ```r
+# constructor function (version 3)
 coin <- function(object = c("heads", "tails"), prob = c(0.5, 0.5)) {
   if (length(object) != 2) {
     stop("\n'object' must be of length 2")
@@ -711,6 +707,7 @@ Another way to implement a constructor function `coin()` that returns an object 
 
 
 ```r
+# constructor function (version 4)
 coin <- function(sides = c("heads", "tails"), prob = c(0.5, 0.5)) {
   if (length(sides) != 2) {
     stop("\n'sides' must be of length 2")
@@ -799,6 +796,7 @@ Here's the improved constructor function `coin()`:
 
 
 ```r
+# constructor function (version 5)
 coin <- function(sides = c("heads", "tails"), prob = c(0.5, 0.5)) {
   if (length(sides) != 2) {
     stop("\n'sides' must be of length 2")
@@ -843,7 +841,7 @@ penny
 
 Sometimes the default displayed output is all you need. However, there are occasions in which you need to customize the amount and format of information displayed on the screen when you type in the name of an object.
 
-Instead of keeping the default printed values, it would be nice to print `penny` and see some output like this:
+Instead of keeping the default printed values, it would be nice to print `penny` and see some _cleaner_ output like this:
 
 ```
 object "coin"
@@ -853,10 +851,11 @@ object "coin"
 2   "shield"   0.5
 ```
 
-How can we do this? The answer involves writing a `print` method for objects of class `"coin"`. Because `print()` is actually a generic function, what you need to do is to create a a specific print _flavor_ for class coin. Basically, you define a `print.coin()` function, and then include commands to print information in the desired way:
+How can we do this? The answer involves writing a `print` method for objects of class `"coin"`. Because `print()` is actually a generic function, what you need to do is to create a a specific print _flavor_ for class `"coin"`. Basically, you define a `print.coin()` function, and then include commands to print information in the desired way:
 
 
 ```r
+# print method for objects of class "coin"
 print.coin <- function(x) {
   cat('object "coin"\n\n')
   cd <- data.frame(
@@ -880,31 +879,36 @@ penny
 ```
 
 
+
 ## Extending classes
 
-We can extend the class `"coin"` and create a derived class for special types of coins. For instance, say we want to create a class `"quarter"`. One side of the coin refers to George Washington, while the other side refers to John Brown's Fort:
+We can extend the class `"coin"` and create a derived class for special types of coins. For instance, say we want to create a class `"quarter"`. One side of the coin refers to George Washington, while the other side refers to the bald eagle:
 
 https://en.wikipedia.org/wiki/Quarter_(United_States_coin)
 
+We can create a quarter by first starting with a `coin()` of `sides` _washington_ and _bald-eagle_, and then assign a `"quarter"` class:
+
 
 ```r
-quarter1 <- coin(c("washington", "fort")) 
+quarter1 <- coin(c("washington", "bald-eagle")) 
 class(quarter1) <- c("quarter", "coin")
 quarter1
 #> object "coin"
 #> 
 #>         side prob
 #> 1 washington  0.5
-#> 2       fort  0.5
+#> 2 bald-eagle  0.5
 ```
 
-Our coin `quarter1` inherits from `"coin"`:
+Interestingly, our coin `quarter1` inherits from `"coin"`:
 
 
 ```r
 inherits(quarter1, "coin")
 #> [1] TRUE
 ```
+
+In other words, `quartier1` is of class `"quarter"` but it is also a `"coin"` object.
 
 Likewise, we can create a class for a slightly unbalanced `"dime"`:
 
@@ -920,7 +924,7 @@ dime1
 #> 2     torch 0.52
 ```
 
-Here's another coin example, a _peso_, from Mexico (where I grew up). When you flip a _peso_, you have two sides: _aguila_ (eagle) or _sol_ (sun):
+Here's another coin example, a _peso_, from Mexico (where I grew up). When you flip a _peso_, mexicans will talk about two sides: _aguila_ (eagle) or _sol_ (sun):
 
 
 ```r
@@ -955,7 +959,7 @@ From [chapter 2](#function), we ended up with the following `toss()` function:
 ```r
 #' @title Coin toss function 
 #' @description Simulates tossing a coin a given number of times
-#' @param x coin object
+#' @param x coin object (a vector)
 #' @param times number of tosses
 #' @param prob vector of probabilities for each side of the coin
 #' @return vector of tosses
@@ -1003,7 +1007,7 @@ A more formal strategy, and one that follows OOP principles, is to create a toss
 print
 #> function (x, ...) 
 #> UseMethod("print")
-#> <bytecode: 0x7fc44b135c28>
+#> <bytecode: 0x7fcd63e9c628>
 #> <environment: namespace:base>
 ```
 
@@ -1026,15 +1030,17 @@ When implementing new methods, you begin by creating a __generic__ method with t
 
 
 ```r
+# generic method 'toss'
 toss <- function(x, ...) UseMethod("toss")
 ```
 
 The function `UseMethod()` allows you to declare the name of a method. In this example we are telling R that the function `toss()` is now a generic `"toss"` method. Note the use of `"..."` in the function definition, this will allow you to include more arguments when you define specific methods based on `"toss"`. 
 
-A generic method alone is not very useful. You need to create specific cases for the generic. In our example, we only have one class `"coin"`,so that is the only class we will allow `toss` to be applied on. The way to do this is by defining `toss.coin()`:
+A generic method alone is not very useful. You need to create specific cases for the generic. In our example, we only have one class `"coin"`, so that is the only class we will allow `toss` to be applied on. The way to do this is by defining `toss.coin()`:
 
 
 ```r
+# specific method 'toss' for objects "coin"
 toss.coin <- function(x, times = 1, prob = NULL) {
   sample(x$sides, size = times, replace = TRUE, prob = prob)
 }
@@ -1097,10 +1103,26 @@ Let's keep improving our function `toss()`, but now changing its output in order
 
 ## Motivation for object `"toss"`
 
-We finished the previous chapter with the following `toss()` function, which actually corresponds to the `toss` _method_ for objects of class `"coin"`:
+So far we have a constructor function `coin()` (from [chapter 3](#function)) and a `toss()` (from [chapter 4](#methods1)) which actually corresponds to the `toss` _method_ for objects of class `"coin"`:
 
 
 ```r
+# constructor function
+coin <- function(sides = c("heads", "tails"), prob = c(0.5, 0.5)) {
+  if (length(sides) != 2) {
+    stop("\n'sides' must be of length 2")
+  }
+  check_prob(prob)
+  res <- list(sides = sides, prob = prob)
+  class(res) <- "coin"
+  return(res)
+}
+```
+
+
+
+```r
+# toss method for "coin" objects
 toss.coin <- function(x, times = 1) {
   sample(x$sides, size = times, replace = TRUE, prob = x$prob)
 }
@@ -1120,7 +1142,11 @@ toss10
 #>  [9] "tails" "heads"
 ```
 
-Having obtained several tosses, we can calculate things like 1) the total number of tosses, 2) the total number of `heads`, and 3) the total number of `tails`:
+Having obtained several tosses, we can calculate things like:
+
+1) the total number of tosses
+2) the total number of `heads`
+3) the total number of `tails`
 
 
 ```r
@@ -1197,14 +1223,16 @@ make_toss <- function(coin, flips) {
 }
 ```
 
+This auxiliary function is not intended to be called by the user. Instead, it's an _internal_ function for auxiliary purposes.
 
 
 ## Main Function `toss()`
 
-Now that we have the auxiliary function `make_toss()`, we can encapsulate it in a _master_ function `toss.coin()`:
+Now that we have the auxiliary function `make_toss()`, we can integrate it inside the specific method `toss.coin()`. In this way, the function `toss.coin()` becomes the _master_ function: the one designed to be called by the user:
 
 
 ```r
+# redefining toss.coin()
 toss.coin <- function(x, times = 1) {
   flips <- sample(x$sides, size = times, replace = TRUE, prob = x$prob)
   make_toss(x, flips)
@@ -1268,6 +1296,7 @@ Here's a brief recap of the main functions we have so far:
 - `make_toss()` is an auxiliary function that takes a `"coin"` and a vector of 
 flips, and which produces an object `"toss"`.
 - `toss.coin()` is the specific `"toss"` method to be used on `"coin"` objects.
+- notice that `make_toss()` is called by `toss.coin()`.
 
 
 ## Upgrading `toss()`
@@ -1414,7 +1443,9 @@ toss(quarter1, 5)
 
 ### In Summary
 
-The more you understand a problem (i.e. phenomenon, process), the better you will be prepared to design objects, and program their corresponding methods.
+The more you understand a problem (i.e. phenomenon, process), the better you will be prepared to design objects, and program their corresponding methods, auxiliary functions, classes, etc.
+
+In my experience, you will very likely need to iterate several times with the creation of objects and functions for your code. At one iteration you will realize that you need to break down a given function into two ore more simpler functions. Sometimes you will see an opportunity to create a secondary function to check ceratin inputs. Likewise, you will identify situations when derived methods are needed to make your code more flexible and user friendly. Of course, like anything in this life, learning when all these components are needed takes a lot of time and practice.
 
 <!--chapter:end:toss.Rmd-->
 
@@ -1518,15 +1549,15 @@ Here's another example with the `quarter1` coin used in previous chapters:
 
 ```r
 set.seed(555)
-quarter1 <- coin(c("washington", "fort")) 
+quarter1 <- coin(c("washington", "bald-eagle")) 
 quarter_flips <- toss(quarter1, 50)
 quarter_flips
 #> object "toss"
-#> sides: "washington", "fort" 
+#> sides: "washington", "bald-eagle" 
 #> prob: "0.5", "0.5" 
 #> total tosses: 50 
 #> num of washington: 20 
-#> num of fort: 30
+#> num of bald-eagle: 30
 ```
 
 
@@ -1534,26 +1565,49 @@ quarter_flips
 
 For most purposes the standard `print` method will be sufficient output. However, sometimes a more extensive display is required. This can be done with a `summary` function. To define this type of method we use the function `summary()`.
 
-The way you declare a `summary` method is similar to the way you declare `print`. You need to specify `summary.toss`, indicating that there will be a new summary method for objects of class `"toss"`. The `summary` will return an object of class `"summary.toss"`, which is typically a list (although you can return any other type of data object).
+The way you declare a `summary` method is similar to the way you declare a `print` method. You need to specify `summary.toss`, indicating that there will be a new summary method for objects of class `"toss"`. The `summary` will return an object of class `"summary.toss"`, which is typically a list (although you can return any other type of data object).
 
-There's actually one more method that you typically have to create in addition to `summary`: a sibling `print.summary` method. The reason why you need these pair of methods is because an object `"summary.toss"`---returned by `summary()`---will very likely need its own `print` method, thus requiring a `print.summary.toss()` function. 
-
-Here's the `summary.toss()` and the `print.summary.toss()` functions:
+Here's the `summary.toss()` function:
 
 
 ```r
-summary.toss <- function(object) {
-  structure(object, class = c("summary.toss", class(object)))
+summary.toss <- function(x, ...) {
+  proportions <- c(
+    sum(x$tosses == x$coin$sides[1]) / x$total,
+    sum(x$tosses == x$coin$sides[2]) / x$total
+  )
+  freqs <- data.frame(
+    side = x$coin$sides,
+    count = c(x$heads, x$tails),
+    prop = proportions)
+  obj <- list(freqs = freqs)
+  class(obj) <- "summary.toss"
+  obj
 }
+```
 
+Let's test it:
+
+
+```r
+summary(quarter_flips)
+#> $freqs
+#>         side count prop
+#> 1 washington    20  0.4
+#> 2 bald-eagle    30  0.6
+#> 
+#> attr(,"class")
+#> [1] "summary.toss"
+```
+
+
+When implementing `summary` methods for specific classes, there's actually one more method that you typically have to create: a sibling `print.summary` method. The reason why you need these pair of methods is because an object `"summary.toss"`---returned by `summary()`---will very likely need its own `print` method, thus requiring a `print.summary.toss()` function. 
+
+
+```r
 print.summary.toss <- function(x, ...) {
   cat('summary "toss"\n\n')
-  cat(sprintf('coin: "%s", "%s"', x$coin[1], x$coin[2]), "\n")
-  cat("total tosses:", x$total, "\n\n")
-  cat(sprintf("num of %s:", x$coin$sides[1]), x$heads, "\n")
-  cat(sprintf("prop of %s:", x$coin$sides[1]), x$heads/x$total, "\n\n")
-  cat(sprintf("num of %s:", x$coin$sides[2]), x$tails, "\n")
-  cat(sprintf("prop of %s:", x$coin$sides[2]), x$tails/x$total, "\n")
+  print(x$freqs)
   invisible(x)
 }
 ```
@@ -1565,23 +1619,24 @@ Let's test it:
 summary(quarter_flips)
 #> summary "toss"
 #> 
-#> coin: "c("washington", "fort")", "c(0.5, 0.5)" 
-#> total tosses: 50 
-#> 
-#> num of washington: 20 
-#> prop of washington: 0.4 
-#> 
-#> num of fort: 30 
-#> prop of fort: 0.6
+#>         side count prop
+#> 1 washington    20  0.4
+#> 2 bald-eagle    30  0.6
 ```
 
 You can actually store the output of `summary()` and inspect its contents:
 
 
 ```r
-quater_sum <- summary(quarter_flips)
+quarter_sum <- summary(quarter_flips)
 names(quarter_sum)
-#> Error in eval(expr, envir, enclos): object 'quarter_sum' not found
+#> [1] "freqs"
+
+# inspect it
+quarter_sum$freqs
+#>         side count prop
+#> 1 washington    20  0.4
+#> 2 bald-eagle    30  0.6
 ```
 
 
@@ -1635,7 +1690,7 @@ Let's test our `plot` method:
 plot(quarter_flips)
 ```
 
-<img src="packyourcode_files/figure-html4/unnamed-chunk-70-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="packyourcode_files/figure-html4/unnamed-chunk-71-1.png" width="70%" style="display: block; margin: auto;" />
 
 <!--chapter:end:methods2.Rmd-->
 
@@ -1886,14 +1941,14 @@ Nowadays you can create an R package in an almost instant way. Here's the list o
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-step0-new.png" alt="Starting point for a new project" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-79)Starting point for a new project</p>
+<p class="caption">(\#fig:unnamed-chunk-80)Starting point for a new project</p>
 </div>
 
 2. Then choose __New Directory__
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-step1-project.png" alt="Different types of RStudio projects" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-80)Different types of RStudio projects</p>
+<p class="caption">(\#fig:unnamed-chunk-81)Different types of RStudio projects</p>
 </div>
 
 3. Choose __R package__
@@ -1904,7 +1959,7 @@ Nowadays you can create an R package in an almost instant way. Here's the list o
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-step4-name.png" alt="Choosing a name for a package" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-82)Choosing a name for a package</p>
+<p class="caption">(\#fig:unnamed-chunk-83)Choosing a name for a package</p>
 </div>
 
 5. The filestructure of your package will be created with some default content. Here's a screenshot of how the panes in RStudio look like in my computer. Notice the default R script `hello.R` and the file structure in the __Files__ tab:
@@ -1918,7 +1973,7 @@ If you look at pane with the __Files__ tab, you should be able to see the follow
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-step6-files.png" alt="Minimal filestructure created by devtools" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-84)Minimal filestructure created by devtools</p>
+<p class="caption">(\#fig:unnamed-chunk-85)Minimal filestructure created by devtools</p>
 </div>
 
 We've ended up with six components inside the package folder. Here's the description of each file:
@@ -1928,6 +1983,8 @@ We've ended up with six components inside the package folder. Here's the descrip
 - `NAMESPACE` is a text file (also with no extension) that is used to list the functions that will be available to be called by the user.
 
 - The `R/` directory which is where you store all the R script files with the functions of the package.
+
+- The `man/` directory which is the folder containing the `Rd` (R documentation) files, that is, the text files with the technical _help_ documentation of the functions in your package.
 
 - `cointoss.Rproj` is an RStudio project file that is designed to make your package easy to use with RStudio.
 
@@ -1948,7 +2005,7 @@ Alternatively, if you go to the __Build__ tab, you will find the _Install and Re
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-step6-build.png" alt="Options in the Build tab" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-85)Options in the Build tab</p>
+<p class="caption">(\#fig:unnamed-chunk-86)Options in the Build tab</p>
 </div>
 
 I recommend that you follow the suggested steps to see what happens: build the package and check it:
@@ -1956,7 +2013,7 @@ I recommend that you follow the suggested steps to see what happens: build the p
 - Build and Reload Package: `Cmd + Shift + B`
 - Check Package: `Cmd + Shift + E`
 
-If everything went fine, you should have been able to create a toy _hello world_ R package (with one function) that you can load:
+If everything went fine, you should have been able to create a toy _hello world_ R package (with one function) that you can load with `library()`:
 
 
 ```r
@@ -1986,21 +2043,21 @@ In this chapter we describe the anatomy of a package: the types of files and the
 
 ## Scenarios
 
-The following diagram depicts three possible filestructures for a package.
+The following diagram depicts three possible (hypothetical) filestructures for a package. From a minimal version, to the default contents created by `"devtools"`, to a more sophisticated structure.
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-structures.png" alt="Three possible filestructures for a package" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-90)Three possible filestructures for a package</p>
+<p class="caption">(\#fig:unnamed-chunk-91)Three possible filestructures for a package</p>
 </div>
 
 
 ## Minimal Package
 
-The first option is what is considered to be a __minimal__ package. 
+The first option is what it's considered to be a __minimal__ package. 
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-structures1.png" alt="Filestructure of a minimal package" width="30%" />
-<p class="caption">(\#fig:unnamed-chunk-91)Filestructure of a minimal package</p>
+<p class="caption">(\#fig:unnamed-chunk-92)Filestructure of a minimal package</p>
 </div>
 
 Every package must have at least the following four components: 
@@ -2010,6 +2067,8 @@ Every package must have at least the following four components:
 - `R/` directory
 - `man/` directory
 
+Without any of these four elements, you won't be able to create a valid R package.
+
 
 
 ## Default devtools setting
@@ -2018,7 +2077,7 @@ The second option corresponds to the __default structure__ generated by RStudio 
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-structures2.png" alt="Default filestructure created by devtools" width="30%" />
-<p class="caption">(\#fig:unnamed-chunk-92)Default filestructure created by devtools</p>
+<p class="caption">(\#fig:unnamed-chunk-93)Default filestructure created by devtools</p>
 </div>
 
 In addition to the files and directories of the previous option, now there are two more files:
@@ -2030,15 +2089,16 @@ In addition to the files and directories of the previous option, now there are t
 
 ## Our working example
 
-The third option is the actual structure for our __working example__. Starting with a default structure, we can add more elements like a `README.md` files, and directories for `tests/` and `vignettes/`. The extra directory `inst/` is generated in the building process.
+The third option is the actual structure for our __working example__.
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-structures3.png" alt="Filestructure of the working example" width="30%" />
-<p class="caption">(\#fig:unnamed-chunk-93)Filestructure of the working example</p>
+<p class="caption">(\#fig:unnamed-chunk-94)Filestructure of the working example</p>
 </div>
 
 Starting with a default structure, we can add more elements like a `README.md` files, and directories for `tests/` and `vignettes/`. The extra directory `inst/` is generated in the building process.
 
+You can add more files and directories to make a more complex and _robust_ package. However, to keep a focused scope on this book we will concentrate on the above structure.
 
 
 
@@ -2058,7 +2118,7 @@ When creating an "off-the-shelf" package, like the _hello world_ example, the fi
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-description.png" alt="Typical default content in a DESCRIPTION file" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-95)Typical default content in a DESCRIPTION file</p>
+<p class="caption">(\#fig:unnamed-chunk-96)Typical default content in a DESCRIPTION file</p>
 </div>
 
 Although the `DESCRIPTION` file is a text with no file extension, it does follow a special type of format known as a _Debian Control File_:
@@ -2103,7 +2163,7 @@ All other fields are optional.
 
 Every R package needs a name, specified in the `Package` field. The package of our study-case is `"cointoss"` but you can actually use a different name. However, you need to follow three rules to choose a valid package name:
 
-- the name can only consist of (ASCII) letters, numbers and dot. 
+- the name can only consist of (ASCII) letters, numbers and the dot (or period). 
 - it must start with a letter.
 - it cannot end with a period. 
 
@@ -2124,10 +2184,27 @@ The `Title` field corresponds to a short description of the package. If the idea
 - if you refer to other packages and external software then that has to be done in single quotes.
 - if you refer to book titles (and similar), then that has to be done in double quotes.
 
+The `Title` value of our working example is:
+
+```
+Title: Simulates Tossing a Coin
+```
+
+But you could also specify a title like:
+
+```
+Title: Functions for Tossing a Coin
+```
+
+
 
 ### Description
 
 The `Description` field provides a comprehensive description of what your package is designed for. The entire description must be given with one paragraph, which can contain various sentences.
+
+```Description: Functions to create a coin object, to toss a coin multiple times,
+    and to summarize and visualize frequencies of the tosses.
+```
 
 The same rules of double quotes used in `Title` apply to `Description`. If you use URLs in your description, these should be enclosed in angle brackets, e.g. `<https://www.r-project.org>`.
 
@@ -2136,10 +2213,19 @@ The same rules of double quotes used in `Title` apply to `Description`. If you u
 
 You need to provide the name(s) of the author(s). You also need to designate one (and only one) person who will be in charge of maintaining the package. The role of the maintainer is essentially fixing bugs, and integrate new code and build a new version.
 
+```
+Author: Gaston Sanchez
+Maintainer: Gaston Sanchez <gaston@email.com>
+```
+
 
 ### Version
 
 Another mandatory field is `Version`, which as you may guess, gives the version of the package. The version is a sequence of at least two (and usually three) non-negative integers separated by single `.` (dot) or `-` (hyphen) characters.
+
+```
+Version: 0.1.0
+```
 
 Among the different versioning schemes, perhaps the most common one consists of `<major>.<minor>.<patch>`. For example, consider a version number `1.5.3`, 1 is the major number, 5 is the minor number, and 3 is the patch number. 
 
@@ -2327,7 +2413,7 @@ e.g. `test-coin.R`, `test-toss.R`, etc.
 
 <div class="figure" style="text-align: center">
 <img src="images/test-files.png" alt="Structure of test files" width="35%" />
-<p class="caption">(\#fig:unnamed-chunk-100)Structure of test files</p>
+<p class="caption">(\#fig:unnamed-chunk-101)Structure of test files</p>
 </div>
 
 
@@ -2360,14 +2446,14 @@ As you can tell, you simply load the package `testthat`, then load your package,
 
 <div class="figure" style="text-align: center">
 <img src="images/test-concept.png" alt="Conceptual test structure" width="30%" />
-<p class="caption">(\#fig:unnamed-chunk-101)Conceptual test structure</p>
+<p class="caption">(\#fig:unnamed-chunk-102)Conceptual test structure</p>
 </div>
 
 - A __context__ involves __tests__ formed by groups of __expectations__
 
 <div class="figure" style="text-align: center">
 <img src="images/test-hierarchy.png" alt="Abstract and functional representations" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-102)Abstract and functional representations</p>
+<p class="caption">(\#fig:unnamed-chunk-103)Abstract and functional representations</p>
 </div>
 
 - Each structure has associated functions:
@@ -2377,7 +2463,7 @@ As you can tell, you simply load the package `testthat`, then load your package,
 
 <div class="figure" style="text-align: center">
 <img src="images/test-meaning.png" alt="Description of testthat components" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-103)Description of testthat components</p>
+<p class="caption">(\#fig:unnamed-chunk-104)Description of testthat components</p>
 </div>
 
 
@@ -2433,7 +2519,7 @@ If you decide that your package needs one or more vignettes (which I strongly re
 
 <div class="figure" style="text-align: center">
 <img src="images/vignette-files.png" alt="Structure of vignette files" width="35%" />
-<p class="caption">(\#fig:unnamed-chunk-105)Structure of vignette files</p>
+<p class="caption">(\#fig:unnamed-chunk-106)Structure of vignette files</p>
 </div>
 
 When creating an `.Rmd` file for a vignette, you need to modify the _yaml_ header with the following fields:
@@ -2467,7 +2553,7 @@ The following screenshot shows part of the contents in the introductory vignette
 
 <div class="figure" style="text-align: center">
 <img src="images/vignette-rmd.png" alt="Screenshot of the vignette in cointoss" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-106)Screenshot of the vignette in cointoss</p>
+<p class="caption">(\#fig:unnamed-chunk-107)Screenshot of the vignette in cointoss</p>
 </div>
 
 
@@ -2498,7 +2584,7 @@ The creation process of an R package can be done in several ways. Depending on t
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-states.png" alt="Five possible states of a package" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-108)Five possible states of a package</p>
+<p class="caption">(\#fig:unnamed-chunk-109)Five possible states of a package</p>
 </div>
 
 
@@ -2509,33 +2595,33 @@ From a source package, you can transition to more "mature" (less raw) states.
 
 <div class="figure" style="text-align: center">
 <img src="images/state-source.png" alt="Source package" width="30%" />
-<p class="caption">(\#fig:unnamed-chunk-109)Source package</p>
+<p class="caption">(\#fig:unnamed-chunk-110)Source package</p>
 </div>
 
 
 ### Bundled Package
 
-The next immediate state (although not mandatory) is a __bundled__ package. This involves wrapping the source package into a single compressed file with extension `.tar.gz`. What exactly is this file? A `.tar` file, also known as "tarball", is a standard format in the Unix/Linux environment, short for _Tape ARchive_. A `.gz` file is simply the type of compression. Therefore, a `.tar.gz` file is a compressed tarball.
+The next immediate state (although not mandatory) is a __bundled__ package. This involves wrapping the source package into a single compressed file with extension `.tar.gz`. What exactly is this file? A `.tar` file, also known as "tarball", is a standard format in the Unix/Linux environment, short for _Tape ARchive_. In turn, a `.gz` file is simply the type of compression. Therefore, a `.tar.gz` file is a compressed tarball.
 
 <div class="figure" style="text-align: center">
 <img src="images/state-bundled.png" alt="Bundled package (tarball)" width="25%" />
-<p class="caption">(\#fig:unnamed-chunk-110)Bundled package (tarball)</p>
+<p class="caption">(\#fig:unnamed-chunk-111)Bundled package (tarball)</p>
 </div>
 
-To generate a bundled package from a source package, you can use the `"devtools"` function `build()`. This will combine of the necessary components in a single file, and gz-compress it for you.
+To generate a bundled package from a source package, you can use the `"devtools"` function `build()`. This will combine the necessary components in a single file, and gz-compress it for you.
 
-When/how do you use a `.tar.gz` package? In a not so distant past, this was the default option that I would use to share a package, via email, without passing through CRAN. I would took the bundled package of an experimental version and email it to my colleagues so they could install it in their machines. They would simple need to download the `.tar.gz` file, and then use `install.packages()` with the filepath of the bundled package.
+When/how do you use a `.tar.gz` package? In a not so distant past, this was the default option that I would use to share a package with one of my colleagues, via email, without passing through CRAN. I would took the bundled package of an experimental version and email it to one or more friends so they could install it in their machines. They would simple need to download the `.tar.gz` file, and then use `install.packages()` with the filepath of the bundled package.
 
-Nowadays you don't really need bundled packages that much, especially with file-sharing and file-hosting services like GitHub, google drive, dropbox, etc.
+Nowadays you don't really need bundled packages that much, especially with file-sharing and file-hosting services like GitHub, Google Drive, Dropbox, etc.
 
 
 ### Binary Package
 
-A package in __binary__ form is another type of state for a package. This is another type of compressed file, but in a platform specific way depending on an operating system (e.g. Mac/Linux, Windows).
+A package in __binary__ form is another type of state for a package. This is another type of compressed file that is platform specific, and depends on the operating system you are working with (e.g. Mac/Linux, Windows).
 
 <div class="figure" style="text-align: center">
 <img src="images/state-binary.png" alt="Binary package (platform specific)" width="35%" />
-<p class="caption">(\#fig:unnamed-chunk-111)Binary package (platform specific)</p>
+<p class="caption">(\#fig:unnamed-chunk-112)Binary package (platform specific)</p>
 </div>
 
 To give you another description of the idea of a binary package, let me use the excellent metaphor written by David Eaton in the [Quora](https://www.quora.com/Whats-the-difference-between-an-installer-source-code-and-a-binary-package-when-installing-software) forum.
@@ -2554,7 +2640,7 @@ An __installed__ package is a decompressed binary file that has been unwrapped i
 
 <div class="figure" style="text-align: center">
 <img src="images/state-installed.png" alt="Installed package (decompressed binary)" width="50%" />
-<p class="caption">(\#fig:unnamed-chunk-112)Installed package (decompressed binary)</p>
+<p class="caption">(\#fig:unnamed-chunk-113)Installed package (decompressed binary)</p>
 </div>
 
 Keeping with the metaphor of the 3-course meal, an installed package is associated with an _installer_. An installer is like the waiter, getting your food and preparing everything for you to eat it: plates, glasses, cutlery, napkins, portions of fodd, etc. The installer basically gets your food ready for you to eat it. 
@@ -2569,7 +2655,7 @@ Lastly, in order to use an installed package you need to load it into memory. Th
 
 <div class="figure" style="text-align: center">
 <img src="images/state-in-memory.png" alt="In-memory package (loaded to be used)" width="30%" />
-<p class="caption">(\#fig:unnamed-chunk-113)In-memory package (loaded to be used)</p>
+<p class="caption">(\#fig:unnamed-chunk-114)In-memory package (loaded to be used)</p>
 </div>
 
 
@@ -2579,7 +2665,7 @@ During the development of a package, you always start at the source level, and e
 
 <div class="figure" style="text-align: center">
 <img src="images/packaging-ideal-flow.png" alt="Theoretical flow of package states" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-114)Theoretical flow of package states</p>
+<p class="caption">(\#fig:unnamed-chunk-115)Theoretical flow of package states</p>
 </div>
 
 <!--chapter:end:states.Rmd-->
@@ -2599,7 +2685,7 @@ The following diagram depicts the filestructure for our working example with the
 
 <div class="figure" style="text-align: center">
 <img src="images/pkg-example.png" alt="Assumed filestructure" width="35%" />
-<p class="caption">(\#fig:unnamed-chunk-116)Assumed filestructure</p>
+<p class="caption">(\#fig:unnamed-chunk-117)Assumed filestructure</p>
 </div>
 
 Let's assume that the source package you are developing has the previous structure. If this is not the case for you, at least keep in mind that the mandatory components are  `DESCRIPTION`, `NAMESPACE`, `R/` and `man/`.
@@ -2619,7 +2705,7 @@ The core part of a package is the code in the `R/` directory. Most of the modifi
 - Install Package
 - Check Package
 
-You can use functions from `"devtools"` to individually perform each of the actions previously listed. The following table shows such functions:
+You can use functions from `"devtools"` to individually perform each of the actions previously listed. The following table shows such functions.
 
 | Action               | Function      |
 |:---------------------|:--------------|
@@ -2630,6 +2716,10 @@ You can use functions from `"devtools"` to individually perform each of the acti
 | Build Bundle         | `devtools::build()` |
 | Install binary       | `devtools::install()` |
 | Check                | `devtools::check()` |
+
+<br>
+
+_Note: Assuming that your working directory is the one containing all the files and subdirectories of your package, you can invoke the `devtools` functions from the console._
 
 <br>
 
@@ -2688,7 +2778,7 @@ When you use an RStudio R.project, you will see that the pane containing the Env
 
 <div class="figure" style="text-align: center">
 <img src="images/flow-build-tab.png" alt="Build tab" width="55%" />
-<p class="caption">(\#fig:unnamed-chunk-117)Build tab</p>
+<p class="caption">(\#fig:unnamed-chunk-118)Build tab</p>
 </div>
 
 This tab displays three buttons:
@@ -2701,7 +2791,7 @@ The __Install and Restart__ button will install and reload your package, startin
 
 <div class="figure" style="text-align: center">
 <img src="images/flow-icon-install.png" alt="Install icon" width="35%" />
-<p class="caption">(\#fig:unnamed-chunk-118)Install icon</p>
+<p class="caption">(\#fig:unnamed-chunk-119)Install icon</p>
 </div>
 
 
@@ -2709,7 +2799,7 @@ The __Check__ button will perform a comprehensive check of your package.
 
 <div class="figure" style="text-align: center">
 <img src="images/flow-icon-check.png" alt="Check icon" width="25%" />
-<p class="caption">(\#fig:unnamed-chunk-119)Check icon</p>
+<p class="caption">(\#fig:unnamed-chunk-120)Check icon</p>
 </div>
 
 
@@ -2717,7 +2807,7 @@ The __Build__ button shows more building options.
 
 <div class="figure" style="text-align: center">
 <img src="images/flow-icon-build.png" alt="Build icon" width="35%" />
-<p class="caption">(\#fig:unnamed-chunk-120)Build icon</p>
+<p class="caption">(\#fig:unnamed-chunk-121)Build icon</p>
 </div>
 
 
@@ -2752,7 +2842,7 @@ To install your package, the users will have to download it to their computers, 
 
 <div class="figure" style="text-align: center">
 <img src="images/share-install.png" alt="Installing a .tar.gz file from RStudio's Packages tab" width="70%" />
-<p class="caption">(\#fig:unnamed-chunk-122)Installing a .tar.gz file from RStudio's Packages tab</p>
+<p class="caption">(\#fig:unnamed-chunk-123)Installing a .tar.gz file from RStudio's Packages tab</p>
 </div>
 
 - Go to the __Packages__ tab
@@ -2765,7 +2855,7 @@ To install your package, the users will have to download it to their computers, 
 
 ## GitHub
 
-Another very convenient way to share your package is GitHub. I'm assuming that you have a GitHub account, and that you have some familiary with this service. If you use GitHub to host your package source, the `"devtools"` function `install_github()` is the way to go.
+Another very convenient way to share your package is GitHub. I'm assuming that you have a GitHub account, and that you have some familiarity with this service. If you use GitHub to host your package source, the `"devtools"` function `install_github()` is the way to go.
 
 All you (or any other user) have to do is specify the GitHub username, and the name of the repository containing the source code:
 

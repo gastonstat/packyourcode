@@ -42,7 +42,7 @@ Recall that, to define a new function in R, you use the function `function()`. Y
 - Usually, you wrap the body of the functions with curly braces.
 - A function returns a single value.
 
-Once defined, you can use a function like any other function in R:
+Once defined, you can use `toss()` like any other function in R:
 
 ```{r}
 # basic call
@@ -55,7 +55,7 @@ toss(coin, 5)
 Because we can make use of the `prob` argument inside `sample()`, we can make the `toss()` function more versatile by adding an argument that let us specify different probabilities for each side of a coin:
 
 ```{r toss-function-ver2}
-# toss function (version 1)
+# toss function (version 2)
 toss <- function(x, times = 1, prob = NULL) {
   sample(x, size = times, replace = TRUE, prob = prob)
 }
@@ -96,9 +96,9 @@ toss <- function(x, times = 1, prob = NULL) {
 
 ## Roxygen Comments
 
-I'm going to take advantage of our first function to introduce __Roxygen__ comments. As you know, the hash symbol `#` has a special meaning in R: you use it to indicate comments in your code. Interestingly, there is a special kind of comment called an "R oxygen" comment, or simply _roxygen_. As any R comment, Roxygen comments are also indicated with a hash; unlike standard comments, Roxygen comments have an appended apostrophe: `#'`.
+I'm going to take advantage of our first function to introduce __Roxygen__ comments. As you know, the hash symbol `#` has a special meaning in R: you use it to indicate comments in your code. Interestingly, there is a special kind of comment called an "R oxygen" comment, or simply _roxygen_ comment. As any R comment, Roxygen comments are also indicated with a hash; unlike standard comments, Roxygen comments have an appended apostrophe: `#'`.
 
-You use Roxygen comments to write documentation for your functions. One way to do this is by using Roxygen comments. Let's see an example and then I will explain what's going on with the special comments:
+You use Roxygen comments to write documentation for your functions. Let's see an example and then I will explain what's going on with the special comments:
 
 ```{r toss-function2}
 #' @title Coin toss function 
@@ -139,11 +139,6 @@ toss <- function(x, times = 1, prob = NULL) {
 When you see Roxygen comments like the above ones, the text in the first line is treated as the `@title` of the function, and then the text after the empty line is considered to be the `@description`. Notice how both lines of text have an empty line below them!
 
 The `@return` keyword is optional. But I strongly recommend including `@return` because it is part of a function's documentation: tile, description, inputs, and output.
-
-```{r}
-# toss a loaded coin 10 times
-toss(coin, times = 10, prob = c(0.8, 0.2))
-```
 
 
 ### About Roxygen Comments

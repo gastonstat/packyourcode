@@ -63,7 +63,7 @@ Here's another example with the `quarter1` coin used in previous chapters:
 
 ```{r}
 set.seed(555)
-quarter1 <- coin(c("washington", "fort")) 
+quarter1 <- coin(c("washington", "bald-eagle")) 
 quarter_flips <- toss(quarter1, 50)
 quarter_flips
 ```
@@ -73,25 +73,39 @@ quarter_flips
 
 For most purposes the standard `print` method will be sufficient output. However, sometimes a more extensive display is required. This can be done with a `summary` function. To define this type of method we use the function `summary()`.
 
-The way you declare a `summary` method is similar to the way you declare `print`. You need to specify `summary.toss`, indicating that there will be a new summary method for objects of class `"toss"`. The `summary` will return an object of class `"summary.toss"`, which is typically a list (although you can return any other type of data object).
+The way you declare a `summary` method is similar to the way you declare a `print` method. You need to specify `summary.toss`, indicating that there will be a new summary method for objects of class `"toss"`. The `summary` will return an object of class `"summary.toss"`, which is typically a list (although you can return any other type of data object).
 
-There's actually one more method that you typically have to create in addition to `summary`: a sibling `print.summary` method. The reason why you need these pair of methods is because an object `"summary.toss"`---returned by `summary()`---will very likely need its own `print` method, thus requiring a `print.summary.toss()` function. 
-
-Here's the `summary.toss()` and the `print.summary.toss()` functions:
+Here's the `summary.toss()` function:
 
 ```{r summary-toss}
-summary.toss <- function(object) {
-  structure(object, class = c("summary.toss", class(object)))
+summary.toss <- function(x, ...) {
+  proportions <- c(
+    sum(x$tosses == x$coin$sides[1]) / x$total,
+    sum(x$tosses == x$coin$sides[2]) / x$total
+  )
+  freqs <- data.frame(
+    side = x$coin$sides,
+    count = c(x$heads, x$tails),
+    prop = proportions)
+  obj <- list(freqs = freqs)
+  class(obj) <- "summary.toss"
+  obj
 }
+```
 
+Let's test it:
+
+```{r}
+summary(quarter_flips)
+```
+
+
+When implementing `summary` methods for specific classes, there's actually one more method that you typically have to create: a sibling `print.summary` method. The reason why you need these pair of methods is because an object `"summary.toss"`---returned by `summary()`---will very likely need its own `print` method, thus requiring a `print.summary.toss()` function. 
+
+```{r print-summary}
 print.summary.toss <- function(x, ...) {
   cat('summary "toss"\n\n')
-  cat(sprintf('coin: "%s", "%s"', x$coin[1], x$coin[2]), "\n")
-  cat("total tosses:", x$total, "\n\n")
-  cat(sprintf("num of %s:", x$coin$sides[1]), x$heads, "\n")
-  cat(sprintf("prop of %s:", x$coin$sides[1]), x$heads/x$total, "\n\n")
-  cat(sprintf("num of %s:", x$coin$sides[2]), x$tails, "\n")
-  cat(sprintf("prop of %s:", x$coin$sides[2]), x$tails/x$total, "\n")
+  print(x$freqs)
   invisible(x)
 }
 ```
@@ -105,10 +119,11 @@ summary(quarter_flips)
 You can actually store the output of `summary()` and inspect its contents:
 
 ```{r}
-quater_sum <- summary(quarter_flips)
+quarter_sum <- summary(quarter_flips)
 names(quarter_sum)
 
-
+# inspect it
+quarter_sum$freqs
 ```
 
 

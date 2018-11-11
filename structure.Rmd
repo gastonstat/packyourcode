@@ -7,7 +7,7 @@ In this chapter we describe the anatomy of a package: the types of files and the
 
 ## Scenarios
 
-The following diagram depicts three possible filestructures for a package.
+The following diagram depicts three possible (hypothetical) filestructures for a package. From a minimal version, to the default contents created by `"devtools"`, to a more sophisticated structure.
 
 ```{r echo = FALSE, fig.cap='Three possible filestructures for a package'}
 knitr::include_graphics("images/pkg-structures.png")
@@ -16,7 +16,7 @@ knitr::include_graphics("images/pkg-structures.png")
 
 ## Minimal Package
 
-The first option is what is considered to be a __minimal__ package. 
+The first option is what it's considered to be a __minimal__ package. 
 
 ```{r echo = FALSE, fig.cap='Filestructure of a minimal package', out.width = "30%"}
 knitr::include_graphics("images/pkg-structures1.png")
@@ -28,6 +28,8 @@ Every package must have at least the following four components:
 - `NAMESPACE` file
 - `R/` directory
 - `man/` directory
+
+Without any of these four elements, you won't be able to create a valid R package.
 
 
 
@@ -48,7 +50,7 @@ In addition to the files and directories of the previous option, now there are t
 
 ## Our working example
 
-The third option is the actual structure for our __working example__. Starting with a default structure, we can add more elements like a `README.md` files, and directories for `tests/` and `vignettes/`. The extra directory `inst/` is generated in the building process.
+The third option is the actual structure for our __working example__.
 
 ```{r echo = FALSE, fig.cap='Filestructure of the working example', out.width = "30%"}
 knitr::include_graphics("images/pkg-structures3.png")
@@ -56,5 +58,6 @@ knitr::include_graphics("images/pkg-structures3.png")
 
 Starting with a default structure, we can add more elements like a `README.md` files, and directories for `tests/` and `vignettes/`. The extra directory `inst/` is generated in the building process.
 
+You can add more files and directories to make a more complex and _robust_ package. However, to keep a focused scope on this book we will concentrate on the above structure.
 
 

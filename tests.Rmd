@@ -26,7 +26,7 @@ knitr::include_graphics("images/test-files.png")
 
 ## Script `testthat.R`
 
-The script `testthat.R` is just an auxiliary. The content of this file is very minimalist, with three lines of code, something like this: 
+The script `testthat.R` is just an auxiliary script. The content of this file is very minimalist, with three lines of code, something like this: 
 
 ```
 library(testthat)
@@ -40,7 +40,7 @@ As you can tell, you simply load the package `testthat`, then load your package,
 
 ## About `"testthat"`
 
-`"testthat"` is one of the packages in R that helps you write tests for your functions. One of the main references is the paper _testthat: Get Started with Testing_ by Hadley Wickham (see link below). This paper clearly describes the philisoply and workflow of `"testthat"`. But keep in mind that since the introduction of the package, many more functions haven been added to it.
+`"testthat"` is one of the packages in R that helps you write tests for your functions. One of the main references is the paper _testthat: Get Started with Testing_ by Hadley Wickham (see link below). This paper clearly describes the philosophy and workflow of `"testthat"`. But keep in mind that since the introduction of the package, many more functions haven been added to it.
 
 [https://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf](https://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf)
 
@@ -60,7 +60,7 @@ knitr::include_graphics("images/test-concept.png")
 knitr::include_graphics("images/test-hierarchy.png")
 ```
 
-- Each structure has associated functions:
+- Each test structure has associated functions:
     + `expect_that()` for expectations
     + `test_that()` for groups of tests
     + `context()` for contexts

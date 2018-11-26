@@ -266,7 +266,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="15" data-path="flow.html"><a href="flow.html"><i class="fa fa-check"></i><b>15</b> Packaging Flow</a><ul>
 <li class="chapter" data-level="15.1" data-path="flow.html"><a href="flow.html#introduction-13"><i class="fa fa-check"></i><b>15.1</b> Introduction</a></li>
 <li class="chapter" data-level="15.2" data-path="flow.html"><a href="flow.html#example-structure"><i class="fa fa-check"></i><b>15.2</b> Example Structure</a></li>
-<li class="chapter" data-level="15.3" data-path="flow.html"><a href="flow.html#worklfow"><i class="fa fa-check"></i><b>15.3</b> Worklfow</a><ul>
+<li class="chapter" data-level="15.3" data-path="flow.html"><a href="flow.html#workflow"><i class="fa fa-check"></i><b>15.3</b> Workflow</a><ul>
 <li class="chapter" data-level="15.3.1" data-path="flow.html"><a href="flow.html#optional-devtools-file"><i class="fa fa-check"></i><b>15.3.1</b> Optional devtools file</a></li>
 <li class="chapter" data-level="15.3.2" data-path="flow.html"><a href="flow.html#rstudio-build-and-check"><i class="fa fa-check"></i><b>15.3.2</b> RStudio Build and Check</a></li>
 <li class="chapter" data-level="15.3.3" data-path="flow.html"><a href="flow.html#sample-package-cointoss"><i class="fa fa-check"></i><b>15.3.3</b> Sample Package <code>cointoss</code></a></li>
@@ -325,7 +325,7 @@ Figure 12.1: Structure of test files
 </div>
 <div id="script-testthat.r" class="section level2">
 <h2><span class="header-section-number">12.3</span> Script <code>testthat.R</code></h2>
-<p>The script <code>testthat.R</code> is just an auxiliary. The content of this file is very minimalist, with three lines of code, something like this:</p>
+<p>The script <code>testthat.R</code> is just an auxiliary script. The content of this file is very minimalist, with three lines of code, something like this:</p>
 <pre><code>library(testthat)
 library(cointoss)
 
@@ -334,7 +334,7 @@ test_check(&quot;cointoss&quot;)</code></pre>
 </div>
 <div id="about-testthat" class="section level2">
 <h2><span class="header-section-number">12.4</span> About <code>&quot;testthat&quot;</code></h2>
-<p><code>&quot;testthat&quot;</code> is one of the packages in R that helps you write tests for your functions. One of the main references is the paper <em>testthat: Get Started with Testing</em> by Hadley Wickham (see link below). This paper clearly describes the philisoply and workflow of <code>&quot;testthat&quot;</code>. But keep in mind that since the introduction of the package, many more functions haven been added to it.</p>
+<p><code>&quot;testthat&quot;</code> is one of the packages in R that helps you write tests for your functions. One of the main references is the paper <em>testthat: Get Started with Testing</em> by Hadley Wickham (see link below). This paper clearly describes the philosophy and workflow of <code>&quot;testthat&quot;</code>. But keep in mind that since the introduction of the package, many more functions haven been added to it.</p>
 <p><a href="https://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf" class="uri">https://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf</a></p>
 <ul>
 <li><code>&quot;testthat&quot;</code> provides a testing framework for R that is easy to learn and use</li>
@@ -361,7 +361,7 @@ Figure 12.3: Abstract and functional representations
 </p>
 </div>
 <ul>
-<li>Each structure has associated functions:
+<li>Each test structure has associated functions:
 <ul>
 <li><code>expect_that()</code> for expectations</li>
 <li><code>test_that()</code> for groups of tests</li>

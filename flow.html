@@ -266,7 +266,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="15" data-path="flow.html"><a href="flow.html"><i class="fa fa-check"></i><b>15</b> Packaging Flow</a><ul>
 <li class="chapter" data-level="15.1" data-path="flow.html"><a href="flow.html#introduction-13"><i class="fa fa-check"></i><b>15.1</b> Introduction</a></li>
 <li class="chapter" data-level="15.2" data-path="flow.html"><a href="flow.html#example-structure"><i class="fa fa-check"></i><b>15.2</b> Example Structure</a></li>
-<li class="chapter" data-level="15.3" data-path="flow.html"><a href="flow.html#worklfow"><i class="fa fa-check"></i><b>15.3</b> Worklfow</a><ul>
+<li class="chapter" data-level="15.3" data-path="flow.html"><a href="flow.html#workflow"><i class="fa fa-check"></i><b>15.3</b> Workflow</a><ul>
 <li class="chapter" data-level="15.3.1" data-path="flow.html"><a href="flow.html#optional-devtools-file"><i class="fa fa-check"></i><b>15.3.1</b> Optional devtools file</a></li>
 <li class="chapter" data-level="15.3.2" data-path="flow.html"><a href="flow.html#rstudio-build-and-check"><i class="fa fa-check"></i><b>15.3.2</b> RStudio Build and Check</a></li>
 <li class="chapter" data-level="15.3.3" data-path="flow.html"><a href="flow.html#sample-package-cointoss"><i class="fa fa-check"></i><b>15.3.3</b> Sample Package <code>cointoss</code></a></li>
@@ -315,8 +315,8 @@ Figure 15.1: Assumed filestructure
 </div>
 <p>Let’s assume that the source package you are developing has the previous structure. If this is not the case for you, at least keep in mind that the mandatory components are <code>DESCRIPTION</code>, <code>NAMESPACE</code>, <code>R/</code> and <code>man/</code>.</p>
 </div>
-<div id="worklfow" class="section level2">
-<h2><span class="header-section-number">15.3</span> Worklfow</h2>
+<div id="workflow" class="section level2">
+<h2><span class="header-section-number">15.3</span> Workflow</h2>
 <p>Because a package is made up of various types of files—which can be located in different subdirectories—that play different roles, you can actually break down the overall creation of a package into separate pieces. Interestingly, each of the resulting pieces can be created separately. Consequently, the packaging process that you follow may depend on the piece (or pieces) that need to be built as you add or change components in a package.</p>
 <p>The core part of a package is the code in the <code>R/</code> directory. Most of the modifications made at this level will very likely have a cascading effect on the rest of elements in the package. From this point of view, a typical packaging workflow involves the following steps:</p>
 <ul>

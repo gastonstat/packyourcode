@@ -120,7 +120,7 @@ Here's how to simulate a coin toss using `sample()` to take a random sample of s
 coin <- c('heads', 'tails')
 
 sample(coin, size = 1)
-#> [1] "tails"
+#> [1] "heads"
 ```
 
 You use the argument `size = 1` to specify that you want to take a sample of size 1 from the input vector `coin`.
@@ -156,7 +156,7 @@ To be able to draw more elements, you need to sample __with replacement__, which
 ```r
 # draw 4 elements with replacement
 sample(coin, size = 4, replace = TRUE)
-#> [1] "tails" "heads" "tails" "heads"
+#> [1] "heads" "heads" "tails" "heads"
 ```
 
 
@@ -168,14 +168,14 @@ The way `sample()` works is by taking a random sample from the input vector. Thi
 ```r
 # five tosses
 sample(coin, size = 5, replace = TRUE)
-#> [1] "tails" "tails" "heads" "heads" "tails"
+#> [1] "heads" "heads" "heads" "tails" "heads"
 ```
 
 
 ```r
 # another five tosses
 sample(coin, size = 5, replace = TRUE)
-#> [1] "heads" "heads" "tails" "heads" "heads"
+#> [1] "tails" "tails" "heads" "heads" "tails"
 ```
 
 
@@ -1007,7 +1007,7 @@ A more formal strategy, and one that follows OOP principles, is to create a toss
 print
 #> function (x, ...) 
 #> UseMethod("print")
-#> <bytecode: 0x7fcd63e9c628>
+#> <bytecode: 0x7fa0ac9a5188>
 #> <environment: namespace:base>
 ```
 
@@ -2420,7 +2420,7 @@ e.g. `test-coin.R`, `test-toss.R`, etc.
 
 ## Script `testthat.R`
 
-The script `testthat.R` is just an auxiliary. The content of this file is very minimalist, with three lines of code, something like this: 
+The script `testthat.R` is just an auxiliary script. The content of this file is very minimalist, with three lines of code, something like this: 
 
 ```
 library(testthat)
@@ -2434,7 +2434,7 @@ As you can tell, you simply load the package `testthat`, then load your package,
 
 ## About `"testthat"`
 
-`"testthat"` is one of the packages in R that helps you write tests for your functions. One of the main references is the paper _testthat: Get Started with Testing_ by Hadley Wickham (see link below). This paper clearly describes the philisoply and workflow of `"testthat"`. But keep in mind that since the introduction of the package, many more functions haven been added to it.
+`"testthat"` is one of the packages in R that helps you write tests for your functions. One of the main references is the paper _testthat: Get Started with Testing_ by Hadley Wickham (see link below). This paper clearly describes the philosophy and workflow of `"testthat"`. But keep in mind that since the introduction of the package, many more functions haven been added to it.
 
 [https://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf](https://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf)
 
@@ -2456,7 +2456,7 @@ As you can tell, you simply load the package `testthat`, then load your package,
 <p class="caption">(\#fig:unnamed-chunk-103)Abstract and functional representations</p>
 </div>
 
-- Each structure has associated functions:
+- Each test structure has associated functions:
     + `expect_that()` for expectations
     + `test_that()` for groups of tests
     + `context()` for contexts
@@ -2691,7 +2691,7 @@ The following diagram depicts the filestructure for our working example with the
 Let's assume that the source package you are developing has the previous structure. If this is not the case for you, at least keep in mind that the mandatory components are  `DESCRIPTION`, `NAMESPACE`, `R/` and `man/`.
 
 
-## Worklfow
+## Workflow
 
 Because a package is made up of various types of files---which can be located in different subdirectories---that play different roles, you can actually break down the overall creation of a package into separate pieces. Interestingly, each of the resulting pieces can be created separately. Consequently, the packaging process that you follow may depend on the piece (or pieces) that need to be built as you add or change components in a package.
 

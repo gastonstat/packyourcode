@@ -17,7 +17,7 @@ knitr::include_graphics("images/pkg-example.png")
 Let's assume that the source package you are developing has the previous structure. If this is not the case for you, at least keep in mind that the mandatory components are  `DESCRIPTION`, `NAMESPACE`, `R/` and `man/`.
 
 
-## Worklfow
+## Workflow
 
 Because a package is made up of various types of files---which can be located in different subdirectories---that play different roles, you can actually break down the overall creation of a package into separate pieces. Interestingly, each of the resulting pieces can be created separately. Consequently, the packaging process that you follow may depend on the piece (or pieces) that need to be built as you add or change components in a package.
 

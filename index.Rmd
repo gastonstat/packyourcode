@@ -50,5 +50,6 @@ If _R Packages_ is not enough for you, and you are still curious about more obsc
 
 -----
 
+If you find this resource useful (which I'm pretty sure you will) please consider helping me with my [wishlist](http://amzn.com/w/A8P707HJ94QI).
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work, by [Gaston Sanchez](http://gastonsanchez.com), is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.

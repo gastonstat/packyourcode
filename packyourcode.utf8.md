@@ -49,6 +49,7 @@ If _R Packages_ is not enough for you, and you are still curious about more obsc
 
 -----
 
+If you find this resource useful (which I'm pretty sure you will) please consider helping me with my [wishlist](http://amzn.com/w/A8P707HJ94QI).
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work, by [Gaston Sanchez](http://gastonsanchez.com), is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
@@ -120,7 +121,7 @@ Here's how to simulate a coin toss using `sample()` to take a random sample of s
 coin <- c('heads', 'tails')
 
 sample(coin, size = 1)
-#> [1] "heads"
+#> [1] "tails"
 ```
 
 You use the argument `size = 1` to specify that you want to take a sample of size 1 from the input vector `coin`.
@@ -156,7 +157,7 @@ To be able to draw more elements, you need to sample __with replacement__, which
 ```r
 # draw 4 elements with replacement
 sample(coin, size = 4, replace = TRUE)
-#> [1] "heads" "heads" "tails" "heads"
+#> [1] "tails" "tails" "tails" "heads"
 ```
 
 
@@ -168,14 +169,14 @@ The way `sample()` works is by taking a random sample from the input vector. Thi
 ```r
 # five tosses
 sample(coin, size = 5, replace = TRUE)
-#> [1] "heads" "heads" "heads" "tails" "heads"
+#> [1] "tails" "heads" "heads" "tails" "tails"
 ```
 
 
 ```r
 # another five tosses
 sample(coin, size = 5, replace = TRUE)
-#> [1] "tails" "tails" "heads" "heads" "tails"
+#> [1] "tails" "heads" "heads" "heads" "heads"
 ```
 
 
@@ -1007,7 +1008,7 @@ A more formal strategy, and one that follows OOP principles, is to create a toss
 print
 #> function (x, ...) 
 #> UseMethod("print")
-#> <bytecode: 0x7fa0ac9a5188>
+#> <bytecode: 0x7fa2dc198388>
 #> <environment: namespace:base>
 ```
 

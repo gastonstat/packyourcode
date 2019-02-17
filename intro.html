@@ -133,6 +133,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i>About this book</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#other-resources"><i class="fa fa-check"></i>Other Resources</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#give-now"><i class="fa fa-check"></i>Give Now</a></li>
 </ul></li>
 <li class="part"><span><b>I Motivation</b></span></li>
 <li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Let’s toss a coin</a><ul>
@@ -336,7 +337,7 @@ instead of <code>&quot;heads&quot;</code> and <code>&quot;tails&quot;</code>:</p
 <a class="sourceLine" id="cb4-2" data-line-number="2">coin &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;heads&#39;</span>, <span class="st">&#39;tails&#39;</span>)</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw">sample</span>(coin, <span class="dt">size =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; [1] &quot;tails&quot;</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; [1] &quot;heads&quot;</span></a></code></pre></div>
 <p>You use the argument <code>size = 1</code> to specify that you want to take a sample of size 1 from the input vector <code>coin</code>.</p>
 <div id="random-samples" class="section level3">
 <h3><span class="header-section-number">1.2.1</span> Random Samples</h3>
@@ -344,7 +345,7 @@ instead of <code>&quot;heads&quot;</code> and <code>&quot;tails&quot;</code>:</p
 <p>To draw two elements WITHOUT replacement, use <code>sample()</code> like this:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># draw 2 elements without replacement</span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">sample</span>(coin, <span class="dt">size =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [1] &quot;tails&quot; &quot;heads&quot;</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [1] &quot;heads&quot; &quot;tails&quot;</span></a></code></pre></div>
 <p>What if you try to toss the coin three or four times?</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># trying to toss coin 3 times</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">sample</span>(coin, <span class="dt">size =</span> <span class="dv">3</span>)</a>
@@ -353,7 +354,7 @@ instead of <code>&quot;heads&quot;</code> and <code>&quot;tails&quot;</code>:</p
 <p>To be able to draw more elements, you need to sample <strong>with replacement</strong>, which is done by specifying the argument <code>replace = TRUE</code>, like this:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># draw 4 elements with replacement</span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">sample</span>(coin, <span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt; [1] &quot;tails&quot; &quot;tails&quot; &quot;tails&quot; &quot;heads&quot;</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt; [1] &quot;heads&quot; &quot;tails&quot; &quot;heads&quot; &quot;heads&quot;</span></a></code></pre></div>
 </div>
 </div>
 <div id="the-random-seed" class="section level2">
@@ -361,10 +362,10 @@ instead of <code>&quot;heads&quot;</code> and <code>&quot;tails&quot;</code>:</p
 <p>The way <code>sample()</code> works is by taking a random sample from the input vector. This means that every time you invoke <code>sample()</code> you will likely get a different output.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># five tosses</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">sample</span>(coin, <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt; [1] &quot;tails&quot; &quot;heads&quot; &quot;heads&quot; &quot;tails&quot; &quot;tails&quot;</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt; [1] &quot;tails&quot; &quot;tails&quot; &quot;heads&quot; &quot;tails&quot; &quot;tails&quot;</span></a></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># another five tosses</span></a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw">sample</span>(coin, <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt; [1] &quot;tails&quot; &quot;heads&quot; &quot;heads&quot; &quot;heads&quot; &quot;heads&quot;</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt; [1] &quot;heads&quot; &quot;heads&quot; &quot;heads&quot; &quot;tails&quot; &quot;tails&quot;</span></a></code></pre></div>
 <p>In order to make the examples replicable (so you can get the same output as mine), you need to specify what is called a <strong>random seed</strong>. This is done with the function <code>set.seed()</code>. By setting a <em>seed</em>, every time you use one of the random generator functions, like <code>sample()</code>, you will get the same values.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># set random seed</span></a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">set.seed</span>(<span class="dv">1257</span>)</a>

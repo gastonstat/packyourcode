@@ -15,6 +15,7 @@ description: "Basic example of how to create an R package based on S3 classes."
 
 <img src="images/pack-your-code-logo.png" width="50%" style="display: block; margin: auto;" />
 
+
 The ultimate goal of this book is to teach you how to create a relatively simple R package based on the so-called S3 classes. 
 
 The chapters of the book are organized in three major parts:
@@ -49,7 +50,19 @@ If _R Packages_ is not enough for you, and you are still curious about more obsc
 
 -----
 
-If you find this resource useful (which I'm pretty sure you will) please consider helping me with my [wishlist](http://amzn.com/w/A8P707HJ94QI).
+### Give Now {-}
+
+If you find this resource useful (which I'm pretty sure you will) please consider making a one-time donation in any amount. Your support really matters.
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_donations" />
+<input type="hidden" name="business" value="ZF6U7K5MW25W2" />
+<input type="hidden" name="currency_code" value="USD" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+</form>
+
+Alternatively, you can also help me with my Amazon __[wishlist](http://amzn.com/w/A8P707HJ94QI)__.
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work, by [Gaston Sanchez](http://gastonsanchez.com), is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
@@ -121,7 +134,7 @@ Here's how to simulate a coin toss using `sample()` to take a random sample of s
 coin <- c('heads', 'tails')
 
 sample(coin, size = 1)
-#> [1] "tails"
+#> [1] "heads"
 ```
 
 You use the argument `size = 1` to specify that you want to take a sample of size 1 from the input vector `coin`.
@@ -137,7 +150,7 @@ To draw two elements WITHOUT replacement, use `sample()` like this:
 ```r
 # draw 2 elements without replacement
 sample(coin, size = 2)
-#> [1] "tails" "heads"
+#> [1] "heads" "tails"
 ```
 
 What if you try to toss the coin three or four times?
@@ -157,7 +170,7 @@ To be able to draw more elements, you need to sample __with replacement__, which
 ```r
 # draw 4 elements with replacement
 sample(coin, size = 4, replace = TRUE)
-#> [1] "tails" "tails" "tails" "heads"
+#> [1] "heads" "tails" "heads" "heads"
 ```
 
 
@@ -169,14 +182,14 @@ The way `sample()` works is by taking a random sample from the input vector. Thi
 ```r
 # five tosses
 sample(coin, size = 5, replace = TRUE)
-#> [1] "tails" "heads" "heads" "tails" "tails"
+#> [1] "tails" "tails" "heads" "tails" "tails"
 ```
 
 
 ```r
 # another five tosses
 sample(coin, size = 5, replace = TRUE)
-#> [1] "tails" "heads" "heads" "heads" "heads"
+#> [1] "heads" "heads" "heads" "tails" "tails"
 ```
 
 
@@ -1008,7 +1021,7 @@ A more formal strategy, and one that follows OOP principles, is to create a toss
 print
 #> function (x, ...) 
 #> UseMethod("print")
-#> <bytecode: 0x7fa2dc198388>
+#> <bytecode: 0x7ff7f2af4908>
 #> <environment: namespace:base>
 ```
 

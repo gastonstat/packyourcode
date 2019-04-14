@@ -340,7 +340,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb56-2" data-line-number="2">print</a>
 <a class="sourceLine" id="cb56-3" data-line-number="3"><span class="co">#&gt; function (x, ...) </span></a>
 <a class="sourceLine" id="cb56-4" data-line-number="4"><span class="co">#&gt; UseMethod(&quot;print&quot;)</span></a>
-<a class="sourceLine" id="cb56-5" data-line-number="5"><span class="co">#&gt; &lt;bytecode: 0x7ff7f2af4908&gt;</span></a>
+<a class="sourceLine" id="cb56-5" data-line-number="5"><span class="co">#&gt; &lt;bytecode: 0x7fb08aa78908&gt;</span></a>
 <a class="sourceLine" id="cb56-6" data-line-number="6"><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></a></code></pre></div>
 <p>These types of functions are not really one unique function, they typically comprise a collection or family of functions for printing objects, computing summaries, plotting, etc. Depending on the class of the object, a generic method will look for a specific function for that class:</p>
 <div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="co"># methods for objects &quot;matrix&quot;</span></a>
@@ -381,7 +381,19 @@ Here’s a new definition of <code>toss.coin()</code>:</p>
 <a class="sourceLine" id="cb63-2" data-line-number="2">loaded_coin &lt;-<span class="st"> </span><span class="kw">coin</span>(<span class="kw">c</span>(<span class="st">&#39;HEADS&#39;</span>, <span class="st">&#39;tails&#39;</span>), <span class="dt">prob =</span> <span class="kw">c</span>(<span class="fl">0.75</span>, <span class="fl">0.25</span>))</a>
 <a class="sourceLine" id="cb63-3" data-line-number="3"><span class="kw">toss</span>(loaded_coin, <span class="dt">times =</span> <span class="dv">6</span>)</a>
 <a class="sourceLine" id="cb63-4" data-line-number="4"><span class="co">#&gt; [1] &quot;HEADS&quot; &quot;HEADS&quot; &quot;HEADS&quot; &quot;HEADS&quot; &quot;HEADS&quot; &quot;tails&quot;</span></a></code></pre></div>
+<hr />
+<div id="make-a-donation-3" class="section level4 unnumbered">
+<h4>Make a donation</h4>
+<p>If you find this resource useful, please consider making a one-time donation in any amount. Your support really matters.</p>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_donations" />
+<input type="hidden" name="business" value="ZF6U7K5MW25W2" />
+<input type="hidden" name="currency_code" value="USD" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+</form>
 
+</div>
 </div>
 </div>
             </section>

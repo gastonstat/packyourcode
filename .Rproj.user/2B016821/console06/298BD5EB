@@ -1,0 +1,1124 @@
+make
+Rscript -e 'bookdown::render_book("index.Rmd", output_format = "bookdown::gitbook", clean = FALSE)'
+
+
+processing file: packyourcode.Rmd
+  |                                                                         |                                                                 |   0%
+  ordinary text without R code
+
+  |                                                                         |                                                                 |   1%
+label: unnamed-chunk-1 (with options) 
+List of 2
+ $ include: logi FALSE
+ $ cache  : logi FALSE
+
+  |                                                                         |.                                                                |   1%
+  ordinary text without R code
+
+
+label: unnamed-chunk-2 (with options) 
+List of 2
+ $ echo     : logi FALSE
+ $ out.width: chr "50%"
+
+  |                                                                         |.                                                                |   2%
+  ordinary text without R code
+
+
+label: unnamed-chunk-3 (with options) 
+List of 2
+ $ include: logi FALSE
+ $ cache  : logi FALSE
+
+
+  ordinary text without R code
+
+  |                                                                         |..                                                               |   2%
+label: unnamed-chunk-4 (with options) 
+List of 2
+ $ echo     : logi FALSE
+ $ out.width: NULL
+
+  |                                                                         |..                                                               |   3%
+  ordinary text without R code
+
+
+label: unnamed-chunk-5 (with options) 
+List of 3
+ $ echo     : logi FALSE
+ $ out.width: NULL
+ $ fig.cap  : chr "two sides of a coin"
+
+
+  ordinary text without R code
+
+  |                                                                         |..                                                               |   4%
+label: coin-vector
+  |                                                                         |...                                                              |   4%
+  ordinary text without R code
+
+
+label: unnamed-chunk-6
+  |                                                                         |...                                                              |   5%
+  ordinary text without R code
+
+
+label: unnamed-chunk-7
+
+  ordinary text without R code
+
+  |                                                                         |....                                                             |   6%
+label: unnamed-chunk-8
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-9
+
+  ordinary text without R code
+
+  |                                                                         |....                                                             |   7%
+label: unnamed-chunk-10
+  |                                                                         |.....                                                            |   7%
+  ordinary text without R code
+
+
+label: unnamed-chunk-11
+  |                                                                         |.....                                                            |   8%
+  ordinary text without R code
+
+
+label: unnamed-chunk-12
+
+  ordinary text without R code
+
+  |                                                                         |......                                                           |   9%
+label: unnamed-chunk-13
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-14
+  |                                                                         |......                                                           |  10%
+  ordinary text without R code
+
+
+label: unnamed-chunk-15
+  |                                                                         |.......                                                          |  10%
+  ordinary text without R code
+
+
+label: unnamed-chunk-16
+  |                                                                         |.......                                                          |  11%
+  ordinary text without R code
+
+
+label: unnamed-chunk-17
+
+   inline R code fragments
+
+  |                                                                         |........                                                         |  12%
+label: flips100
+
+  ordinary text without R code
+
+
+label: heads_freq
+  |                                                                         |........                                                         |  13%
+  ordinary text without R code
+
+
+label: head_freqs_plot
+  |                                                                         |.........                                                        |  13%
+  ordinary text without R code
+
+  |                                                                         |.........                                                        |  14%
+label: unnamed-chunk-18 (with options) 
+List of 2
+ $ include: logi FALSE
+ $ cache  : logi FALSE
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-19
+
+  ordinary text without R code
+
+  |                                                                         |..........                                                       |  15%
+label: unnamed-chunk-20
+
+  ordinary text without R code
+
+
+label: toss-function-ver1
+  |                                                                         |..........                                                       |  16%
+  ordinary text without R code
+
+
+label: unnamed-chunk-21
+  |                                                                         |...........                                                      |  16%
+  ordinary text without R code
+
+  |                                                                         |...........                                                      |  17%
+label: toss-function-ver2
+
+  ordinary text without R code
+
+
+label: toss-function-ver3 (with options) 
+List of 1
+ $ eval: logi FALSE
+
+  |                                                                         |...........                                                      |  18%
+  ordinary text without R code
+
+  |                                                                         |............                                                     |  18%
+label: toss-function2
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-22 (with options) 
+List of 2
+ $ echo     : logi FALSE
+ $ out.width: NULL
+
+  |                                                                         |............                                                     |  19%
+  ordinary text without R code
+
+
+label: toss-function4
+  |                                                                         |.............                                                    |  19%
+  ordinary text without R code
+
+  |                                                                         |.............                                                    |  20%
+label: unnamed-chunk-23 (with options) 
+List of 2
+ $ include: logi FALSE
+ $ cache  : logi FALSE
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-24
+  |                                                                         |.............                                                    |  21%
+  ordinary text without R code
+
+  |                                                                         |..............                                                   |  21%
+label: unnamed-chunk-25
+
+  ordinary text without R code
+
+  |                                                                         |..............                                                   |  22%
+label: structure-class
+
+  ordinary text without R code
+
+
+label: attribute-class
+  |                                                                         |...............                                                  |  22%
+  ordinary text without R code
+
+  |                                                                         |...............                                                  |  23%
+label: class-example
+
+  ordinary text without R code
+
+
+label: inherits-example
+  |                                                                         |...............                                                  |  24%
+  ordinary text without R code
+
+  |                                                                         |................                                                 |  24%
+label: unnamed-chunk-26
+
+  ordinary text without R code
+
+  |                                                                         |................                                                 |  25%
+label: simple-coin
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-27
+  |                                                                         |.................                                                |  26%
+  ordinary text without R code
+
+
+label: unnamed-chunk-28
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-29
+  |                                                                         |.................                                                |  27%
+  ordinary text without R code
+
+  |                                                                         |..................                                               |  27%
+label: unnamed-chunk-30 (with options) 
+List of 2
+ $ echo   : logi FALSE
+ $ fig.cap: chr "US Penny (www.usacoinbook.com)"
+
+
+  ordinary text without R code
+
+  |                                                                         |..................                                               |  28%
+label: unnamed-chunk-31
+
+  ordinary text without R code
+
+
+label: invalid-coin
+  |                                                                         |...................                                              |  29%
+  ordinary text without R code
+
+
+label: unnamed-chunk-32
+
+  ordinary text without R code
+
+  |                                                                         |...................                                              |  30%
+label: unnamed-chunk-33
+
+  ordinary text without R code
+
+  |                                                                         |....................                                             |  30%
+label: unnamed-chunk-34 (with options) 
+List of 1
+ $ echo: logi FALSE
+
+
+  ordinary text without R code
+
+  |                                                                         |....................                                             |  31%
+label: unnamed-chunk-35
+
+  ordinary text without R code
+
+
+label: check-prob
+  |                                                                         |.....................                                            |  32%
+  ordinary text without R code
+
+
+label: check-good-probs
+
+  ordinary text without R code
+
+  |                                                                         |.....................                                            |  33%
+label: check-bad-probs
+
+  ordinary text without R code
+
+  |                                                                         |......................                                           |  33%
+label: unnamed-chunk-36
+  |                                                                         |......................                                           |  34%
+  ordinary text without R code
+
+
+label: unnamed-chunk-37
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-38
+  |                                                                         |.......................                                          |  35%
+  ordinary text without R code
+
+
+label: unnamed-chunk-39
+
+  ordinary text without R code
+
+  |                                                                         |.......................                                          |  36%
+label: quarter-coin
+
+  ordinary text without R code
+
+  |                                                                         |........................                                         |  36%
+label: unnamed-chunk-40
+  |                                                                         |........................                                         |  37%
+  ordinary text without R code
+
+
+label: dime-coin
+
+  ordinary text without R code
+
+  |                                                                         |........................                                         |  38%
+label: peso
+  |                                                                         |.........................                                        |  38%
+  ordinary text without R code
+
+
+label: unnamed-chunk-41 (with options) 
+List of 2
+ $ include: logi FALSE
+ $ cache  : logi FALSE
+
+
+  ordinary text without R code
+
+  |                                                                         |.........................                                        |  39%
+label: unnamed-chunk-42
+
+  ordinary text without R code
+
+  |                                                                         |..........................                                       |  39%
+label: unnamed-chunk-43
+  |                                                                         |..........................                                       |  40%
+  ordinary text without R code
+
+
+label: unnamed-chunk-44
+
+  ordinary text without R code
+
+  |                                                                         |..........................                                       |  41%
+label: print-method
+  |                                                                         |...........................                                      |  41%
+  ordinary text without R code
+
+
+label: matrix-methods
+  |                                                                         |...........................                                      |  42%
+  ordinary text without R code
+
+
+label: toss-method
+
+  ordinary text without R code
+
+  |                                                                         |............................                                     |  42%
+label: toss-coin-specific
+  |                                                                         |............................                                     |  43%
+  ordinary text without R code
+
+
+label: unnamed-chunk-45
+
+  ordinary text without R code
+
+  |                                                                         |............................                                     |  44%
+label: unnamed-chunk-46
+  |                                                                         |.............................                                    |  44%
+  ordinary text without R code
+
+
+label: new-toss
+  |                                                                         |.............................                                    |  45%
+  ordinary text without R code
+
+
+label: unnamed-chunk-47
+
+  ordinary text without R code
+
+  |                                                                         |..............................                                   |  46%
+label: unnamed-chunk-48 (with options) 
+List of 2
+ $ include: logi FALSE
+ $ cache  : logi FALSE
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-49
+
+  ordinary text without R code
+
+  |                                                                         |..............................                                   |  47%
+label: unnamed-chunk-50
+  |                                                                         |...............................                                  |  47%
+  ordinary text without R code
+
+
+label: unnamed-chunk-51
+  |                                                                         |...............................                                  |  48%
+  ordinary text without R code
+
+
+label: unnamed-chunk-52
+
+  ordinary text without R code
+
+  |                                                                         |................................                                 |  49%
+label: unnamed-chunk-53
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-54
+  |                                                                         |................................                                 |  50%
+  ordinary text without R code
+
+
+label: toss-ver1
+  |                                                                         |.................................                                |  50%
+  ordinary text without R code
+
+
+label: unnamed-chunk-55
+  |                                                                         |.................................                                |  51%
+  ordinary text without R code
+
+
+label: unnamed-chunk-56
+
+  ordinary text without R code
+
+  |                                                                         |..................................                               |  52%
+label: unnamed-chunk-57
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-58
+  |                                                                         |..................................                               |  53%
+  ordinary text without R code
+
+
+label: unnamed-chunk-59
+  |                                                                         |...................................                              |  53%
+  ordinary text without R code
+
+  |                                                                         |...................................                              |  54%
+label: unnamed-chunk-60
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-61
+
+  ordinary text without R code
+
+  |                                                                         |....................................                             |  55%
+label: unnamed-chunk-62 (with options) 
+List of 2
+ $ include: logi FALSE
+ $ cache  : logi FALSE
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-63 (with options) 
+List of 3
+ $ echo     : logi FALSE
+ $ out.width: NULL
+ $ fig.cap  : chr "An old Mexican peso (www.coinfactswiki.com)"
+
+  |                                                                         |....................................                             |  56%
+  ordinary text without R code
+
+
+label: unnamed-chunk-64
+  |                                                                         |.....................................                            |  56%
+  ordinary text without R code
+
+  |                                                                         |.....................................                            |  57%
+label: print-toss
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-65
+  |                                                                         |.....................................                            |  58%
+  ordinary text without R code
+
+  |                                                                         |......................................                           |  58%
+label: unnamed-chunk-66
+
+  ordinary text without R code
+
+
+label: summary-toss
+  |                                                                         |......................................                           |  59%
+  ordinary text without R code
+
+
+label: unnamed-chunk-67
+  |                                                                         |.......................................                          |  59%
+  ordinary text without R code
+
+  |                                                                         |.......................................                          |  60%
+label: print-summary
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-68
+  |                                                                         |.......................................                          |  61%
+  ordinary text without R code
+
+  |                                                                         |........................................                         |  61%
+label: unnamed-chunk-69
+
+  ordinary text without R code
+
+  |                                                                         |........................................                         |  62%
+label: unnamed-chunk-70
+
+  ordinary text without R code
+
+
+label: plot-toss
+  |                                                                         |.........................................                        |  62%
+  ordinary text without R code
+
+  |                                                                         |.........................................                        |  63%
+label: unnamed-chunk-71
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-72 (with options) 
+List of 2
+ $ include: logi FALSE
+ $ cache  : logi FALSE
+
+  |                                                                         |.........................................                        |  64%
+  ordinary text without R code
+
+  |                                                                         |..........................................                       |  64%
+label: replacement-toss
+
+  ordinary text without R code
+
+  |                                                                         |..........................................                       |  65%
+label: test-replacement
+
+  ordinary text without R code
+
+
+label: weird-test-replacement
+  |                                                                         |...........................................                      |  66%
+  ordinary text without R code
+
+
+label: fail-test-replacement
+
+  ordinary text without R code
+
+
+label: better-replacement-toss
+  |                                                                         |...........................................                      |  67%
+  ordinary text without R code
+
+  |                                                                         |............................................                     |  67%
+label: error-replacement
+
+  ordinary text without R code
+
+  |                                                                         |............................................                     |  68%
+label: unnamed-chunk-73
+
+  ordinary text without R code
+
+
+label: extract-toss
+  |                                                                         |.............................................                    |  69%
+  ordinary text without R code
+
+
+label: test-extract
+
+  ordinary text without R code
+
+  |                                                                         |.............................................                    |  70%
+label: unnamed-chunk-74
+
+  ordinary text without R code
+
+  |                                                                         |..............................................                   |  70%
+label: unnamed-chunk-75 (with options) 
+List of 1
+ $ eval: logi FALSE
+
+
+  ordinary text without R code
+
+  |                                                                         |..............................................                   |  71%
+label: unnamed-chunk-76
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-77
+  |                                                                         |...............................................                  |  72%
+  ordinary text without R code
+
+
+label: unnamed-chunk-78
+
+  ordinary text without R code
+
+  |                                                                         |...............................................                  |  73%
+label: unnamed-chunk-79 (with options) 
+List of 2
+ $ include: logi FALSE
+ $ cache  : logi FALSE
+
+
+  ordinary text without R code
+
+  |                                                                         |................................................                 |  73%
+label: unnamed-chunk-80 (with options) 
+List of 2
+ $ echo   : logi FALSE
+ $ fig.cap: chr "Starting point for a new project"
+
+  |                                                                         |................................................                 |  74%
+  ordinary text without R code
+
+
+label: unnamed-chunk-81 (with options) 
+List of 2
+ $ echo   : logi FALSE
+ $ fig.cap: chr "Different types of RStudio projects"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-82 (with options) 
+List of 1
+ $ echo: logi FALSE
+
+  |                                                                         |.................................................                |  75%
+  ordinary text without R code
+
+
+label: unnamed-chunk-83 (with options) 
+List of 2
+ $ echo   : logi FALSE
+ $ fig.cap: chr "Choosing a name for a package"
+
+
+  ordinary text without R code
+
+  |                                                                         |.................................................                |  76%
+label: unnamed-chunk-84 (with options) 
+List of 1
+ $ echo: logi FALSE
+
+
+  ordinary text without R code
+
+  |                                                                         |..................................................               |  76%
+label: unnamed-chunk-85 (with options) 
+List of 2
+ $ echo   : logi FALSE
+ $ fig.cap: chr "Minimal filestructure created by devtools"
+
+  |                                                                         |..................................................               |  77%
+  ordinary text without R code
+
+
+label: unnamed-chunk-86 (with options) 
+List of 2
+ $ echo   : logi FALSE
+ $ fig.cap: chr "Options in the Build tab"
+
+
+  ordinary text without R code
+
+  |                                                                         |..................................................               |  78%
+label: unnamed-chunk-87 (with options) 
+List of 1
+ $ eval: logi FALSE
+
+  |                                                                         |...................................................              |  78%
+  ordinary text without R code
+
+
+label: unnamed-chunk-88 (with options) 
+List of 1
+ $ echo: logi FALSE
+
+
+  ordinary text without R code
+
+  |                                                                         |...................................................              |  79%
+label: unnamed-chunk-89
+
+  ordinary text without R code
+
+  |                                                                         |....................................................             |  79%
+label: unnamed-chunk-90 (with options) 
+List of 2
+ $ include: logi FALSE
+ $ cache  : logi FALSE
+
+  |                                                                         |....................................................             |  80%
+  ordinary text without R code
+
+
+label: unnamed-chunk-91 (with options) 
+List of 2
+ $ echo   : logi FALSE
+ $ fig.cap: chr "Three possible filestructures for a package"
+
+
+  ordinary text without R code
+
+  |                                                                         |....................................................             |  81%
+label: unnamed-chunk-92 (with options) 
+List of 3
+ $ echo     : logi FALSE
+ $ fig.cap  : chr "Filestructure of a minimal package"
+ $ out.width: chr "30%"
+
+  |                                                                         |.....................................................            |  81%
+  ordinary text without R code
+
+
+label: unnamed-chunk-93 (with options) 
+List of 3
+ $ echo     : logi FALSE
+ $ fig.cap  : chr "Default filestructure created by devtools"
+ $ out.width: chr "30%"
+
+  |                                                                         |.....................................................            |  82%
+  ordinary text without R code
+
+
+label: unnamed-chunk-94 (with options) 
+List of 3
+ $ echo     : logi FALSE
+ $ fig.cap  : chr "Filestructure of the working example"
+ $ out.width: chr "30%"
+
+
+  ordinary text without R code
+
+  |                                                                         |......................................................           |  82%
+label: unnamed-chunk-95 (with options) 
+List of 2
+ $ include: logi FALSE
+ $ cache  : logi FALSE
+
+  |                                                                         |......................................................           |  83%
+  ordinary text without R code
+
+
+label: unnamed-chunk-96 (with options) 
+List of 2
+ $ echo   : logi FALSE
+ $ fig.cap: chr "Typical default content in a DESCRIPTION file"
+
+
+  ordinary text without R code
+
+  |                                                                         |......................................................           |  84%
+label: unnamed-chunk-97 (with options) 
+List of 2
+ $ include: logi FALSE
+ $ cache  : logi FALSE
+
+  |                                                                         |.......................................................          |  84%
+  ordinary text without R code
+
+
+label: unnamed-chunk-98 (with options) 
+List of 1
+ $ eval: logi FALSE
+
+  |                                                                         |.......................................................          |  85%
+  ordinary text without R code
+
+
+label: unnamed-chunk-99 (with options) 
+List of 1
+ $ eval: logi FALSE
+
+
+  ordinary text without R code
+
+  |                                                                         |........................................................         |  86%
+label: unnamed-chunk-100 (with options) 
+List of 2
+ $ include: logi FALSE
+ $ cache  : logi FALSE
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-101 (with options) 
+List of 3
+ $ echo     : logi FALSE
+ $ fig.cap  : chr "Structure of test files"
+ $ out.width: chr "35%"
+
+
+  ordinary text without R code
+
+  |                                                                         |........................................................         |  87%
+label: unnamed-chunk-102 (with options) 
+List of 3
+ $ echo     : logi FALSE
+ $ fig.cap  : chr "Conceptual test structure"
+ $ out.width: chr "30%"
+
+  |                                                                         |.........................................................        |  87%
+  ordinary text without R code
+
+
+label: unnamed-chunk-103 (with options) 
+List of 2
+ $ echo   : logi FALSE
+ $ fig.cap: chr "Abstract and functional representations"
+
+  |                                                                         |.........................................................        |  88%
+  ordinary text without R code
+
+
+label: unnamed-chunk-104 (with options) 
+List of 3
+ $ echo     : logi FALSE
+ $ fig.cap  : chr "Description of testthat components"
+ $ out.width: chr "80%"
+
+
+  ordinary text without R code
+
+  |                                                                         |..........................................................       |  89%
+label: unnamed-chunk-105 (with options) 
+List of 2
+ $ include: logi FALSE
+ $ cache  : logi FALSE
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-106 (with options) 
+List of 3
+ $ echo     : logi FALSE
+ $ fig.cap  : chr "Structure of vignette files"
+ $ out.width: chr "35%"
+
+  |                                                                         |..........................................................       |  90%
+  ordinary text without R code
+
+
+label: unnamed-chunk-107 (with options) 
+List of 3
+ $ echo     : logi FALSE
+ $ fig.cap  : chr "Screenshot of the vignette in cointoss"
+ $ out.width: chr "80%"
+
+  |                                                                         |...........................................................      |  90%
+  ordinary text without R code
+
+
+label: unnamed-chunk-108 (with options) 
+List of 2
+ $ include: logi FALSE
+ $ cache  : logi FALSE
+
+  |                                                                         |...........................................................      |  91%
+  ordinary text without R code
+
+
+label: unnamed-chunk-109 (with options) 
+List of 2
+ $ echo   : logi FALSE
+ $ fig.cap: chr "Five possible states of a package"
+
+
+  ordinary text without R code
+
+  |                                                                         |............................................................     |  92%
+label: unnamed-chunk-110 (with options) 
+List of 3
+ $ echo     : logi FALSE
+ $ fig.cap  : chr "Source package"
+ $ out.width: chr "30%"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-111 (with options) 
+List of 3
+ $ echo     : logi FALSE
+ $ fig.cap  : chr "Bundled package (tarball)"
+ $ out.width: chr "25%"
+
+  |                                                                         |............................................................     |  93%
+  ordinary text without R code
+
+
+label: unnamed-chunk-112 (with options) 
+List of 3
+ $ echo     : logi FALSE
+ $ fig.cap  : chr "Binary package (platform specific)"
+ $ out.width: chr "35%"
+
+  |                                                                         |.............................................................    |  93%
+  ordinary text without R code
+
+  |                                                                         |.............................................................    |  94%
+label: unnamed-chunk-113 (with options) 
+List of 3
+ $ echo     : logi FALSE
+ $ fig.cap  : chr "Installed package (decompressed binary)"
+ $ out.width: chr "50%"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-114 (with options) 
+List of 3
+ $ echo     : logi FALSE
+ $ fig.cap  : chr "In-memory package (loaded to be used)"
+ $ out.width: chr "30%"
+
+
+  ordinary text without R code
+
+  |                                                                         |..............................................................   |  95%
+label: unnamed-chunk-115 (with options) 
+List of 3
+ $ echo     : logi FALSE
+ $ fig.cap  : chr "Theoretical flow of package states"
+ $ out.width: chr "80%"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-116 (with options) 
+List of 2
+ $ include: logi FALSE
+ $ cache  : logi FALSE
+
+  |                                                                         |..............................................................   |  96%
+  ordinary text without R code
+
+
+label: unnamed-chunk-117 (with options) 
+List of 3
+ $ echo     : logi FALSE
+ $ fig.cap  : chr "Assumed filestructure"
+ $ out.width: chr "35%"
+
+  |                                                                         |...............................................................  |  96%
+  ordinary text without R code
+
+  |                                                                         |...............................................................  |  97%
+label: unnamed-chunk-118 (with options) 
+List of 3
+ $ echo     : logi FALSE
+ $ fig.cap  : chr "Build tab"
+ $ out.width: chr "55%"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-119 (with options) 
+List of 3
+ $ echo     : logi FALSE
+ $ fig.cap  : chr "Install icon"
+ $ out.width: chr "35%"
+
+  |                                                                         |...............................................................  |  98%
+  ordinary text without R code
+
+  |                                                                         |................................................................ |  98%
+label: unnamed-chunk-120 (with options) 
+List of 3
+ $ echo     : logi FALSE
+ $ fig.cap  : chr "Check icon"
+ $ out.width: chr "25%"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-121 (with options) 
+List of 3
+ $ echo     : logi FALSE
+ $ fig.cap  : chr "Build icon"
+ $ out.width: chr "35%"
+
+  |                                                                         |................................................................ |  99%
+  ordinary text without R code
+
+
+label: unnamed-chunk-122 (with options) 
+List of 2
+ $ include: logi FALSE
+ $ cache  : logi FALSE
+
+  |                                                                         |.................................................................|  99%
+  ordinary text without R code
+
+  |                                                                         |.................................................................| 100%
+label: unnamed-chunk-123 (with options) 
+List of 2
+ $ echo   : logi FALSE
+ $ fig.cap: chr "Installing a .tar.gz file from RStudio's Packages tab"
+
+
+  ordinary text without R code
+
+
+output file: packyourcode.knit.md
+
+/usr/local/bin/pandoc +RTS -K512m -RTS packyourcode.utf8.md --to html4 --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash+smart --output packyourcode.html --email-obfuscation none --wrap preserve --standalone --section-divs --table-of-contents --toc-depth 3 --template /Library/Frameworks/R.framework/Versions/3.3/Resources/library/bookdown/templates/gitbook.html --highlight-style pygments --number-sections --css style.css --include-in-header /var/folders/6z/1hlnpplx0pqfpkbqbtyjk0080000gn/T//RtmpstjsXi/rmarkdown-str8a7d3baba2cd.html --mathjax --filter /usr/local/bin/pandoc-citeproc 
+
+Output created: _book/index.html
+[1] "/Users/gaston/Dropbox/packyourcode/_book/index.html"
+cp -fvr style.css _book/
+style.css -> _book/style.css
+cp -fvr images _book/
+images -> _book/images
+images/coin-sides.png -> _book/images/coin-sides.png
+images/flip-coin.jpg -> _book/images/flip-coin.jpg
+images/flow-build-tab.png -> _book/images/flow-build-tab.png
+images/flow-icon-build.png -> _book/images/flow-icon-build.png
+images/flow-icon-check.png -> _book/images/flow-icon-check.png
+images/flow-icon-install.png -> _book/images/flow-icon-install.png
+images/pack-your-code-logo.png -> _book/images/pack-your-code-logo.png
+images/packaging-ideal-flow.png -> _book/images/packaging-ideal-flow.png
+images/penny.jpg -> _book/images/penny.jpg
+images/peso.jpg -> _book/images/peso.jpg
+images/pkg-description.png -> _book/images/pkg-description.png
+images/pkg-example.png -> _book/images/pkg-example.png
+images/pkg-states.png -> _book/images/pkg-states.png
+images/pkg-step0-new.png -> _book/images/pkg-step0-new.png
+images/pkg-step1-project.png -> _book/images/pkg-step1-project.png
+images/pkg-step2-type.png -> _book/images/pkg-step2-type.png
+images/pkg-step3-package.png -> _book/images/pkg-step3-package.png
+images/pkg-step4-name.png -> _book/images/pkg-step4-name.png
+images/pkg-step5-panes.png -> _book/images/pkg-step5-panes.png
+images/pkg-step6-build.png -> _book/images/pkg-step6-build.png
+images/pkg-step6-files.png -> _book/images/pkg-step6-files.png
+images/pkg-structures.png -> _book/images/pkg-structures.png
+images/pkg-structures1.png -> _book/images/pkg-structures1.png
+images/pkg-structures2.png -> _book/images/pkg-structures2.png
+images/pkg-structures3.png -> _book/images/pkg-structures3.png
+images/share-install.png -> _book/images/share-install.png
+images/state-binary.png -> _book/images/state-binary.png
+images/state-bundled.png -> _book/images/state-bundled.png
+images/state-in-memory.png -> _book/images/state-in-memory.png
+images/state-installed.png -> _book/images/state-installed.png
+images/state-source.png -> _book/images/state-source.png
+images/test-concept.png -> _book/images/test-concept.png
+images/test-files.png -> _book/images/test-files.png
+images/test-hierarchy.png -> _book/images/test-hierarchy.png
+images/test-meaning.png -> _book/images/test-meaning.png
+images/toss-function.png -> _book/images/toss-function.png
+images/vignette-files.png -> _book/images/vignette-files.png
+images/vignette-rmd.png -> _book/images/vignette-rmd.png
+]0;~/Dropbox/packyourcode[0;36m[gaston@ packyourcode]$[0m 

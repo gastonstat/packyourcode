@@ -62,7 +62,11 @@ If you find this resource useful (which I'm pretty sure you will) please conside
 <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
 </form>
 
+<br>
+
 Alternatively, you can also help me with my Amazon __[wishlist](http://amzn.com/w/A8P707HJ94QI)__.
+
+<br>
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work, by [Gaston Sanchez](http://gastonsanchez.com), is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
@@ -150,7 +154,7 @@ To draw two elements WITHOUT replacement, use `sample()` like this:
 ```r
 # draw 2 elements without replacement
 sample(coin, size = 2)
-#> [1] "heads" "tails"
+#> [1] "tails" "heads"
 ```
 
 What if you try to toss the coin three or four times?
@@ -170,7 +174,7 @@ To be able to draw more elements, you need to sample __with replacement__, which
 ```r
 # draw 4 elements with replacement
 sample(coin, size = 4, replace = TRUE)
-#> [1] "heads" "tails" "heads" "heads"
+#> [1] "tails" "tails" "tails" "tails"
 ```
 
 
@@ -182,14 +186,14 @@ The way `sample()` works is by taking a random sample from the input vector. Thi
 ```r
 # five tosses
 sample(coin, size = 5, replace = TRUE)
-#> [1] "tails" "tails" "heads" "tails" "tails"
+#> [1] "heads" "tails" "heads" "heads" "heads"
 ```
 
 
 ```r
 # another five tosses
 sample(coin, size = 5, replace = TRUE)
-#> [1] "heads" "heads" "heads" "tails" "tails"
+#> [1] "heads" "tails" "heads" "tails" "tails"
 ```
 
 
@@ -295,6 +299,20 @@ abline(h = 0.5, col = 'gray50')
 
 <img src="packyourcode_files/figure-html4/head_freqs_plot-1.png" width="70%" style="display: block; margin: auto;" />
 
+
+-----
+
+#### Make a donation {-}
+
+If you find this resource useful, please consider making a one-time donation in any amount. Your support really matters.
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_donations" />
+<input type="hidden" name="business" value="ZF6U7K5MW25W2" />
+<input type="hidden" name="currency_code" value="USD" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+</form>
 
 <!--chapter:end:introduction.Rmd-->
 
@@ -457,6 +475,20 @@ The `@return` keyword is optional. But I strongly recommend including `@return` 
 
 At this point you may be asking yourself: "Do I really need to document my functions with roxygen comments?" The short answer is No; you don't. So why bother? Because royxgen comments are very convenient when you take a set of functions that will be used to build an R package. In later chapters we will describe more details about roxygen comments and roxygen keywords. The way we are going to build a package involves running some functions that will take the content of the roxygen comments and use them to generate what is called `Rd` (R-dcoumentation) files. These are actually the files behind all the help (or manual) documentation pages of any function.
 
+
+-----
+
+#### Make a donation {-}
+
+If you find this resource useful, please consider making a one-time donation in any amount. Your support really matters.
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_donations" />
+<input type="hidden" name="business" value="ZF6U7K5MW25W2" />
+<input type="hidden" name="currency_code" value="USD" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+</form>
 
 <!--chapter:end:functions.Rmd-->
 
@@ -952,6 +984,21 @@ peso
 #> 2    sol  0.5
 ```
 
+
+-----
+
+#### Make a donation {-}
+
+If you find this resource useful, please consider making a one-time donation in any amount. Your support really matters.
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_donations" />
+<input type="hidden" name="business" value="ZF6U7K5MW25W2" />
+<input type="hidden" name="currency_code" value="USD" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+</form>
+
 <!--chapter:end:coin.Rmd-->
 
 
@@ -1021,7 +1068,7 @@ A more formal strategy, and one that follows OOP principles, is to create a toss
 print
 #> function (x, ...) 
 #> UseMethod("print")
-#> <bytecode: 0x7ff7f2af4908>
+#> <bytecode: 0x7fb08aa78908>
 #> <environment: namespace:base>
 ```
 
@@ -1104,6 +1151,21 @@ loaded_coin <- coin(c('HEADS', 'tails'), prob = c(0.75, 0.25))
 toss(loaded_coin, times = 6)
 #> [1] "HEADS" "HEADS" "HEADS" "HEADS" "HEADS" "tails"
 ```
+
+
+-----
+
+#### Make a donation {-}
+
+If you find this resource useful, please consider making a one-time donation in any amount. Your support really matters.
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_donations" />
+<input type="hidden" name="business" value="ZF6U7K5MW25W2" />
+<input type="hidden" name="currency_code" value="USD" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+</form>
 
 <!--chapter:end:methods1.Rmd-->
 
@@ -1461,6 +1523,21 @@ The more you understand a problem (i.e. phenomenon, process), the better you wil
 
 In my experience, you will very likely need to iterate several times with the creation of objects and functions for your code. At one iteration you will realize that you need to break down a given function into two ore more simpler functions. Sometimes you will see an opportunity to create a secondary function to check ceratin inputs. Likewise, you will identify situations when derived methods are needed to make your code more flexible and user friendly. Of course, like anything in this life, learning when all these components are needed takes a lot of time and practice.
 
+
+-----
+
+#### Make a donation {-}
+
+If you find this resource useful, please consider making a one-time donation in any amount. Your support really matters.
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_donations" />
+<input type="hidden" name="business" value="ZF6U7K5MW25W2" />
+<input type="hidden" name="currency_code" value="USD" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+</form>
+
 <!--chapter:end:toss.Rmd-->
 
 
@@ -1706,6 +1783,21 @@ plot(quarter_flips)
 
 <img src="packyourcode_files/figure-html4/unnamed-chunk-71-1.png" width="70%" style="display: block; margin: auto;" />
 
+
+-----
+
+#### Make a donation {-}
+
+If you find this resource useful, please consider making a one-time donation in any amount. Your support really matters.
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_donations" />
+<input type="hidden" name="business" value="ZF6U7K5MW25W2" />
+<input type="hidden" name="currency_code" value="USD" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+</form>
+
 <!--chapter:end:methods2.Rmd-->
 
 
@@ -1935,6 +2027,21 @@ seven + 3
 #> num of tails: 4
 ```
 
+
+-----
+
+#### Make a donation {-}
+
+If you find this resource useful, please consider making a one-time donation in any amount. Your support really matters.
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_donations" />
+<input type="hidden" name="business" value="ZF6U7K5MW25W2" />
+<input type="hidden" name="currency_code" value="USD" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+</form>
+
 <!--chapter:end:methods3.Rmd-->
 
 
@@ -2045,6 +2152,20 @@ hello()
 ```
 
 
+-----
+
+#### Make a donation {-}
+
+If you find this resource useful, please consider making a one-time donation in any amount. Your support really matters.
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_donations" />
+<input type="hidden" name="business" value="ZF6U7K5MW25W2" />
+<input type="hidden" name="currency_code" value="USD" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+</form>
+
 <!--chapter:end:toy.Rmd-->
 
 
@@ -2115,6 +2236,19 @@ Starting with a default structure, we can add more elements like a `README.md` f
 You can add more files and directories to make a more complex and _robust_ package. However, to keep a focused scope on this book we will concentrate on the above structure.
 
 
+-----
+
+#### Make a donation {-}
+
+If you find this resource useful, please consider making a one-time donation in any amount. Your support really matters.
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_donations" />
+<input type="hidden" name="business" value="ZF6U7K5MW25W2" />
+<input type="hidden" name="currency_code" value="USD" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+</form>
 
 <!--chapter:end:structure.Rmd-->
 
@@ -2297,6 +2431,19 @@ Another optional field is `Type`, which specifies the type of the package. This 
 If your package includes vignettes (i.e. there's a `vignettes/` subdirectory) written with `.Rmd` files, then `DESCRIPTION` needs a field and value `VignetteBuilder: knitr`. 
 
 
+-----
+
+#### Make a donation {-}
+
+If you find this resource useful, please consider making a one-time donation in any amount. Your support really matters.
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_donations" />
+<input type="hidden" name="business" value="ZF6U7K5MW25W2" />
+<input type="hidden" name="currency_code" value="USD" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+</form>
 
 <!--chapter:end:description.Rmd-->
 
@@ -2401,6 +2548,21 @@ export(coin)
 ```
 
 This means that the package `"roxygen2"` is actually doing the work for us, automatically updating `NAMESPACE`. Observe the syntax `export(coin)`, meaning that `coin()` will be exported.
+
+
+-----
+
+#### Make a donation {-}
+
+If you find this resource useful, please consider making a one-time donation in any amount. Your support really matters.
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_donations" />
+<input type="hidden" name="business" value="ZF6U7K5MW25W2" />
+<input type="hidden" name="currency_code" value="USD" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+</form>
 
 <!--chapter:end:namespace.Rmd-->
 
@@ -2511,9 +2673,23 @@ As you can tell, you simply load the package `testthat`, then load your package,
 - You can organize your tests any way that you like. But again, the two extremes are clearly bad (all tests in one file, one file per test). You need to find a happy medium that works for you. A good starting place is to have one file of tests for each complicated function.
 
 
-
 To know more about testing a package with `"testthat"`, see 
 <a href="http://r-pkgs.had.co.nz/tests.html" target="_blank">r-pkgs: Testing</a>.
+
+
+-----
+
+#### Make a donation {-}
+
+If you find this resource useful, please consider making a one-time donation in any amount. Your support really matters.
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_donations" />
+<input type="hidden" name="business" value="ZF6U7K5MW25W2" />
+<input type="hidden" name="currency_code" value="USD" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+</form>
 
 <!--chapter:end:tests.Rmd-->
 
@@ -2572,6 +2748,21 @@ The following screenshot shows part of the contents in the introductory vignette
 
 
 To know more about vignettes see <a href="http://r-pkgs.had.co.nz/vignettes.html" target="_blank">r-pkgs: Package Vignettes</a>.
+
+
+-----
+
+#### Make a donation {-}
+
+If you find this resource useful, please consider making a one-time donation in any amount. Your support really matters.
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_donations" />
+<input type="hidden" name="business" value="ZF6U7K5MW25W2" />
+<input type="hidden" name="currency_code" value="USD" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+</form>
 
 <!--chapter:end:vignettes.Rmd-->
 
@@ -2681,6 +2872,21 @@ During the development of a package, you always start at the source level, and e
 <img src="images/packaging-ideal-flow.png" alt="Theoretical flow of package states" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-115)Theoretical flow of package states</p>
 </div>
+
+
+-----
+
+#### Make a donation {-}
+
+If you find this resource useful, please consider making a one-time donation in any amount. Your support really matters.
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_donations" />
+<input type="hidden" name="business" value="ZF6U7K5MW25W2" />
+<input type="hidden" name="currency_code" value="USD" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+</form>
 
 <!--chapter:end:states.Rmd-->
 
@@ -2838,6 +3044,20 @@ Feel free to download (or clone) the repository and modify its contents to exper
 Happy packaging and ... _May the FoRce be with You!_
 
 
+-----
+
+#### Make a donation {-}
+
+If you find this resource useful, please consider making a one-time donation in any amount. Your support really matters.
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_donations" />
+<input type="hidden" name="business" value="ZF6U7K5MW25W2" />
+<input type="hidden" name="currency_code" value="USD" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+</form>
+
 <!--chapter:end:flow.Rmd-->
 
 
@@ -2904,6 +3124,21 @@ A few things to keep in mind about `install_github()`:
 
 To know more about sharing options with Git and GitHub see <a href="http://r-pkgs.had.co.nz/git.html" target="_blank">r-pkgs: Package Git</a>.
 If you are interested in sharing a package via CRAN, then see <a href="http://r-pkgs.had.co.nz/release.html" target="_blank">r-pkgs: Releasing a Package</a>.
+
+
+-----
+
+#### Make a donation {-}
+
+If you find this resource useful, please consider making a one-time donation in any amount. Your support really matters.
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_donations" />
+<input type="hidden" name="business" value="ZF6U7K5MW25W2" />
+<input type="hidden" name="currency_code" value="USD" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+</form>
 
 <!--chapter:end:sharing.Rmd-->
 

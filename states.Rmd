@@ -74,7 +74,7 @@ An __installed__ package is a decompressed binary file that has been unwrapped i
 knitr::include_graphics("images/state-installed.png")
 ```
 
-Keeping with the metaphor of the 3-course meal, an installed package is associated with an _installer_. An installer is like the waiter, getting your food and preparing everything for you to eat it: plates, glasses, cutlery, napkins, portions of fodd, etc. The installer basically gets your food ready for you to eat it. 
+Keeping with the metaphor of the 3-course meal, an installed package is associated with an _installer_. An installer is like the waiter, getting your food and preparing everything for you to eat it: plates, glasses, cutlery, napkins, portions of food, etc. The installer basically gets your food ready for you to eat it. 
 An installer does prep-work on your computer. While the binary may have all the instructions it needs, the installer may need to perform some set-up tasks.
 
 To install a package with `"devtools"`, you use the `install()` function. You can use this function to take a package in the form of source, bundled, or binary, to install it in your computer.

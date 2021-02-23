@@ -266,7 +266,7 @@ is done by specifying the argument `replace = TRUE`, like this:
 ```r
 # draw 4 elements with replacement
 sample(coin, size = 4, replace = TRUE)
-#> [1] "heads" "tails" "heads" "tails"
+#> [1] "tails" "heads" "tails" "heads"
 ```
 
 
@@ -283,14 +283,14 @@ command is exactly the same in both cases:
 ```r
 # five tosses
 sample(coin, size = 5, replace = TRUE)
-#> [1] "tails" "tails" "heads" "tails" "heads"
+#> [1] "tails" "tails" "tails" "heads" "tails"
 ```
 
 
 ```r
 # another five tosses
 sample(coin, size = 5, replace = TRUE)
-#> [1] "heads" "tails" "tails" "heads" "heads"
+#> [1] "heads" "heads" "heads" "heads" "tails"
 ```
 
 
@@ -1329,7 +1329,7 @@ method
 print
 #> function (x, ...) 
 #> UseMethod("print")
-#> <bytecode: 0x7fee91a8c368>
+#> <bytecode: 0x7fc314d47d58>
 #> <environment: namespace:base>
 ```
 
@@ -1353,10 +1353,11 @@ of object use the `methods()` function:
 ```r
 # methods for objects "matrix"
 methods(class = "matrix")
-#>  [1] anyDuplicated as.data.frame as.raster     boxplot       coerce       
-#>  [6] determinant   duplicated    edit          head          initialize   
-#> [11] isSymmetric   Math          Math2         Ops           relist       
-#> [16] subset        summary       tail          unique       
+#>  [1] anyDuplicated as.data.frame as.raster     boxplot      
+#>  [5] coerce        determinant   duplicated    edit         
+#>  [9] head          initialize    isSymmetric   Math         
+#> [13] Math2         Ops           relist        subset       
+#> [17] summary       tail          unique       
 #> see '?methods' for accessing help and source code
 ```
 

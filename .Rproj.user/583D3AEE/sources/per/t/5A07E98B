@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1613843245833.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3405166199",
+    "id" : "5A07E98B",
+    "lastKnownWriteTime" : 1614036670,
+    "last_content_update" : 1614036670461,
+    "path" : "~/Dropbox/packyourcode/Makefile",
+    "project_path" : "Makefile",
+    "properties" : {
+        "cursorPosition" : "14,0",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "makefile"
+}

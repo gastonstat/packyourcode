@@ -2,26 +2,13 @@ book_filename: "packyourcode"
 delete_merged_file: true
 rmd_files: [
   "index.Rmd",
-  "introduction.Rmd",
-  "functions.Rmd",
+  "01-introduction.Rmd",
+  "02-functions.Rmd",
 
-  "coin.Rmd",
+  "03-coin.Rmd",
 
-  "methods1.Rmd",
-  "toss.Rmd",
-  "methods2.Rmd",
-  "methods3.Rmd",
-
-  "toy.Rmd",
-  "structure.Rmd",
-  "description.Rmd",
-  "namespace.Rmd",
-  "tests.Rmd",
-  "vignettes.Rmd",
-  
-  "states.Rmd",
-  "flow.Rmd",
-  "sharing.Rmd"
+  "04-methods1.Rmd",
+  "05-preview.Rmd"
 ]
 
 before_chapter_script: "_common.R"

@@ -1,0 +1,170 @@
+# Methods (part 1) {#methods1}
+
+## Introduction
+
+Having seen how to create S3 objects, in this chapter you will learn about how
+to create methods for S3 objects.
+
+
+
+## Improving `toss()`
+
+From [chapter 2](#function), we ended up with the following `toss()` function:
+
+```{r}
+#' @title Coin toss function 
+#' @description Simulates tossing a coin a given number of times
+#' @param x coin object (a vector)
+#' @param times number of tosses
+#' @param prob vector of probabilities for each side of the coin
+#' @return vector of tosses
+toss <- function(x, times = 1, prob = NULL) {
+  sample(x, size = times, replace = TRUE, prob = prob)
+}
+```
+
+The issue with the way `toss()` has been defined so far, is that you can provide 
+any type of input vector (not necessarily of class `"coin"`), and it will still 
+work. For instance, let's bring back the vector `c('tic', 'tac', 'toe')` and
+use it as an input for `toss()`
+
+```{r}
+toss(c('tic', 'tac', 'toe'))
+```
+
+The reason why `toss()` works with pretty much any vector, is because we are 
+not checking for the validity of the input vector. That is, currently we are
+not enforcing the input vector to be an object of class `"coin"`.
+
+To create a function `toss()` that only works for objects of class `"coin"`, we 
+could add a `stop()` condition that checks if the argument `x` is of the right 
+class:
+
+```{r}
+toss <- function(x, times = 1, prob = NULL) {
+  if (class(x) != "coin") {
+    stop("\ntoss() requires an object 'coin'")
+  }
+  sample(x$sides, size = times, replace = TRUE, prob = prob)
+}
+
+# ok
+toss(coin1)
+
+# bad coin
+toss(c('tic', 'tac', 'toe'))
+```
+
+
+A more formal strategy, and one that follows OOP principles, is to create a 
+toss __method__. In R, many functions are actually methods: e.g. `print()`, 
+`summary()`, `plot()`, `str()`, etc. Out of curiosity, you can simply type the
+name of the function---without parenthesis---and confirm that `print()` is a 
+method
+
+```{r print-method}
+# print method
+print
+```
+
+The second line in the above output indicates `UseMethod("print")`, which is 
+the way R tells you that `print` is a generic method. In fact, if you look at 
+the manual documentation of `print()`, in the _Description_ section you will 
+see the following information
+
+> `print` prints its argument and returns it invisibly (via `invisible(x)`). 
+> It is a generic function which means that new printing methods can be easily 
+> added for new classes.
+
+A function that is a generic method is not really one unique function but a 
+collection or family of functions for printing objects, computing summaries, 
+plotting, etc. Depending on the class of the object, a generic method will look 
+for a specific function for that class. For example, objects of class `"matrix"`
+have several methods; to see the collection of available methods for this type
+of object use the `methods()` function:
+
+```{r matrix-methods}
+# methods for objects "matrix"
+methods(class = "matrix")
+```
+
+
+
+## Generic Method `toss`
+
+Let's see how to to create methods for our coin tossing working example.
+When implementing new methods, you begin by creating a __generic__ method with 
+the function `UseMethod()`:
+
+```{r toss-method}
+# generic method 'toss'
+toss <- function(x, ...) UseMethod("toss")
+```
+
+The function `UseMethod()` allows you to declare the name of a method. In this 
+example we are telling R that the function `toss()` is now a generic `"toss"` 
+method. Note the use of `"..."` in the function definition, this will allow you 
+to include more arguments when you define specific methods based on `"toss"`. 
+
+A generic method alone is not very useful. You need to create specific cases for 
+the generic. In our example, we only have one class `"coin"`, so that is the 
+only class we will allow `toss` to be applied on. The way to do this is by 
+defining `toss.coin()`:
+
+```{r toss-coin-specific}
+# specific method 'toss' for objects "coin"
+toss.coin <- function(x, times = 1, prob = NULL) {
+  sample(x$sides, size = times, replace = TRUE, prob = prob)
+}
+```
+
+The name of the method, `"toss"`, comes first, followed by a dot `"."`, followed 
+by the name of the class, `"coin"`. Notice that the body of the function 
+`toss.coin()` does not include the `stop()` command anymore.
+
+To use the `toss()` method on a `"coin"` object, you don't really have to call 
+`toss.coin()`; calling `toss()` is enough:
+
+```{r}
+toss(coin1)
+```
+
+How does `toss()` work? Becasue `toss()` is now a generic method, everytime you 
+use it, R will look at the class of the input, and see if there is an associated 
+`"toss"` method. In the previous example, `coin1` is an object of class `"coin"`, 
+for which there is a specific `toss.coin()` method. Thus using `toss()` on a 
+`"coin"` object works fine. 
+
+Now let's try `toss()` on the character vector `c('tic', 'tac', 'toe')`:
+
+```{r results = FALSE}
+# no toss() method for regular vectors
+toss(c('tic', 'tac', 'toe'))
+```
+
+When you try to use `toss()` on an object that is not of class `"coin"`, you get 
+a nice error message like the one below
+
+```
+Error in UseMethod("toss"): no applicable method for 'toss' 
+applied to an object of class "character"
+```
+
+Because an object `"coin"` already contains an element `prob`, the `toss.coin()` 
+function does not really need an argument `prob`. Instead, we can pass this 
+value from the coin object. Here's a new definition of `toss.coin()`:
+
+```{r new-toss}
+toss.coin <- function(x, times = 1) {
+  sample(x$sides, size = times, replace = TRUE, prob = x$prob)
+}
+```
+
+Let's toss a loaded coin:
+
+```{r}
+set.seed(2341)
+loaded_coin <- coin(c('HEADS', 'tails'), prob = c(0.75, 0.25))
+toss(loaded_coin, times = 6)
+```
+

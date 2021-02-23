@@ -2,13 +2,23 @@
 title: "Pack YouR Code"
 author: "Gaston Sanchez"
 date: ""
+description: "This book showcases a basic example of how to create an R package based on S3 classes."
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-description: "Basic example of how to create an R package based on S3 classes."
+colorlinks: yes
+graphics: yes
+fontsize: 12pt
+cover-image: images/pack-your-code-logo.png
 ---
+
+```{r setup, include=FALSE}
+options(tinytex.verbose = TRUE)
+knitr::opts_chunk$set(tidy = TRUE, error = TRUE)
+options(width = 60)
+```
 
 # Welcome {-}
 
@@ -16,57 +26,114 @@ description: "Basic example of how to create an R package based on S3 classes."
 knitr::include_graphics("images/pack-your-code-logo.png")
 ```
 
+- __Pack YouR Code__ by Gaston Sanchez.
+- Copyright 2018-2021. All rights reserved.
 
-The ultimate goal of this book is to teach you how to create a relatively simple R package based on the so-called S3 classes. 
 
-The chapters of the book are organized in three major parts:
+## Full Edition {-}
 
-- The first part involves describing a motivating example about using R to write code for tossing a coin. We begin tackling this problem from a _classic programming_ style (as opposed to a more object-oriented style).
+The full edition (in PDF and EPUB formats) can be purchased at leanpub:
 
-- The second part is dedicated to implement code in a more object-oriented programming (OOP) fashion by using S3-class objects. Keep in mind that the S3 system is a very informal OOP approach. However, it is the most common system among the universe of R packages.
+https://leanpub.com/packyourcode
 
-- The third part of the book has to do with the actual process of organizing the R code into a formal package. We discuss the anatomy of a package, its differrent possible states, some usual components that are worth including in a package, and the flow for building a package.
+
+## Preview Edition {-}
+
+This is now a preview of the first four chapters:
+
+1) [Let's Toss a Coin](#intro)
+2) [Tossing Function](#function)
+3) [Coin Objects](#aboutpls)
+4) [Methods (part 1)](#timeline)
+5) Object toss
+6) Methods (part 2)
+7) Additional Methods
+8) Toy Package
+9) Filestructure
+10) Description File
+11) Namespace
+12) Vignettes
+13) Package States
+14) Packaging Flow
+15) Sharing
+
+
+## Preface {-}
+
+The ultimate goal of this book is to teach you how to create a relatively simple 
+R package based on the so-called S3 classes. 
+
+The chapters of the book are organized in four major parts:
+
+- The first part involves describing a motivating example about using R to write 
+code for tossing a coin. We begin tackling this problem from a 
+_classic programming_ style (as opposed to a more object-oriented style).
+
+- The second part is dedicated to implement code in a more object-oriented 
+programming (OOP) fashion by using S3-class objects. Keep in mind that the S3 
+system is a very informal OOP approach. However, it is the most common system 
+among the universe of R packages.
+
+- The third part discusses the anatomy of an R package, and how the various 
+files are organized in a formal filestructure. The purpose of this part is to
+review the main type of directories, subdirectories, and files ina package, as 
+well as some usual components that are worth including in a package. 
+
+- The fourth part of the book has to do with the actual process of building 
+a package. We describe the differrent possible states, showing an opinionated 
+flow for building a package.
+
 
 
 ### About this book {-}
 
-The main reason to write this book was the lack of a teaching resource that I could use with the students in my computational statistics courses at the University of California Berkeley (e.g. Stat 133, 159, 243, 259). Not only I saw the need, but also the opportunity, to refine a couple of tutorial documents that I had written for those courses. I hope that this book can help not only students in my courses but also many other useRs that are interested in creating R packages.
+The main reason for me to write this book was the lack of a teaching resource 
+that I could use with the students in my computational statistics courses at the 
+University of California Berkeley (e.g. Stat 133, 159, 243, 259). Not only I 
+saw the need, but also the opportunity, to refine a couple of tutorial documents 
+that I had written for those courses. I hope that this book can help not only 
+students in my courses but also many other useRs that are interested in creating 
+R packages.
 
-This book assumes a couple of things about you: familiarity with R in general, and more specifically with RStudio. You should have used `.R` (R script) and `.Rmd` (R markdwon) files before. You don't need to be an expert useR but you do need to feel comfortable working with various data structures: vectors, factors, arrays, matrices, lists, data frames, etc. Also, I assume that you have some basic programming experience: for example, you know how to create simple functions, you know how to use conditional structures like `if-then-else`, as well as loop structures such as `for()` loops or `while()` loops. And that you also have some experience writing tests of functions (ideally using the package `"testthat"`).
+This book assumes a couple of things about you: familiarity with R in general, 
+and more specifically with RStudio. You should have used `.R` (R script) and 
+`.Rmd` (R markdwon) files before. You don't need to be an expert useR but you 
+do need to feel comfortable working with various data structures: vectors, 
+factors, arrays, matrices, lists, data frames, etc. Also, I assume that you have 
+some basic programming experience: for example, you know how to create simple 
+functions, you know how to use conditional structures like `if-then-else`, as 
+well as loop structures such as `for()` loops or `while()` loops. And that you 
+also have some experience writing tests of functions (ideally using the package 
+`"testthat"`).
 
 
 
 ### Other Resources {-}
 
-This is NOT a comprehensive text that covers every single aspect about creating R packages. Instead, I've written this book more in the spirit of an extended tutorial or guide document with a relatively simple working example.
+This is NOT a comprehensive text that covers every single aspect about creating 
+R packages. Instead, I've written this book more in the spirit of an extended 
+tutorial or guide document with a relatively simple working example.
 
-If you are interested in the nitty gritty aspects about R packages, then you should read Hadley Wickham's excellent book on __[R Packages](http://r-pkgs.had.co.nz/package.html)__. In fact, in various chapters of _Pack YouR Code_, I will be constantly referring to the book _R Packages_ in the form of links like this: `r-pkgs: topic`; for example: [r-pkgs: Introduction](http://r-pkgs.had.co.nz/intro.html).
+If you are interested in the nitty gritty aspects about R packages, then you 
+should read Hadley Wickham's excellent book on 
+__[R Packages](http://r-pkgs.had.co.nz/package.html)__. In fact, in various 
+chapters of _Pack YouR Code_, I will be constantly referring to the book 
+_R Packages_ in the form of links like this: `r-pkgs: topic`; for example: 
+[r-pkgs: Introduction](http://r-pkgs.had.co.nz/intro.html).
 
-I also recommend reading Friedrich Leisch's manuscript __[Creating R Packages: A Tutorial](https://cran.r-project.org/doc/contrib/Leisch-CreatingPackages.pdf)__. Personally, this tutorial helped me a lot to successfully complete creating my first R package in the spring of 2009, after several (enormously frustrating) failed attempts during 2007 and 2008. It's impressive to have witnessed how the package-creation process has been made more smooth since those years.
+I also recommend reading Friedrich Leisch's manuscript 
+__[Creating R Packages: A Tutorial](https://cran.r-project.org/doc/contrib/Leisch-CreatingPackages.pdf)__. 
+Personally, this tutorial helped me a lot to successfully complete creating my 
+first R package in the spring of 2009, after several (enormously frustrating) 
+failed attempts during 2007 and 2008. It's impressive to have witnessed how the 
+package-creation process has been made more smooth since those years.
 
-Another classic book with material about R packages is __Software for Data Analysis__ by John Chamber, the "master mind" behind the S language, on which the R language is based on.
+Another classic book with material about R packages is 
+__Software for Data Analysis__ by John Chamber, the "master mind" behind the S 
+language, on which the R language is based on.
 
-If _R Packages_ is not enough for you, and you are still curious about more obscure and esoteric details, then you need to check the technical R manual __[Writing R Extensions](https://cran.r-project.org/doc/manuals/r-release/R-exts.html)__ (by the R Core Team). I should warn you: this is NOT a beginner friendly document.
+If _R Packages_ is not enough for you, and you are still curious about more 
+obscure and esoteric details, then you need to check the technical R manual 
+__[Writing R Extensions](https://cran.r-project.org/doc/manuals/r-release/R-exts.html)__ 
+(by the R Core Team). I should warn you: this is NOT a beginner friendly document.
 
-
------
-
-### Give Now {-}
-
-If you find this resource useful (which I'm pretty sure you will) please consider making a one-time donation in any amount. Your support really matters.
-
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_donations" />
-<input type="hidden" name="business" value="ZF6U7K5MW25W2" />
-<input type="hidden" name="currency_code" value="USD" />
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
-</form>
-
-<br>
-
-Alternatively, you can also help me with my Amazon __[wishlist](http://amzn.com/w/A8P707HJ94QI)__.
-
-<br>
-
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work, by [Gaston Sanchez](http://gastonsanchez.com), is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.

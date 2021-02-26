@@ -13,4 +13,4 @@ https://leanpub.com/packyourcode
 
 [Gaston Sanchez](https://www.gastonsanchez.com)
 
-@ Copyright 2015-2020. All rights reserved.
+@ Copyright 2015-2021. All rights reserved.
